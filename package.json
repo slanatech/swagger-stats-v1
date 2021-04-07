@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "version": "1.0.0-alpha.1",
+  "description": "Instant Observability for Node.js microservices",
+  "workspaces": {
+    "packages": [ "packages/*","examples/*" ],
+    "nohoist": ["**/@vue/cli-plugin-eslint", "**/@vue/cli-plugin-eslint/**"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slanatech/swagger-stats"
+  },
+  "author": "https://github.com/slanatech",
+  "homepage": "https://slanatech.github.io/swagger-stats/",
+  "bugs": {
+    "url": "https://github.com/slanatech/swagger-stats/issues",
+    "email": "sv2@slana.tech"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "echo TODO"
+  },
+  "dependencies": {
+    "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1"
+  },
+  "engines": {
+    "node": ">= 10"
+  }
+}
