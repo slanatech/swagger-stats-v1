@@ -1,0 +1,3 @@
+[submodule "packages/collector/protos"]
+	path = packages/collector/protos
+	url = https://github.com/open-telemetry/opentelemetry-proto.git

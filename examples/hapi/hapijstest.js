@@ -1,7 +1,18 @@
 // Swagger-Stats must be initialized first thing in the app, before importing other packages
 // Swagger-Stats will perform OpenTelemetry initialization
+const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
+
 const { swsMonitor } = require('@swaggerstats/node');
 swsMonitor.start({});
+
+let exporter = new JaegerExporter({
+  serviceName: 'hapitest',
+  host: 'localhost',
+  port: 14268,
+  endpoint: 'http://localhost:14268/api/traces',
+});
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
 const http = require('http');
 const Hapi = require('@hapi/hapi');
@@ -19,7 +30,7 @@ function waitfor(t, v) {
 
 const init = async () => {
   server = Hapi.server({
-    port: 3040,
+    port: process.env.PORT || 3050,
     host: 'localhost',
   });
 

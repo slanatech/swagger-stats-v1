@@ -9,6 +9,10 @@ const { SwsSpanExporter } = require('./swsSpanExporter');
 const swsSettings = require('./swssettings');
 const debug = require('debug')('sws:monitor');
 
+// TODO Tracer
+//  const opentelemetry = require('@opentelemetry/api');
+//  const tracer = opentelemetry.trace.getTracer('spectest');
+
 class SwsMonitor {
   constructor() {
     this.tracerProvider = null;
@@ -26,7 +30,7 @@ class SwsMonitor {
     registerInstrumentations({
       // This enables all available Instrumentations
       tracerProvider: this.tracerProvider,
-      instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation({}), new HapiInstrumentation()],
+      instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation()],
     });
     // TODO Support exporters configuration
     //provider.addSpanProcessor(new SimpleSpanProcessor(exporter));

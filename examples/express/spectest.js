@@ -1,7 +1,39 @@
 // Swagger-Stats must be intialized first thing in the app, before importing other packages
 // Swagger-Stats will perform OpenTelemetry initialization
+//const { registerInstrumentations } = require('@opentelemetry/instrumentation');
+//const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
+//const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
+const opentelemetry = require('@opentelemetry/api');
+const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
+const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
+
 const { swsMonitor } = require('@swaggerstats/node');
 swsMonitor.start({});
+const tracer = opentelemetry.trace.getTracer('spectest');
+
+/*
+let exporter = new JaegerExporter({
+  serviceName: 'spectest',
+  host: 'localhost',
+  port: 14268,
+  endpoint: 'http://localhost:14268/api/traces',
+});
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+*/
+
+const collectorOptions = {
+  serviceName: 'basic-service',
+  url: 'localhost:50051', // url is optional and can be omitted - default is localhost:4317
+};
+const exporterCollector = new CollectorTraceExporter(collectorOptions);
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+
+// Can register instrumentations subsequently multiple times
+//registerInstrumentations({
+//  tracerProvider: swsMonitor.tracerProvider,
+//  instrumentations: [ExpressInstrumentation],
+//});
 
 const http = require('http');
 const path = require('path');
@@ -14,6 +46,8 @@ const promClient = require('prom-client');
 const collectDefaultMetrics = promClient.collectDefaultMetrics;
 // Probe every 1 second
 collectDefaultMetrics({ timeout: 1000 });
+
+const RestOp = require('./restop');
 
 // Server
 var server = null;
@@ -127,6 +161,26 @@ parser.validate(specLocation, function (err, api) {
 
     // Enable swagger-stats middleware with options
     // app.use(swStats.getMiddleware(swsOptions));
+
+    // Test API call that invokes other service
+    app.get('/dtest', async function (req, res) {
+      let otctx = opentelemetry.context.active(); // This can get current trace id
+      //let otSpan = opentelemetry.getCurrentSpan(); // This does not exist anymore
+
+      let callResult = await new RestOp({ method: 'get', url: `http://localhost:3052/v2/paramstest/200/and/aaa` }).execute();
+      debug(`Got result from downstream: ${JSON.stringify(callResult)}`);
+      res.json(callResult);
+
+      /*
+      const span = tracer.startSpan('makeRequest');
+      await opentelemetry.context.with(opentelemetry.setSpan(opentelemetry.context.active(), span), async () => {
+        let callResult = await new RestOp({ method: 'get', url: `http://localhost:3050/v2/paramstest/200/and/aaa` }).execute();
+        debug(`Got result from downstream: ${JSON.stringify(callResult)}`);
+        span.end();
+        res.json(callResult);
+      });
+      */
+    });
 
     // Implement mock API
     app.use(mockApiImplementation);

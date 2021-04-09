@@ -1,0 +1,32 @@
+{
+  "name": "@swagger-stats/collector",
+  "version": "1.0.0-alpha.1",
+  "private": true,
+  "main": "collector_server.js",
+  "scripts": {
+  },
+  "keywords": [
+    "opentelemetry",
+    "nodejs",
+    "grpc",
+    "tracing",
+    "profiling",
+    "metrics",
+    "stats"
+  ],
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@opentelemetry/api": "^1.0.0-rc.0"
+  },
+  "peerDependencies": {
+    "@opentelemetry/api": "^1.0.0-rc.0"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.2.12",
+    "@grpc/proto-loader": "^0.6.0",
+    "@opentelemetry/core": "^0.18.2",
+    "@opentelemetry/tracing": "^0.18.2"
+  }
+}
