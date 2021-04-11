@@ -8,26 +8,28 @@ const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
+// opa2
+
 const { swsMonitor } = require('@swaggerstats/node');
 swsMonitor.start({});
 const tracer = opentelemetry.trace.getTracer('spectest');
 
-/*
 let exporter = new JaegerExporter({
   serviceName: 'spectest',
   host: 'localhost',
   port: 14268,
-  endpoint: 'http://localhost:14268/api/traces',
+  endpoint: 'http://10.1.26.44:14268/api/traces',
 });
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
-*/
 
+/*
 const collectorOptions = {
   serviceName: 'basic-service',
   url: 'localhost:50051', // url is optional and can be omitted - default is localhost:4317
 };
 const exporterCollector = new CollectorTraceExporter(collectorOptions);
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+*/
 
 // Can register instrumentations subsequently multiple times
 //registerInstrumentations({

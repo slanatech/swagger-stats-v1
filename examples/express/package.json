@@ -6,6 +6,9 @@
   "main": "spectest.js",
   "scripts": {
   },
+  "config": {
+    "imageName": "swaggerstats-examples-express"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/slanatech/swagger-stats"

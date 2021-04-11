@@ -1,0 +1,17 @@
+agentCollector:
+  enabled: true
+  containerLogs:
+    enabled: false
+
+config:
+  exporters:
+    jaeger:
+      endpoint: tempo.loki-stack.svc:14250
+      insecure: true
+  service:
+    pipelines:
+      metrics: null
+      logs: null
+      traces:
+        exporters:
+          - jaeger
