@@ -1,3 +1,6 @@
 [submodule "packages/collector/protos"]
 	path = packages/collector/protos
 	url = https://github.com/open-telemetry/opentelemetry-proto.git
+[submodule "packages/receiver/jaeger-idl"]
+	path = packages/receiver/jaeger-idl
+	url = https://github.com/jaegertracing/jaeger-idl.git
