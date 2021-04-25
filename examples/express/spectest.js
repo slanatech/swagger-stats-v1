@@ -18,7 +18,7 @@ let exporter = new JaegerExporter({
   serviceName: 'spectest',
   host: 'localhost',
   port: 14268,
-  endpoint: 'http://10.1.26.44:14268/api/traces',
+  endpoint: 'http://localhost:14268/api/traces',
 });
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 

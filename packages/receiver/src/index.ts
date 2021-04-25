@@ -1,7 +1,7 @@
 const path = require('path');
 
-const PROTO_PATH = __dirname + '/../../jaeger-idl/proto/api_v2/collector.proto';
-
+//const PROTO_PATH = __dirname + '/../../jaeger-idl/proto/api_v2/collector.proto';
+const PROTO_PATH = path.resolve(__dirname, '..', 'jaeger-idl', 'proto', 'api_v2', 'collector.proto');
 const includeDirs = [path.resolve(__dirname, '/../../jaeger-idl'), path.resolve(__dirname, '/../../../../node_modules/google-proto-files/google/protobuf')];
 
 const grpc = require('@grpc/grpc-js');

@@ -24,6 +24,7 @@ const collector_proto = collector_def.jaeger.api_v2;
  * Implements the PostSpans RPC method.
  */
 function PostSpans(call, callback) {
+  console.log(`Got PostSpans !`);
   callback(null, { message: 'Hello ' + call.request.name });
   // TODO Response ?
 }
