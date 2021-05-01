@@ -6,7 +6,7 @@
 const opentelemetry = require('@opentelemetry/api');
 const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
-const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
+const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
 // opa2
 
@@ -14,6 +14,7 @@ const { swsMonitor } = require('@swaggerstats/node');
 swsMonitor.start({});
 const tracer = opentelemetry.trace.getTracer('spectest');
 
+/* This exports traces to OpenTelemetry Collector Jaeger receiver
 let exporter = new JaegerExporter({
   serviceName: 'spectest',
   host: 'localhost',
@@ -21,15 +22,16 @@ let exporter = new JaegerExporter({
   endpoint: 'http://localhost:14268/api/traces',
 });
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+*/
 
-/*
+/* This exports traces via OpenTelemetry protocol to specified destination */
 const collectorOptions = {
-  serviceName: 'basic-service',
+  serviceName: 'spectest',
   url: 'localhost:50051', // url is optional and can be omitted - default is localhost:4317
 };
 const exporterCollector = new CollectorTraceExporter(collectorOptions);
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
-*/
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
 // Can register instrumentations subsequently multiple times
 //registerInstrumentations({
@@ -124,45 +126,7 @@ parser.validate(specLocation, function (err, api) {
       requestSizeBuckets: [10, 25, 50, 100, 200],
       responseSizeBuckets: [10, 25, 50, 100, 200],
       apdexThreshold: 25,
-      onResponseFinish: function (req, res, rrr) {
-        // You can remove non-needed or private attributes from Request Response Record
-        delete rrr.http.request.headers['user-agent'];
-
-        // You can also extend Request Response Record with custom attributes
-
-        // All custom properties under attrs will be casted to string and indexed in ElasticSearch as keyword
-        rrr.attrs = {
-          test1: 'test1',
-          test2: 'test2',
-          test3: 10,
-          test4: true,
-          test5: { prop: 'value' },
-        };
-
-        // All custom properties under attrsint will be casted to numeric and indexed in ElasticSearch as long
-        rrr.attrsint = {
-          numvalue1: 100,
-          numvalue2: '100',
-          numvalue3: false,
-          numvalue4: '',
-          numvalue5: { prop: 'value' },
-        };
-
-        debug('onResponseFinish: %s', JSON.stringify(rrr));
-      },
     };
-
-    // Enable Elasticsearch if specified
-    if (process.env.SWS_ELASTIC) {
-      swsOptions.elasticsearch = process.env.SWS_ELASTIC;
-    }
-
-    if (process.env.SWS_ELASTIC_INDEX_PREFIX) {
-      swsOptions.elasticsearchIndexPrefix = process.env.SWS_ELASTIC_INDEX_PREFIX;
-    }
-
-    // Enable swagger-stats middleware with options
-    // app.use(swStats.getMiddleware(swsOptions));
 
     // Test API call that invokes other service
     app.get('/dtest', async function (req, res) {
