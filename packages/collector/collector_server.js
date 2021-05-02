@@ -1,5 +1,7 @@
 const path = require('path');
 const { pathOr } = require('ramda');
+const logger = require('./main/logger')('MAIN');
+const monitor = require('./main/monitor');
 const Span = require('./main/span');
 
 const PROTO_PATH = __dirname + '/protos/opentelemetry/proto/collector/trace/v1/trace_service.proto';
@@ -15,11 +17,11 @@ const trace_proto = grpc.loadPackageDefinition(packageDefinition).opentelemetry.
  * Implements the Export RPC method.
  */
 function Export(call, callback) {
-  console.log(`Got spans!`);
+  logger.info(`Got spans!`);
   let resourceSpans = pathOr([], ['request', 'resource_spans'], call);
   for (let rs of resourceSpans) {
     let span = new Span().fromOtel(rs);
-    console.log(`Span: trace_id=${span.trace_id}`);
+    logger.info(`Span: trace_id=${span.trace_id}`);
   }
 
   // Response ?
@@ -35,6 +37,7 @@ function main() {
   server.addService(trace_proto.TraceService.service, { Export: Export });
   server.bindAsync('0.0.0.0:50051', grpc.ServerCredentials.createInsecure(), () => {
     server.start();
+    logger.info(`GRPC Server Started`);
   });
 }
 
