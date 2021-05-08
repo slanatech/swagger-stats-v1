@@ -1,3 +1,27 @@
+// ////////////////////////////////////////////////////// //
+// Enable tracing to OpenTelemetry Collector
+const { registerInstrumentations } = require('@opentelemetry/instrumentation');
+const { GrpcInstrumentation } = require('@opentelemetry/instrumentation-grpc');
+const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
+const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
+const { swsMonitor } = require('@swaggerstats/node');
+swsMonitor.start({});
+/* This exports traces via OpenTelemetry protocol to specified destination */
+// TODO Remove
+//  Note - this will lead to the loop - we're exporting our trace to Collector, and getting it back as we're Receiver
+const collectorOptions = {
+  serviceName: 'receiver',
+  url: 'localhost:4317', // url is optional and can be omitted - default is localhost:4317
+};
+const exporterCollector = new CollectorTraceExporter(collectorOptions);
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+registerInstrumentations({
+  tracerProvider: swsMonitor.tracerProvider,
+  instrumentations: [new GrpcInstrumentation()],
+});
+
+// ////////////////////////////////////////////////////// //
+
 const path = require('path');
 
 const PROTO_PATH = __dirname + '/jaeger-idl/proto/api_v2/collector.proto';
@@ -24,7 +48,7 @@ const collector_proto = collector_def.jaeger.api_v2;
  * Implements the PostSpans RPC method.
  */
 function PostSpans(call, callback) {
-  console.log(`Got PostSpans !`);
+  console.log(`Got PostSpans!`);
   callback(null, { message: 'Hello ' + call.request.name });
   // TODO Response ?
 }
