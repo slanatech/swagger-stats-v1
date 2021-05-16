@@ -27,7 +27,7 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 /* This exports traces via OpenTelemetry protocol to specified destination */
 const collectorOptions = {
   serviceName: 'spectest',
-  url: 'localhost:50051', // url is optional and can be omitted - default is localhost:4317
+  url: 'localhost:4327', // url is optional and can be omitted - default is localhost:4317
 };
 const exporterCollector = new CollectorTraceExporter(collectorOptions);
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));

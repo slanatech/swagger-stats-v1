@@ -61,7 +61,7 @@ function main() {
   let server = new grpc.Server();
   server.addService(collector_proto.CollectorService.service, { PostSpans: PostSpans });
   console.log(`Starting server ...`);
-  server.bindAsync('0.0.0.0:50051', grpc.ServerCredentials.createInsecure(), () => {
+  server.bindAsync('0.0.0.0:50061', grpc.ServerCredentials.createInsecure(), () => {
     server.start();
     console.log(`Server Started ...`);
   });

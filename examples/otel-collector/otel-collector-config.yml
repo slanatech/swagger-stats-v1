@@ -2,18 +2,22 @@ receivers:
   otlp:
     protocols:
       grpc:
+        endpoint: 0.0.0.0:4327
       http:
-
-  jaeger:
-    protocols:
-      grpc:
-      thrift_binary:
-      thrift_compact:
-      thrift_http:
+#  jaeger:
+#    protocols:
+#      grpc:
+#      thrift_binary:
+#      thrift_compact:
+#      thrift_http:
 
 exporters:
-  jaeger:
+  otlp:
     endpoint: localhost:50051
+    insecure: true
+  jaeger:
+#   endpoint: localhost:50061
+    endpoint: localhost:14250
     insecure: true
   logging:
     loglevel: debug
@@ -30,6 +34,6 @@ service:
   extensions: [pprof, zpages, health_check]
   pipelines:
     traces:
-      receivers: [otlp, jaeger]
-      exporters: [jaeger, logging]
+      receivers: [otlp]
+      exporters: [otlp, jaeger, logging]
       processors: [batch]
