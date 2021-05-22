@@ -1,0 +1,69 @@
+version: "2"
+services:
+
+  tempo:
+    image: grafana/tempo:0.7.0
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./etc/tempo-local.yaml:/etc/tempo.yaml
+      - /mnt/data/tempo:/tmp/tempo
+    ports:
+      - "14268:14268"  # jaeger ingest
+      - "3150:3150"
+    network_mode: host  
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
+
+  prometheus:
+    image: prom/prometheus:v2.27.0
+    volumes:
+      - ./etc/prometheus.yaml:/etc/prometheus.yaml
+    entrypoint:
+      - /bin/prometheus
+      - --config.file=/etc/prometheus.yaml
+    ports:
+      - "9090:9090"
+    network_mode: host  
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
+
+  grafana:
+    image: grafana/grafana:7.5.7
+    volumes:
+      - ./example-data/datasources:/etc/grafana/provisioning/datasources
+      - ./example-data/dashboards-provisioning:/etc/grafana/provisioning/dashboards
+      - ./example-data/tempo-mixin/out:/var/lib/grafana/dashboards
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
+    network_mode: host  
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
+
+  loki:
+    image: grafana/loki:2.2.1
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"                                   # loki needs to be exposed so it receives logs
+    network_mode: host  
+    environment:
+      - JAEGER_AGENT_HOST=localhost
+      - JAEGER_ENDPOINT=http://localhost:14268/api/traces # send traces to Tempo
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+    volumes:
+      - ./etc/loki-local.yaml:/etc/loki/local-config.yaml
+      - /mnt/data/loki:/tmp/loki
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'

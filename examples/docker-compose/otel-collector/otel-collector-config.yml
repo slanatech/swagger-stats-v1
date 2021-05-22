@@ -3,7 +3,6 @@ receivers:
     protocols:
       grpc:
         endpoint: 0.0.0.0:4327
-      http:
 #  jaeger:
 #    protocols:
 #      grpc:
@@ -12,11 +11,13 @@ receivers:
 #      thrift_http:
 
 exporters:
+  # swagger-stats otlp grpc receiver
   otlp:
     endpoint: localhost:50051
     insecure: true
+  # tempo Jaeger Grpc receiver
   jaeger:
-#   endpoint: localhost:50061
+    #endpoint: localhost:50061
     endpoint: localhost:14250
     insecure: true
   logging:
