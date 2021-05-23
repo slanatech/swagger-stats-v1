@@ -24,8 +24,8 @@ function Export(call, callback) {
     logger.info(`Span: trace_id=${span.trace_id}`);
   }
 
-  // Response ?
-  callback(null, { message: 'Hello ' + call.request.name });
+  // Response
+  callback(null, {});
 }
 
 /**

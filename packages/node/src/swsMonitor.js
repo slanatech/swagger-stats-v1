@@ -30,7 +30,9 @@ class SwsMonitor {
     registerInstrumentations({
       // This enables all available Instrumentations
       tracerProvider: this.tracerProvider,
-      instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation()],
+      //instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation()],
+      // Skip express for now
+      instrumentations: [new HttpInstrumentation({})],
     });
     // TODO Support exporters configuration
     //provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
