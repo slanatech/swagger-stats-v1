@@ -1,0 +1,14 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: [ "redis-server","--appendonly","yes" ]
+    volumes:
+      - /mnt/data/redis:/data
+    network_mode: host
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
