@@ -21,6 +21,7 @@ class Span {
     this.resourceAttributes = {};
   }
 
+  // TODO Move to transforms
   // Convert attributes from array to object
   attributesToObject(attrs) {
     if (!Array.isArray(attrs) || attrs.length <= 0) {
@@ -48,6 +49,7 @@ class Span {
     return attrsObj;
   }
 
+  // TODO Move to transforms
   // Convert from Otel GRPC message
   fromOtel(msg) {
     // Can it be multiple ?
