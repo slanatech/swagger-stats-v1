@@ -133,7 +133,7 @@ parser.validate(specLocation, function (err, api) {
       let otctx = opentelemetry.context.active(); // This can get current trace id
       //let otSpan = opentelemetry.getCurrentSpan(); // This does not exist anymore
 
-      let callResult = await new RestOp({ method: 'get', url: `http://localhost:3052/v2/paramstest/200/and/aaa` }).execute();
+      let callResult = await new RestOp({ method: 'get', url: `http://localhost:3050/dbtest` }).execute();
       debug(`Got result from downstream: ${JSON.stringify(callResult)}`);
       res.json(callResult);
 

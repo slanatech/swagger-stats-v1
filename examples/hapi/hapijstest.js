@@ -1,11 +1,15 @@
 // Swagger-Stats must be initialized first thing in the app, before importing other packages
 // Swagger-Stats will perform OpenTelemetry initialization
-const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
-const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
+// const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+const { registerInstrumentations } = require('@opentelemetry/instrumentation');
+const { PgInstrumentation } = require('@opentelemetry/instrumentation-pg');
+const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
+const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
 const { swsMonitor } = require('@swaggerstats/node');
 swsMonitor.start({});
 
+/*
 let exporter = new JaegerExporter({
   serviceName: 'hapitest',
   host: 'localhost',
@@ -13,10 +17,37 @@ let exporter = new JaegerExporter({
   endpoint: 'http://localhost:14268/api/traces',
 });
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+*/
+
+/* This exports traces via OpenTelemetry protocol to specified destination */
+const collectorOptions = {
+  serviceName: 'hapitest',
+  url: 'localhost:4327', // url is optional and can be omitted - default is localhost:4317
+};
+const exporterCollector = new CollectorTraceExporter(collectorOptions);
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+
+// Can register instrumentations subsequently multiple times after init
+registerInstrumentations({
+  tracerProvider: swsMonitor.tracerProvider,
+  instrumentations: [new PgInstrumentation()],
+});
+
+// ///////////////////////////////////////////// //
 
 const http = require('http');
 const Hapi = require('@hapi/hapi');
 //const swStats = require('../../lib');    // require('swagger-stats');
+
+const TestDB = require('./db/testdb');
+const db = new TestDB({
+  host: 'localhost',
+  port: 5432,
+  database: 'postgres',
+  user: 'postgres',
+  password: 'postgres',
+});
 
 const swaggerSpec = require('./petstore.json');
 
@@ -52,10 +83,10 @@ const init = async () => {
 
   server.route({
     method: 'GET',
-    path: '/stats',
-    handler: (request, h) => {
-      let stats = swStats.getCoreStats();
-      return h.response(stats).code(200);
+    path: '/dbtest',
+    handler: async (request, h) => {
+      let countResult = await db.getCount();
+      return h.response({ count: countResult }).code(200);
     },
   });
 
@@ -131,6 +162,7 @@ const init = async () => {
     }
   });
 
+  await db.initialize();
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };

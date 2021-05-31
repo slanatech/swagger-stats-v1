@@ -26,6 +26,8 @@
     "moment": "^2.29.1",
     "uuid": "^8.3.2",
     "prom-client": "^13.1.0",
-    "@swaggerstats/node": "1.0.0-alpha.1"
+    "@swaggerstats/node": "1.0.0-alpha.1",
+    "@opentelemetry/instrumentation-pg": "^0.16.0",
+    "pg-promise": "^10.10.2"
   }
 }
