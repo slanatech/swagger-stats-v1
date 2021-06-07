@@ -24,23 +24,23 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@opentelemetry/api": "^1.0.0-rc.0",
+    "@opentelemetry/api": "^0.21.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4",
     "@types/node": "^14.14.41"
   },
   "peerDependencies": {
-    "@opentelemetry/api": "^1.0.0-rc.0"
+    "@opentelemetry/api": "^0.21.0"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.2.12",
     "@grpc/proto-loader": "^0.6.0",
     "protobufjs": "^6.10.2",
     "google-proto-files": "^2.4.0",
-    "@opentelemetry/core": "^0.18.2",
-    "@opentelemetry/tracing": "^0.18.2",
-    "@opentelemetry/instrumentation": "^0.19.0",
-    "@opentelemetry/instrumentation-grpc": "^0.19.0",
+    "@opentelemetry/core": "^0.20.0",
+    "@opentelemetry/tracing": "^0.20.0",
+    "@opentelemetry/instrumentation": "^0.20.0",
+    "@opentelemetry/instrumentation-grpc": "^0.20.0",
     "@swaggerstats/node": "1.0.0-alpha.1"
   }
 }

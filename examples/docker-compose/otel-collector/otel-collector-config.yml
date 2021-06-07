@@ -3,12 +3,13 @@ receivers:
     protocols:
       grpc:
         endpoint: 0.0.0.0:4327
-#  jaeger:
-#    protocols:
+  jaeger:
+    protocols:
+      thrift_http:
+        endpoint: 0.0.0.0:14278
 #      grpc:
 #      thrift_binary:
 #      thrift_compact:
-#      thrift_http:
 
 exporters:
   # swagger-stats otlp grpc receiver
@@ -35,6 +36,6 @@ service:
   extensions: [pprof, zpages, health_check]
   pipelines:
     traces:
-      receivers: [otlp]
+      receivers: [otlp, jaeger]
       exporters: [otlp, jaeger, logging]
       processors: [batch]

@@ -5,32 +5,31 @@
 //const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
 const opentelemetry = require('@opentelemetry/api');
 const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
-const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
+//const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
 // opa2
 
 const { swsMonitor } = require('@swaggerstats/node');
 swsMonitor.start({});
-const tracer = opentelemetry.trace.getTracer('spectest');
 
-/* This exports traces to OpenTelemetry Collector Jaeger receiver
+/* This exports traces to OpenTelemetry Collector Jaeger receiver */
 let exporter = new JaegerExporter({
   serviceName: 'spectest',
   host: 'localhost',
-  port: 14268,
-  endpoint: 'http://localhost:14268/api/traces',
+  port: 14278,
+  //endpoint: 'http://localhost:14278/api/traces',
 });
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
-*/
 
 /* This exports traces via OpenTelemetry protocol to specified destination */
-const collectorOptions = {
-  serviceName: 'spectest',
-  url: 'localhost:4327', // url is optional and can be omitted - default is localhost:4317
-};
-const exporterCollector = new CollectorTraceExporter(collectorOptions);
-swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+//const collectorOptions = {
+// serviceName: 'spectest',
+//   url: 'grpc://localhost:4327', // url is optional and can be omitted - default is localhost:4317
+//};
+//const exporterCollector = new CollectorTraceExporter(collectorOptions);
+//swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
 // Can register instrumentations subsequently multiple times
