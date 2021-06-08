@@ -5,6 +5,8 @@ values.yaml provides specific var overrides
 Install as:
 
 ```
+helm repo add grafana https://grafana.github.io/helm-charts
+
 helm upgrade --install loki grafana/loki-stack -f values.yaml
 ```
 
