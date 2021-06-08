@@ -1,0 +1,36 @@
+loki:
+  enabled: true
+  image:
+    tag: 2.2.1
+
+promtail:
+  enabled: true
+
+fluent-bit:
+  enabled: false
+
+grafana:
+  enabled: true
+  sidecar:
+    datasources:
+      enabled: true
+  image:
+    tag: 7.5.7
+  ingress:
+    enabled: true	
+    hosts:
+      - kubernetes.docker.internal
+  grafana.ini:
+    users:
+      viewers_can_edit: true
+    auth:
+      disable_login_form: true
+      disable_signout_menu: true
+    auth.anonymous:
+      enabled: true
+      org_role: Admin
+
+prometheus:
+  enabled: true
+  image:
+    tag: v2.27.1
