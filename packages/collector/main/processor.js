@@ -5,6 +5,7 @@
 const { pathOr } = require('ramda');
 const logger = require('./logger')('PROC');
 const Trace = require('./trace');
+const monitor = require('./monitor');
 
 class Processor {
   constructor() {
@@ -22,6 +23,16 @@ class Processor {
       }
 
       trace.addSpan(span);
+
+      await this.processSingleSpan(span);
+    }
+  }
+
+  async processSingleSpan(span) {
+    // update generic metrics
+    monitor.inc('spans_processed_total');
+    if (span.service) {
+      monitor.inc('spans_processed', { service: span.service });
     }
   }
 }

@@ -42,6 +42,16 @@ exports.getMetrics = function (prefix, metricsSpecifications) {
   return promClientMetrics;
 };
 
+exports.getMetricValues = async function () {
+  let metricValues = '';
+  try {
+    metricValues = await promClient.register.metrics();
+  } catch (e) {
+    metricValues = '';
+  }
+  return metricValues;
+};
+
 exports.pregQuote = function (str, delimiter) {
   // http://kevin.vanzonneveld.net
   // +   original by: booeyOH

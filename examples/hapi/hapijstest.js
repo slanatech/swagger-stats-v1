@@ -19,10 +19,12 @@ let exporter = new JaegerExporter({
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 */
 
+// Set service name
+swsMonitor.tracerProvider.resource.attributes['service.name'] = 'hapitest';
+
 /* This exports traces via OpenTelemetry protocol to specified destination */
 const collectorOptions = {
-  serviceName: 'hapitest',
-  url: 'localhost:4327', // url is optional and can be omitted - default is localhost:4317
+  url: 'grpc://localhost:4327', // url is optional and can be omitted - default is localhost:4317
 };
 const exporterCollector = new CollectorTraceExporter(collectorOptions);
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));

@@ -31,6 +31,7 @@
     "@opentelemetry/tracing": "^0.20.0",
     "ramda": "^0.27.1",
     "prom-client": "^13.1.0",
-    "pino": "^6.11.3"
+    "pino": "^6.11.3",
+    "express": "^4.17.1"
   }
 }

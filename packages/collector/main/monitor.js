@@ -26,6 +26,10 @@ class Monitor {
     return pathOr(null, [metricName], this.promClientMetrics);
   }
 
+  async getMetricValues() {
+    return utils.getMetricValues();
+  }
+
   inc(metricName, labels) {
     let metric = this.getMetric(metricName);
     if (metric) {
