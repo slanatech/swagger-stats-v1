@@ -14,7 +14,7 @@ class Processor {
 
   async processSpans(spansBatch) {
     for (const span of spansBatch) {
-      logger.info(`Processing Span: traceId=${span.traceId}, spanId:${span.spanId}, parentSpanId:${span.parentSpanId}`);
+      logger.info(`Processing Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
 
       let trace = this.traces[span.traceId];
       if (!trace) {
@@ -32,7 +32,12 @@ class Processor {
     // update generic metrics
     monitor.inc('spans_processed_total');
     if (span.service) {
-      monitor.inc('spans_processed', { service: span.service });
+      monitor.inc('service_spans_processed_total', { service: span.service });
+      monitor.inc('service_spans_total', {
+        service: span.service,
+        kind: span.kind,
+        success: span.success,
+      });
     }
   }
 }

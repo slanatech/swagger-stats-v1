@@ -11,11 +11,11 @@ class Span {
     this.spanId = null;
     this.parentSpanId = null;
     this.name = null;
-    this.kind = null;
+    this.kind = 'internal'; // default
     this.service = null;
     // status
     this.status = null;
-    this.success = false;
+    this.success = false; // true or false
     // attributes
     this.attributes = {};
     this.resourceAttributes = {};
@@ -55,17 +55,40 @@ class Span {
     // Can it be multiple ?
     let span = pathOr(null, ['instrumentation_library_spans', 0, 'spans', 0], msg);
     if (!span) {
-      return;
+      return this;
     }
     this.traceId = pathOr([], ['trace_id'], span).toString('hex') || null;
     this.spanId = pathOr([], ['span_id'], span).toString('hex') || null;
     this.parentSpanId = pathOr([], ['parent_span_id'], span).toString('hex') || null;
     this.valid = this.traceId !== null && this.spanId !== null;
     this.name = pathOr(null, ['name'], span);
-    this.kind = pathOr(null, ['kind'], span);
+
+    // Kind
+    // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#spankind
+    let spanKind = pathOr(null, ['kind'], span);
+    if (spanKind === 'SPAN_KIND_SERVER') {
+      this.kind = 'server';
+    } else if (spanKind === 'SPAN_KIND_CLIENT') {
+      this.kind = 'client';
+    } else if (spanKind === 'SPAN_KIND_PRODUCER') {
+      this.kind = 'producer';
+    } else if (spanKind === 'SPAN_KIND_CONSUMER') {
+      this.kind = 'consumer';
+    } else {
+      this.kind = 'internal';
+    }
+
     // Status
     this.status = pathOr({}, ['status'], span);
-    this.success = pathOr(null, ['code'], this.status) === 'STATUS_CODE_OK';
+    let statusCode = pathOr(null, ['code'], this.status); // === 'STATUS_CODE_OK';
+    let deprecatedStatusCode = pathOr(null, ['deprecated_code'], this.status);
+    this.success = false;
+    if (statusCode === 'STATUS_CODE_OK') {
+      this.success = true;
+    } else if (statusCode === 'STATUS_CODE_UNSET' && deprecatedStatusCode === 'DEPRECATED_STATUS_CODE_OK') {
+      this.success = true;
+    }
+
     // TODO Timing
     // Attributes
     this.attributes = this.attributesToObject(pathOr([], ['attributes'], span));
