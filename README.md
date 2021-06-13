@@ -24,4 +24,7 @@ Support Kubernetes. Swagger-stats will provide Helm Chart and will allow easy de
 And of course, swagger-stats will keep enabling instant observability for Node.js microservices. Capability of requiring single package and getting metrics and dashboards instantly in your microservice is the key feature of swagger-stats, which, we believe, is essential, especially during early development stages.
 
 Please share your thoughts, feedback and considerations !
- 
+
+## License
+
+MIT
