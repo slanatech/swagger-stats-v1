@@ -28,8 +28,6 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
 // Set service name
 swsMonitor.tracerProvider.resource.attributes['service.name'] = 'spectest';
-
-/* This exports traces via OpenTelemetry protocol to specified destination */
 const collectorOptions = {
   url: 'grpc://localhost:4327',
 };

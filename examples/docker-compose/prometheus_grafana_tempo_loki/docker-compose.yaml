@@ -2,7 +2,7 @@ version: "2"
 services:
 
   tempo:
-    image: grafana/tempo:1.0.0
+    image: grafana/tempo:1.0.1
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./etc/tempo-local.yaml:/etc/tempo.yaml
@@ -17,7 +17,7 @@ services:
         loki-url: 'http://localhost:3100/api/prom/push'
 
   prometheus:
-    image: prom/prometheus:v2.27.0
+    image: prom/prometheus:v2.28.1
     volumes:
       - ./etc/prometheus.yaml:/etc/prometheus.yaml
     entrypoint:
@@ -32,7 +32,7 @@ services:
         loki-url: 'http://localhost:3100/api/prom/push'
 
   grafana:
-    image: grafana/grafana:8.0.0
+    image: grafana/grafana:8.0.4
     volumes:
       - ./example-data/datasources:/etc/grafana/provisioning/datasources
       - ./example-data/dashboards-provisioning:/etc/grafana/provisioning/dashboards

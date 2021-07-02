@@ -30,7 +30,7 @@
     "prom-client": "^13.1.0",
     "axios": "^0.21.1",
     "@swaggerstats/node": "1.0.0-alpha.1",
-    "@opentelemetry/exporter-jaeger": "^0.20.0",
-    "@opentelemetry/exporter-collector-grpc": "^0.20.0"
+    "@opentelemetry/exporter-jaeger": "^0.22.0",
+    "@opentelemetry/exporter-collector-grpc": "^0.22.0"
   }
 }
