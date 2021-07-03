@@ -15,6 +15,12 @@ Number of requests one services sends to another service.
 
 Number of errors observed on the request from one service to another.
 
+Track **depth** of the error. That is, how deep is error in the trace spans chain. 
+On visualization, error spans with higher depth should have bolder color. 
+This should show where is the origin of error originated - 
+i.e. when chain of services calls each other, and error happens in the last one - such as db failure - error will be
+propagated back up the call stack. But we are interested in the root cause, so we need to know that db failed, and all the rest is consequence. 
+
 ### Latency 
 
 Latency of the request sent from one service to another.
