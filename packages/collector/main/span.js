@@ -10,6 +10,7 @@ class Span {
     this.traceId = null;
     this.spanId = null;
     this.parentSpanId = null;
+    this.depth = null;
     this.name = null;
     this.kind = 'internal'; // default
     this.service = null;

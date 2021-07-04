@@ -9,11 +9,11 @@ These are at least Volume, Errors and Latency
 
 ### Volume 
 
-Number of requests one services sends to another service. 
+Number of calls one services made to another service. 
 
 ### Errors 
 
-Number of errors observed on the request from one service to another.
+Number of errors observed on the calls from one service to another.
 
 Track **depth** of the error. That is, how deep is error in the trace spans chain. 
 On visualization, error spans with higher depth should have bolder color. 
@@ -23,4 +23,4 @@ propagated back up the call stack. But we are interested in the root cause, so w
 
 ### Latency 
 
-Latency of the request sent from one service to another.
+Latency of the calls from one service to another.

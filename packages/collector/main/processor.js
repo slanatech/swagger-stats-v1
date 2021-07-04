@@ -2,9 +2,23 @@
  * Process spans and traces
  */
 
+/*  Notes
+ *  Need to cover cases when some spans from the same trace may arrive out of order or with delay
+ *       i.e. different otel collector used by different services, and spans from one of the services processed / delivered with delay
+ *
+ *  Will need a timeout that:
+ *  1) Starts after we got top-level span for the trace - the one without parent
+ *  2) Expires after configurable time - 1 min ? - and at that point we consider trace complete and calculate metrics on the entire trace
+ *
+ *  Need to have special metric which should increase if we received spans for the trace we consider complete.
+ *  Indicator of spans delivery delays and possibly the need to increase timeout
+ *
+ * */
+
 const { pathOr } = require('ramda');
 const logger = require('./logger')('PROC');
 const Trace = require('./trace');
+const traceStore = require('./tracestore');
 const monitor = require('./monitor');
 
 class Processor {
@@ -18,22 +32,33 @@ class Processor {
   }
 
   async processSpans(spansBatch) {
-    // TODO Opimize: do a first pass and store all spans from batch in hashes.
-    //      then process one by one. so processing would not depend on sequence in batch.
+    // do a first pass and pre-process all spans from the batch, storing them in traces
+    await this.preProcessBatch(spansBatch);
 
+    // then process one by one. so processing would not depend on sequence in batch.
     for (const span of spansBatch) {
       logger.info(`Processing Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
-
-      let trace = this.traces[span.traceId];
-      if (!trace) {
-        trace = new Trace(span.traceId);
-        this.traces[span.traceId] = trace;
-      }
-
-      trace.addSpan(span);
-
       await this.processSingleSpan(span);
     }
+  }
+
+  async preProcessBatch(spansBatch) {
+    let affectedTraces = {};
+
+    // Add all the spans from this batch to their traces
+    for (const span of spansBatch) {
+      const trace = await traceStore.getTrace(span.traceId);
+      trace.addSpan(span);
+      affectedTraces[span.traceId] = trace;
+    }
+
+    // Post-process all affected traces
+    for (let traceId of Object.keys(affectedTraces)) {
+      let trace = affectedTraces[traceId];
+      await trace.updateState();
+    }
+
+    let a = 1;
   }
 
   async processSingleSpan(span) {
@@ -96,21 +121,10 @@ class Processor {
 
     // Find if we have a record: same traceId, and other spanId === this span.parentSpanId
 
-    /*
-    if (!(span.traceId in this.cssContexts)) {
-      this.cssContexts[span.traceId] = {
-        spans: {},
-        parents: {},
-      };
-    }
-    this.cssContexts[span.traceId].spans[span.spanId] = span;
-    this.cssContexts[span.traceId].parents[span.parentSpanId] = span; // ???
-    */
-
     let key = `${span.traceId}:${span.spanId}`;
     this.serverSpans[key] = span;
 
-    // Attempt to find client span
+    // Attempt to find parent client span
     let clientSpanKey = `${span.traceId}:${span.parentSpanId}`;
     if (clientSpanKey in this.clientSpans) {
       let clientSpan = this.clientSpans[clientSpanKey];
