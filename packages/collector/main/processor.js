@@ -40,6 +40,24 @@ class Processor {
       logger.info(`Processing Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
       await this.processSingleSpan(span);
     }
+
+    // Then process traces which were completed in this batch
+    let finishedTraces = this.getFinishedTraceIds(spansBatch);
+    finishedTraces.map(async (traceId) => {
+      const trace = await traceStore.getTrace(traceId);
+      await this.processFinishedTrace(trace);
+    });
+  }
+
+  // Return array of traceIds finished in this spans batch, i.e. ones that received root span
+  getFinishedTraceIds(spansBatch) {
+    let finishedTraces = [];
+    for (const span of spansBatch) {
+      if (!span.parentSpanId) {
+        finishedTraces.push(span.traceId);
+      }
+    }
+    return finishedTraces;
   }
 
   async preProcessBatch(spansBatch) {
@@ -57,10 +75,53 @@ class Processor {
       let trace = affectedTraces[traceId];
       await trace.updateState();
     }
-
-    let a = 1;
   }
 
+  async processFinishedTrace(trace) {
+    // loop through all the spans and calculate all the metrics that require trace context
+    for (let spanId of Object.keys(trace.spans)) {
+      let span = trace.spans[spanId];
+      switch (span.kind) {
+        case 'server': {
+          await this.processTraceServerSpan(trace, span);
+          break;
+        }
+        case 'client': {
+          await this.processTraceClientSpan(trace, span);
+          break;
+        }
+      }
+    }
+  }
+
+  async processTraceServerSpan(trace, span) {
+    logger.info(`Server Span: name: ${span.name} traceId: ${trace.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
+    if (!span.parentSpanId) {
+      // This is ingress span, we do not expect that there will be  corresponding client span
+      monitor.inc('service_calls_total', { src: 'external', dst: span.service });
+      return;
+    }
+    let parentSpan = pathOr(null, [span.parentSpanId], trace.spans);
+    if (!parentSpan) {
+      logger.error({ trace: trace.traceId }, `span: ${span.spanId} - parent ${span.parentSpanId} not found`);
+      // TODO metric
+      return;
+    }
+    monitor.inc('service_calls_total', { src: parentSpan.service, dst: span.service });
+  }
+
+  async processTraceClientSpan(trace, span) {
+    logger.info(`Client Span: name: ${span.name} traceId: ${trace.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
+    if (span.hasChild) {
+      return; // done, counted from server span which is child of this one
+    }
+    // check well-known attributes of client span
+    if ('db.system' in span.attributes && span.attributes['db.system'] === 'postgresql') {
+      monitor.inc('service_calls_total', { src: span.service, dst: span.attributes['db.connection_string'] || 'postgresql' });
+    }
+  }
+
+  // This is to process individual span without trace context. Trace may or may not be finished at this time.
   async processSingleSpan(span) {
     // update generic metrics
     monitor.inc('spans_processed_total');
@@ -72,7 +133,8 @@ class Processor {
         success: span.success,
       });
     }
-    // Process depending on kind
+    // Process depending on kind - TODO Reconsider
+    /*
     switch (span.kind) {
       case 'server': {
         await this.processServerSpan(span);
@@ -83,27 +145,8 @@ class Processor {
         break;
       }
     }
+     */
     // TODO Post-process
-  }
-
-  // ???
-  async resolveClientServerSpanContext(span) {
-    let ctx = null;
-
-    if (!(span.traceId in this.cssContexts)) {
-      // we don't know anything yet
-      this.cssContexts[span.traceId] = {};
-      ctx = this.cssContexts[span.traceId];
-    }
-
-    switch (span.kind) {
-      case 'server': {
-        break;
-      }
-      case 'client': {
-        break;
-      }
-    }
   }
 
   async processServerSpan(span) {

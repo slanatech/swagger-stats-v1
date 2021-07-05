@@ -55,11 +55,15 @@ class Trace {
     }
   }
 
-  updateSpanDepth(spanId) {
+  updateSpanDepth(spanId, childSpanId) {
     let span = pathOr(null, [spanId], this.spans);
     if (!span) {
       this.spanGaps = true; // Gap detected
       return null;
+    }
+    if (childSpanId) {
+      span.hasChild = true;
+      // TODO Array and store all child Ids ?
     }
     if (span.depth !== null) {
       return span.depth; // Already known
@@ -68,7 +72,7 @@ class Trace {
       span.depth = 0; // this is root
       return span.depth;
     }
-    let parentDepth = this.updateSpanDepth(span.parentSpanId);
+    let parentDepth = this.updateSpanDepth(span.parentSpanId, spanId);
     span.depth = parentDepth !== null ? parentDepth + 1 : null;
     return span.depth;
   }
@@ -76,7 +80,7 @@ class Trace {
   updateDepth() {
     this.spanGaps = false;
     for (let spanId of Object.keys(this.spans)) {
-      this.updateSpanDepth(spanId);
+      this.updateSpanDepth(spanId, null);
     }
   }
 

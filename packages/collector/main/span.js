@@ -10,6 +10,7 @@ class Span {
     this.traceId = null;
     this.spanId = null;
     this.parentSpanId = null;
+    this.hasChild = false; // will be set to true upon trace completion if this span has child span(s)
     this.depth = null;
     this.name = null;
     this.kind = 'internal'; // default
