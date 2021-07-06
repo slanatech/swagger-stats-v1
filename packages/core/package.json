@@ -1,12 +1,11 @@
 {
-  "name": "@swaggerstats/node",
+  "name": "@swaggerstats/core",
   "version": "1.0.0-alpha.1",
   "private": true,
-  "description": "swagger-stats node monitoring",
+  "description": "swagger-stats core package",
   "main": "src/index.js",
   "scripts": {
-    "start": "node example/app.js",
-    "build": "echo BUILD-swaggerstats/node"
+    "build": "echo BUILD-swaggerstats/core"
   },
   "keywords": [
     "opentracing",
@@ -32,15 +31,6 @@
     "kibana",
     "grafana"
   ],
-  "files": [
-    "src/*",
-    "schema/*",
-    "package.json",
-    "README.md",
-    "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "LICENSE"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/slanatech/swagger-stats"
@@ -53,29 +43,20 @@
   },
   "license": "MIT",
   "dependencies": {
-    "basic-auth": "^2.0.1",
-    "cookies": "^0.8.0",
-    "debug": "^4.3.1",
-    "moment": "^2.29.1",
-    "path-to-regexp": "^6.2.0",
-    "qs": "^6.10.1",
-    "request": "^2.88.2",
-    "send": "^0.17.1",
-    "uuid": "^8.3.2",
-    "@swaggerstats/core": "1.0.0-alpha.1"
+    "@opentelemetry/api": "^1.0.1",
+    "@opentelemetry/core": "^0.23.0",
+    "@opentelemetry/node": "^0.23.0",
+    "@opentelemetry/instrumentation": "^0.23.0",
+    "@opentelemetry/instrumentation-http": "^0.23.0",
+    "@opentelemetry/instrumentation-express": "^0.23.0",
+    "@opentelemetry/instrumentation-hapi": "^0.23.0",
+    "@opentelemetry/tracing": "^0.23.0",
+    "@opentelemetry/exporter-prometheus": "^0.23.0",
+    "@opentelemetry/exporter-jaeger": "^0.23.0",
+    "@opentelemetry/exporter-collector-grpc": "^0.23.0"
   },
   "peerDependencies": {
-    "prom-client": ">= 10 <= 13"
   },
   "devDependencies": {
-    "chokidar": "^3.5.1",
-    "concurrently": "^6.0.0",
-    "coveralls": "^3.1.0",
-    "cross-env": "^7.0.3",
-    "istanbul": "^0.4.5",
-    "ncp": "^2.0.0",
-    "nyc": "^15.1.0",
-    "prom-client": "^13.1.0",
-    "swagger-parser": "^10.0.2"
   }
 }

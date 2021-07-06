@@ -1,4 +1,6 @@
-# swagger-stats UX
+# TEMPORARY - as a sample - old swagger-stats UX
+
+> ## See UI package  
 
 ####  [https://swaggerstats.io](https://swaggerstats.io) | [Guide](https://swaggerstats.io/guide/) 
 
