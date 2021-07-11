@@ -1,6 +1,7 @@
 import Admin from './layouts/Admin.vue';
 import NotFound from './views/NotFound.vue';
 import Perspective from './views/Perspective.vue';
+import Test from './views/Test.vue';
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
@@ -14,6 +15,11 @@ export const routes = [
         path: '/admin/perspective',
         component: Perspective,
         name: 'perspective',
+      },
+      {
+        path: '/admin/test',
+        component: Test,
+        name: 'test',
       },
     ],
   },

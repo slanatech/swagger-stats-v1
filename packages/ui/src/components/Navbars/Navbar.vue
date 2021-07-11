@@ -13,6 +13,13 @@
             </div>
             <div v-bind:class="{'hidden': !showMenu, 'flex': showMenu}" class="lg:flex lg:flex-grow items-center">
                 <ul class="flex flex-col lg:flex-row list-none ml-auto">
+                  <li class="nav-item">
+                    <router-link to="/admin/test">
+                      <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                        <i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Test</span>
+                      </a>
+                    </router-link>
+                  </li>
                     <li class="nav-item">
                         <router-link to="/admin/perspective">
                             <a v-bind:class="{'opacity-60': !perspectiveActive, 'opacity-100': perspectiveActive}" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">

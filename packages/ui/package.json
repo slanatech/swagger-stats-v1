@@ -40,6 +40,8 @@
     "@finos/perspective-viewer-d3fc": "^0.9.0",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@popperjs/core": "^2.8.2",
-    "vue-sidebar-menu": "^4.7.4"
+    "vue-sidebar-menu": "^4.7.4",
+    "d3": "^7.0.0",
+    "loglevel": "^1.7.1"
   }
 }
