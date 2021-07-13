@@ -3,7 +3,7 @@ import ApiOp from '@/store/apiop';
 const baseURL = '';
 
 const api = {
-  getData({ type = 'test' }) {
+  getData({ type = 'stats' }) {
     let opts = {
       method: 'get',
       params: {
@@ -11,8 +11,8 @@ const api = {
       },
     };
     switch (type) {
-      case 'test': {
-        opts.url = `${baseURL}/api/test`;
+      case 'stats': {
+        opts.url = `${baseURL}/stats`;
         break;
       }
     }

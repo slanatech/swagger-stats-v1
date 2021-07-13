@@ -39,6 +39,40 @@ app.get('/metrics', async function (req, res) {
   res.end(metricValues);
 });
 
+// TEMP Prometheus access
+const { Prometheus } = require('@swaggerstats/prometheus');
+const { DataSource, prometheusTransforms } = require('@swaggerstats/core');
+let prometheus = null;
+
+async function setupPrometheus() {
+  prometheus = new Prometheus();
+  await prometheus.init();
+  let ds = new DataSource({
+    id: '1',
+    type: 'prometheus',
+    settings: {
+      url: 'http://localhost:9090',
+    },
+  });
+  await prometheus.registerDataSource(ds);
+}
+
+setupPrometheus();
+
+app.get('/stats', async function (req, res) {
+  let timeEnd = Math.floor(Date.now() / 1000);
+  let qResult = await prometheus.query({
+    ds: '1',
+    query: 'sum by(src,dst) (sws_service_calls_total)',
+    start: timeEnd - 10,
+    end: timeEnd,
+    step: 10,
+  });
+
+  let r = prometheusTransforms.normalize(qResult.data, timeEnd - 10, timeEnd, 10);
+  res.json(r); //(qResult.data);
+});
+
 /**
  * Implements the Export RPC method.
  */

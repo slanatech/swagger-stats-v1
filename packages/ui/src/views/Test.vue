@@ -16,12 +16,14 @@ export default defineComponent({
   data(){
     return {
       horizonData: this.generateHorizonData(),
-      chordData: testChordData
+      chordDataTest: testChordData,
+      chordData: []
     }
   },
   computed: {
     ...mapState({
       refresh: state => state.layout.refresh,
+      statsData: state => state.data.data
     }),
     currentRouteName() {
       return this.$route.name;
@@ -31,6 +33,23 @@ export default defineComponent({
     refresh: {
       handler: async function() {
         this.handleLoad();
+      }
+    },
+    statsData: {
+      handler: async function() {
+        console.log('Got stats data updated!'+ JSON.stringify(this.statsData));
+        // Quick transform to chord data
+        let chordData = [];
+        let ts = this.statsData.timestamps[0];
+        this.statsData.metricsDefs.map((x,i)=>{
+          let dataEntry = {
+            source: x.src,
+            target: x.dst,
+            value: this.statsData.metricsValues[i][ts]
+          };
+          chordData.push(dataEntry);
+        });
+        this.chordData = chordData;
       }
     }
   },
@@ -43,6 +62,9 @@ export default defineComponent({
       setProgress: 'layout/setProgress'
     }),
     async handleLoad(){
+      this.setProgress({progress: true});
+      await this.getData();
+      this.setProgress({progress: false});
     },
     generateHorizonData() {
       let chartData = [];

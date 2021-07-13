@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@swaggerstats/core": "1.0.0-alpha.1",
+    "@swaggerstats/prometheus": "1.0.0-alpha.1",
     "@grpc/grpc-js": "^1.2.12",
     "@grpc/proto-loader": "^0.6.0",
     "ramda": "^0.27.1",

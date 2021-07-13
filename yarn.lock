@@ -1083,6 +1083,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@observablehq/stdlib@^3.8.0":
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/@observablehq/stdlib/-/stdlib-3.8.0.tgz#8f9509a44106838b33bdfda576654e5a9d6023d6"
+  integrity sha512-0HZJUV/Nw/HVQjJKpSogWGx0NiuEy+bu0gkYUP2QNLaO5L/n/bwwwj8NvUR0QcKi9iMdE6ojFiGmytyqrAJLPg==
+  dependencies:
+    d3-require "^1.2.4"
+
 "@opentelemetry/api-metrics@0.23.0":
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api-metrics/-/api-metrics-0.23.0.tgz#5b0bae3cee1bab2993aebd44275788577761d1d4"
@@ -3001,6 +3008,11 @@ d3-random@3:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-3.0.1.tgz#d4926378d333d9c0bfd1e6fa0194d30aebaa20f4"
   integrity sha512-FXMe9GfxTxqd5D6jFsQ+DJ8BJS4E/fT5mqqdjovykEB2oFbTMDVdg1MGFxfQW+FBOGoB++k8swBrgwSHT1cUXQ==
+
+d3-require@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/d3-require/-/d3-require-1.2.4.tgz#59afc591d5089f99fecd8c45ef7539e1fee112b3"
+  integrity sha512-8UseEGCkBkBxIMouLMPONUBmU8DUPC1q12LARV1Lk/2Jwa32SVgmRfX8GdIeR06ZP+CG85YD3N13K2s14qCNyA==
 
 d3-scale-chromatic@1:
   version "1.5.0"
@@ -5769,7 +5781,7 @@ module-details-from-path@^1.0.3:
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha1-EUyUlnPiqKNenTV4hSeqN7Z52is=
 
-moment@^2.29.1:
+moment@^2.24.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==

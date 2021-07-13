@@ -17,12 +17,6 @@ exports.getDurationInMs = (startTime) => {
 };
 
 // Returns prom-client metrics created according to provided specification
-/* Specification example:
-const SIP_SERVER_METRICS = Object.freeze({
-  NCALLS: { name: '{prefix}_calls', help: 'Current number of calls', type: 'gauge', labelNames: ['tenant', 'node', 'host'] },
-  . . .
-  });
-*/
 exports.getMetrics = function (prefix, metricsSpecifications) {
   let promClientMetrics = {};
   for (let metricId of Object.keys(metricsSpecifications)) {

@@ -1,0 +1,29 @@
+{
+  "name": "@swaggerstats/prometheus",
+  "version": "1.0.0-alpha.1",
+  "description": "swagger-stats prometheus access",
+  "author": "<sv2@github.com>",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "dependencies": {
+    "@swaggerstats/core" : "1.0.0-alpha.1",
+    "qs": "^6.10.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+  },
+  "jest": {
+    "collectCoverage" : true,
+    "collectCoverageFrom": [
+      "main/*.js",
+      "!../node_modules/**"
+    ],
+    "coverageReporters": ["json", "lcov", "text","html"]
+  },
+  "engines": {
+    "node": ">= 10"
+  }
+}

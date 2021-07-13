@@ -22,7 +22,7 @@ export default defineConfig({
   server: {
     open: true,
     proxy: {
-      '/api/test': {
+      '/stats': {
         target: 'http://localhost:3060',
         changeOrigin: true,
         secure: false,
