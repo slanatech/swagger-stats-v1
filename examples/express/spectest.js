@@ -137,8 +137,30 @@ parser.validate(specLocation, function (err, api) {
       //let otSpan = opentelemetry.getCurrentSpan(); // This does not exist anymore
 
       let callResult = await new RestOp({ method: 'get', url: `http://localhost:3050/dbtest` }).execute();
-      debug(`Got result from downstream: ${JSON.stringify(callResult)}`);
-      res.json(callResult);
+      debug(`Got result from downstream 1: ${JSON.stringify(callResult)}`);
+
+      let callResult2 = [];
+
+      for (let i = 0; i < 10; i++) {
+        let cr = await new RestOp({
+          method: 'get',
+          url: `http://localhost:3070/v2/test`,
+          headers: {
+            'x-sws-res': JSON.stringify({
+              code: 200,
+              message: 'response from fastify',
+              delay: 100,
+            }),
+          },
+        }).execute();
+        callResult2.push(cr);
+      }
+      debug(`Got result from downstream 2: ${JSON.stringify(callResult2)}`);
+
+      res.json({
+        result1: callResult,
+        result2: callResult2,
+      });
 
       /*
       const span = tracer.startSpan('makeRequest');
