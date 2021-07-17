@@ -8,7 +8,8 @@
     "ui:dev": "vite --debug --host",
     "ui:build": "vite build",
     "ui:check": "vue-tsc --noEmit",
-    "ui:serve": "vite preview"
+    "ui:serve": "vite preview",
+    "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -36,6 +37,9 @@
     "@vitejs/plugin-vue": "^1.2.5",
     "vite": "^2.4.2",
     "vue-tsc": "^0.2.1",
+    "@vue/eslint-config-typescript":"^7.0.0",
+    "@typescript-eslint/parser":"^4.28.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@finos/perspective": "^0.9.0",
     "@finos/perspective-viewer": "^0.9.0",
     "@finos/perspective-viewer-datagrid": "^0.9.0",
