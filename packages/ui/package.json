@@ -7,7 +7,7 @@
   "scripts": {
     "ui:dev": "vite --debug --host",
     "ui:build": "vite build",
-    "ui:check": "vue-tsc --noEmit",
+    "ui:check": "vue-tsc --noEmit --skipLibCheck",
     "ui:serve": "vite preview",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
   },
@@ -38,8 +38,11 @@
     "vite": "^2.4.2",
     "vue-tsc": "^0.2.1",
     "@vue/eslint-config-typescript":"^7.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "@typescript-eslint/parser":"^4.28.3",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "eslint-plugin-vue": "^7.13.0",
+    "eslint-plugin-prettier-vue": "^3.1.0",
     "@finos/perspective": "^0.9.0",
     "@finos/perspective-viewer": "^0.9.0",
     "@finos/perspective-viewer-datagrid": "^0.9.0",

@@ -6,7 +6,7 @@ const qs = require('qs');
 const PLUGIN_NAME = 'prometheus';
 
 export class Prometheus {
-  private _datasources: any;
+  private readonly _datasources: any;
 
   constructor() {
     this._datasources = {}; // All registered datasources
@@ -21,7 +21,7 @@ export class Prometheus {
 
   // Register data source
   async registerDataSource(ds: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
     if (!this.validateDataSource(ds).isSuccess(opResult)) {
       return opResult;
@@ -37,20 +37,20 @@ export class Prometheus {
 
   // Test data source
   async testDataSource(ds: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
     if (!this.validateDataSource(ds).isSuccess(opResult)) {
       return opResult;
     }
 
     // Test data source by getting build info
-    let reqOptions = this.getRequestOptions(ds, 'get', '/api/v1/query', {
+    const reqOptions = this.getRequestOptions(ds, 'get', '/api/v1/query', {
       params: {
         query: 'prometheus_build_info',
       },
     });
 
-    let reqResult = await new RestOp(reqOptions).execute();
+    const reqResult = await new RestOp(reqOptions).execute();
     if (!reqResult.isSuccess(opResult)) {
       logger.error(`Test failed for datasource ${JSON.stringify(ds)}`);
       return opResult;
@@ -61,9 +61,9 @@ export class Prometheus {
 
   // Execute arbitrary plugin-specific request
   async request(payload: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
-    let op = pathOr(null, ['op'], payload);
+    const op = pathOr(null, ['op'], payload);
     if (!op) {
       return opResult.error('Missing plugin operation');
     }
@@ -94,23 +94,23 @@ export class Prometheus {
 
   // Get labels, or label values
   async getMeta(payload: any = {}, path: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
     // need ds
-    let dsid = pathOr(null, ['ds'], payload);
+    const dsid = pathOr(null, ['ds'], payload);
     if (!dsid) {
       return opResult.error('Missing datasource id');
     }
 
-    let ds = this._datasources[dsid] || null;
+    const ds = this._datasources[dsid] || null;
     if (!ds) {
       return opResult.error(`Datasource ${dsid} not found`);
     }
 
     // Get labels
-    let reqOptions = this.getRequestOptions(ds, 'get', path);
+    const reqOptions = this.getRequestOptions(ds, 'get', path);
 
-    let reqResult = await new RestOp(reqOptions).execute();
+    const reqResult = await new RestOp(reqOptions).execute();
 
     if (!reqResult.isSuccess(opResult)) {
       logger.error(`Failed to get ${path} for DS=${ds.id}, error: ${opResult.message}`);
@@ -121,7 +121,7 @@ export class Prometheus {
       return opResult.error('Response status is not success');
     }
 
-    let responseData = pathOr([], ['data', 'data'], reqResult);
+    const responseData = pathOr([], ['data', 'data'], reqResult);
 
     return opResult.ok(responseData);
   }
@@ -129,7 +129,7 @@ export class Prometheus {
   // Get values for specific label
   getLabelValues(payload: any = {}) {
     // need label name
-    let label = pathOr(null, ['label'], payload);
+    const label = pathOr(null, ['label'], payload);
     if (!label) {
       return new OpError('Missing label name');
     }
@@ -139,15 +139,15 @@ export class Prometheus {
 
   // Get series
   async getSeries(payload: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
     // need ds
-    let dsid = pathOr(null, ['ds'], payload);
+    const dsid = pathOr(null, ['ds'], payload);
     if (!dsid) {
       return opResult.error('Missing datasource id');
     }
 
-    let ds = this._datasources[dsid] || null;
+    const ds = this._datasources[dsid] || null;
     if (!ds) {
       return opResult.error(`Datasource ${dsid} not found`);
     }
@@ -155,23 +155,23 @@ export class Prometheus {
     // TODO Make params extraction simpler - i.e. validateParams(['match','start','end'...])
 
     // need match
-    let match = pathOr(null, ['match'], payload);
+    const match = pathOr(null, ['match'], payload);
     if (!match) {
       return opResult.error('Missing parameter match');
     }
 
-    let start = pathOr(null, ['start'], payload);
+    const start = pathOr(null, ['start'], payload);
     if (!start) {
       return opResult.error('Missing parameter start');
     }
 
-    let end = pathOr(null, ['end'], payload);
+    const end = pathOr(null, ['end'], payload);
     if (!end) {
       return opResult.error('Missing parameter end');
     }
 
     // Get series
-    let reqOptions = this.getRequestOptions(ds, 'post', '/api/v1/series');
+    const reqOptions = this.getRequestOptions(ds, 'post', '/api/v1/series');
     reqOptions.data = qs.stringify(
       {
         match: match,
@@ -182,7 +182,7 @@ export class Prometheus {
     );
     reqOptions.headers = { 'content-type': 'application/x-www-form-urlencoded' };
 
-    let reqResult = await new RestOp(reqOptions).execute();
+    const reqResult = await new RestOp(reqOptions).execute();
 
     if (!reqResult.isSuccess(opResult)) {
       logger.error(`Failed to get series for DS=${ds.id}, error: ${opResult.message}`);
@@ -193,55 +193,55 @@ export class Prometheus {
       return opResult.error('Response status is not success');
     }
 
-    let responseData = pathOr([], ['data', 'data'], reqResult);
+    const responseData = pathOr([], ['data', 'data'], reqResult);
 
     return opResult.ok(responseData);
   }
 
   // Execute query
   async executeQuery(payload: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
     // need ds
-    let dsid = pathOr(null, ['ds'], payload);
+    const dsid = pathOr(null, ['ds'], payload);
     if (!dsid) {
       return opResult.error('Missing datasource id');
     }
 
-    let ds = this._datasources[dsid] || null;
+    const ds = this._datasources[dsid] || null;
     if (!ds) {
       return opResult.error(`Datasource ${dsid} not found`);
     }
 
     // TODO Make params extraction simpler - i.e. validateParams(['match','start','end'...])
 
-    let query = pathOr(null, ['query'], payload);
+    const query = pathOr(null, ['query'], payload);
     if (!query) {
       return opResult.error('Missing query');
     }
 
     // start, end, step are optional. If they are not specified, it will be instant query: /api/v1/query
     // if they are specified, it will be range query: /api/v1/query_range
-    let start = pathOr(null, ['start'], payload);
-    let end = pathOr(null, ['end'], payload);
-    let step = pathOr(null, ['step'], payload);
-    let time = pathOr(null, ['time'], payload);
+    const start = pathOr(null, ['start'], payload);
+    const end = pathOr(null, ['end'], payload);
+    const step = pathOr(null, ['step'], payload);
+    const time = pathOr(null, ['time'], payload);
 
-    let isRangeQuery = start !== null && end !== null && step !== null;
-    let reqPath = isRangeQuery ? '/api/v1/query_range' : '/api/v1/query';
+    const isRangeQuery = start !== null && end !== null && step !== null;
+    const reqPath = isRangeQuery ? '/api/v1/query_range' : '/api/v1/query';
 
-    let reqParams: Record<string,any> = {};
+    let reqParams: Record<string, any> = {};
     reqParams = isRangeQuery ? { query: query, start: start, end: end, step: step } : { query: query };
     if (!isRangeQuery && time) {
       reqParams.time = time;
     }
 
-    let reqOptions = this.getRequestOptions(ds, 'post', reqPath, {
+    const reqOptions = this.getRequestOptions(ds, 'post', reqPath, {
       data: qs.stringify(reqParams, { arrayFormat: 'brackets' }),
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
     });
 
-    let reqResult = await new RestOp(reqOptions).execute();
+    const reqResult = await new RestOp(reqOptions).execute();
 
     if (!reqResult.isSuccess(opResult)) {
       logger.error(`Failed to execute query ${query} for DS=${ds.id}, error: ${opResult.message}`);
@@ -252,13 +252,13 @@ export class Prometheus {
       return opResult.error('Response status is not success');
     }
 
-    let responseData = pathOr([], ['data', 'data'], reqResult);
+    const responseData = pathOr([], ['data', 'data'], reqResult);
 
     return opResult.ok(responseData);
   }
 
   validateDataSource(ds: any = {}) {
-    let opResult = new OpResult();
+    const opResult = new OpResult();
 
     if (!(ds instanceof DataSource)) {
       return opResult.error('Invalid datasource');
@@ -268,12 +268,12 @@ export class Prometheus {
       return opResult.error('Invalid datasource type');
     }
 
-    let settings = pathOr(null, ['settings'], ds);
+    const settings = pathOr(null, ['settings'], ds);
     if (!settings) {
       return opResult.error('Missing settings');
     }
 
-    let url = pathOr(null, ['url'], settings);
+    const url = pathOr(null, ['url'], settings);
     if (!url) {
       return opResult.error('Missing URL');
     }
@@ -282,8 +282,8 @@ export class Prometheus {
   }
 
   // Get base API request options for invoking Prometheus API
-  getRequestOptions(ds: any = {}, method:string = "", path:string = "", props: any = {}) {
-    let options = Object.assign(
+  getRequestOptions(ds: any = {}, method = '', path = '', props: any = {}) {
+    const options = Object.assign(
       {
         method: method,
         url: ds.settings.url + path,
@@ -294,7 +294,6 @@ export class Prometheus {
     // TODO Support any additional headers as needed
     return options;
   }
-
 }
 
 module.exports = Prometheus;

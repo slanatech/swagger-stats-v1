@@ -5,7 +5,7 @@ const { DataSource } = require('@swaggerstats/core');
 
 const prometheusURL = process.env.TEST_PROMETHEUS_URL || 'http://localhost:9090';
 
-let prometheus = new Prometheus();
+const prometheus = new Prometheus();
 
 describe('Prometheus Plugin Test', function () {
   it('Should instantiate Prometheus plugin', async () => {
@@ -13,7 +13,7 @@ describe('Prometheus Plugin Test', function () {
   });
 
   it('Should register Prometheus data source', async () => {
-    let ds = new DataSource({
+    const ds = new DataSource({
       id: '1',
       type: 'prometheus',
       settings: {
@@ -21,15 +21,15 @@ describe('Prometheus Plugin Test', function () {
       },
     });
 
-    let testResult = await prometheus.testDataSource(ds);
+    const testResult = await prometheus.testDataSource(ds);
     expect(testResult.success).toBeTruthy();
 
-    let registerResult = await prometheus.registerDataSource(ds);
+    const registerResult = await prometheus.registerDataSource(ds);
     expect(registerResult.success).toBeTruthy();
   });
 
   it('Should get labels', async () => {
-    let labelsResult = await prometheus.request({
+    const labelsResult = await prometheus.request({
       op: 'labels',
       ds: '1',
     });
@@ -38,7 +38,7 @@ describe('Prometheus Plugin Test', function () {
   });
 
   it('Should get metrics', async () => {
-    let metricsResult = await prometheus.request({
+    const metricsResult = await prometheus.request({
       op: 'metrics',
       ds: '1',
     });
@@ -47,7 +47,7 @@ describe('Prometheus Plugin Test', function () {
   });
 
   it('Should get labels values', async () => {
-    let labelValuesResult = await prometheus.request({
+    const labelValuesResult = await prometheus.request({
       op: 'labelvalues',
       ds: '1',
       label: 'job',
@@ -57,8 +57,8 @@ describe('Prometheus Plugin Test', function () {
   });
 
   it('Should get series', async () => {
-    let endTs = Math.floor(Date.now() / 1000);
-    let seriesResult = await prometheus.request({
+    const endTs = Math.floor(Date.now() / 1000);
+    const seriesResult = await prometheus.request({
       op: 'series',
       ds: '1',
       match: ['up'],
@@ -78,7 +78,7 @@ describe('Prometheus Plugin Test', function () {
   });
 
   it('Should execute instant query', async () => {
-    let qResult = await prometheus.query({
+    const qResult = await prometheus.query({
       ds: '1',
       query: 'up',
     });
@@ -87,7 +87,7 @@ describe('Prometheus Plugin Test', function () {
 
     expect(Array.isArray(qResult.data.result)).toBeTruthy();
     let upEntry = null;
-    for (let entry of qResult.data.result) {
+    for (const entry of qResult.data.result) {
       if (entry.metric.__name__ === 'up' && entry.metric.job === 'prometheus') {
         upEntry = entry;
       }
@@ -98,8 +98,8 @@ describe('Prometheus Plugin Test', function () {
   });
 
   it('Should execute instant query with time', async () => {
-    let timeVal = Math.floor(Date.now() / 1000);
-    let qResult = await prometheus.query({
+    const timeVal = Math.floor(Date.now() / 1000);
+    const qResult = await prometheus.query({
       ds: '1',
       query: 'up',
       time: timeVal,
@@ -109,7 +109,7 @@ describe('Prometheus Plugin Test', function () {
 
     expect(Array.isArray(qResult.data.result)).toBeTruthy();
     let upEntry = null;
-    for (let entry of qResult.data.result) {
+    for (const entry of qResult.data.result) {
       if (entry.metric.__name__ === 'up' && entry.metric.job === 'prometheus') {
         upEntry = entry;
       }
@@ -121,8 +121,8 @@ describe('Prometheus Plugin Test', function () {
 
   // TODO wait 5 seconds ?
   it('Should execute range query', async () => {
-    let timeEnd = Math.floor(Date.now() / 1000);
-    let qResult = await prometheus.query({
+    const timeEnd = Math.floor(Date.now() / 1000);
+    const qResult = await prometheus.query({
       ds: '1',
       query: 'up',
       start: timeEnd - 5,
@@ -135,7 +135,7 @@ describe('Prometheus Plugin Test', function () {
 
     expect(Array.isArray(qResult.data.result)).toBeTruthy();
     let upEntry = null;
-    for (let entry of qResult.data.result) {
+    for (const entry of qResult.data.result) {
       if (entry.metric.__name__ === 'up' && entry.metric.job === 'prometheus') {
         upEntry = entry;
       }

@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 2021,
   },
   env: {
@@ -8,9 +9,18 @@ module.exports = {
     node: true,
     es2021: true,
   },
-  plugins: ['prettier', 'vue'],
-  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/typescript/recommended', '@vue/prettier', '@vue/prettier/@typescript-eslint'],
+  plugins: ['prettier'],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'eslint:recommended',
+    //'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
+    'plugin:vue/vue3-recommended',
+    //"plugin:vue/recommended",
+    'plugin:prettier-vue/recommended',
+    'prettier',
+  ],
   rules: {
     'prettier/prettier': 'warn',
   },
-}
+};
