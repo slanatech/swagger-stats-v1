@@ -7,6 +7,7 @@
   "scripts": {
     "ui:dev": "vite --debug --host",
     "ui:build": "vite build",
+    "ui:check": "vue-tsc --noEmit",
     "ui:serve": "vite preview"
   },
   "dependencies": {
@@ -17,13 +18,13 @@
     "uuid": "^8.3.2",
     "axios": "^0.21.1",
     "ramda": "^0.27.1",
-    "vue": "^3.1.1",
+    "vue": "^3.1.5",
     "vue-router": "^4.0.9",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@headlessui/vue": "^1.2.0",
-    "@heroicons/vue": "^1.0.1",
+    "@headlessui/vue": "^1.3.0",
+    "@heroicons/vue": "^1.0.2",
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/line-clamp": "^0.2.1",
@@ -31,9 +32,10 @@
     "autoprefixer": "^10.2.6",
     "@types/tailwindcss": "^2.0.6",
     "tailwindcss": "^2.2.0",
-    "@vue/compiler-sfc": "^3.1.1",
-    "@vitejs/plugin-vue": "^1.2.3",
-    "vite": "^2.3.7",
+    "@vue/compiler-sfc": "^3.1.5",
+    "@vitejs/plugin-vue": "^1.2.5",
+    "vite": "^2.4.2",
+    "vue-tsc": "^0.2.1",
     "@finos/perspective": "^0.9.0",
     "@finos/perspective-viewer": "^0.9.0",
     "@finos/perspective-viewer-datagrid": "^0.9.0",

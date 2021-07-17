@@ -6,12 +6,18 @@
     </div>
 </template>
 
-<script>
+<script lang='ts'>
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ProgressBar',
-    props: ['progress'],
+    props: {
+      progress: {
+        type: Boolean,
+        required: false,
+        default: false
+      }
+    },
     data(){
       return {
         progressValue: 57,

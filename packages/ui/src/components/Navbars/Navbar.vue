@@ -56,18 +56,19 @@
     </nav>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
   import { mapActions } from 'vuex';
 
-  export default {
-    name: "blueGray-navbar",
+  export default defineComponent({
+    name: "Navbar",
     data() {
       return {
         showMenu: false
       }
     },
     computed: {
-      currentRouteName() {
+      currentRouteName(): string {
         return this.$route.name;
       },
       perspectiveActive(){
@@ -88,5 +89,5 @@
         console.log(`TO BE IMPLEMENTED`)
       }
     }
-  }
+  })
 </script>
