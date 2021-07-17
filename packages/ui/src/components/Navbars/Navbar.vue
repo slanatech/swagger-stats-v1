@@ -23,7 +23,8 @@
                     <li class="nav-item">
                         <router-link to="/admin/perspective">
                             <a v-bind:class="{'opacity-60': !perspectiveActive, 'opacity-100': perspectiveActive}" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
-                                <i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Perspective</span>
+                                <!--<i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Perspective</span>-->
+                                <BeakerIcon class="h-5 w-5"/><span class="ml-2">Perspective</span>
                             </a>
                         </router-link>
                     </li>
@@ -59,9 +60,11 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { mapActions } from 'vuex';
+  import { BeakerIcon } from '@heroicons/vue/solid'
 
   export default defineComponent({
     name: "Navbar",
+    components: { BeakerIcon },
     data() {
       return {
         showMenu: false

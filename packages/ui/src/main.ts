@@ -8,8 +8,8 @@ import { routes } from './routes.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Consider: https://halilyuce.com/web/how-to-add-font-awesome-to-your-vue-3-project-typescript/
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import '@fortawesome/fontawesome-free/js/all.min.js';
+//import '@fortawesome/fontawesome-free/css/all.min.css';
+//import '@fortawesome/fontawesome-free/js/all.min.js';
 
 let app = createApp(App);
 
