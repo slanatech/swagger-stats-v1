@@ -295,5 +295,3 @@ export class Prometheus {
     return options;
   }
 }
-
-module.exports = Prometheus;

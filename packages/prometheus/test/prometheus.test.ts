@@ -1,6 +1,8 @@
-const path = require('path');
-const { pathOr } = require('ramda');
-const Prometheus = require('../src/prometheus');
+import { Prometheus } from '../src';
+
+//const path = require('path');
+//const { pathOr } = require('ramda');
+
 const { DataSource } = require('@swaggerstats/core');
 
 const prometheusURL = process.env.TEST_PROMETHEUS_URL || 'http://localhost:9090';
