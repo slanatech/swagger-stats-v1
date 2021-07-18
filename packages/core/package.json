@@ -3,9 +3,18 @@
   "version": "1.0.0-alpha.1",
   "private": true,
   "description": "swagger-stats core package",
-  "main": "index.js",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
   "scripts": {
-    "build": "echo BUILD-swaggerstats/core"
+    "compile": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "jest",
+    "test2": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
+    "tdd": "npm run test -- --watch-extensions ts --watch",
+    "codecov": "nyc report --reporter=json && codecov -f coverage/*.json -p ../../",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "watch": "tsc --build --watch"
   },
   "keywords": [
     "opentracing",

@@ -4,13 +4,21 @@
 const { v4: uuidv4 } = require('uuid');
 
 // Datasource
-class DataSource {
-  constructor(src) {
+export class DataSource {
+  public readonly id: string;
+  public name: string;
+  public type: string;
+  public description: string;
+
+  public settings: Record<string, any> = {};
+  public capabilities: Record<string, boolean> = {};
+
+  constructor(src: any) {
     // Common properties
     this.id = uuidv4();
-    this.name = null;
+    this.name = '';
     this.type = 'prometheus';
-    this.description = null;
+    this.description = '';
 
     // Settings, may be specific per DS type
     this.settings = {
@@ -21,7 +29,6 @@ class DataSource {
 
     // Capabilities, depending on DS type
     this.capabilities = {
-      // TODO
       timeseries: false,
       aggregation: false,
     };
@@ -34,5 +41,3 @@ class DataSource {
 
   // TODO Methods
 }
-
-module.exports = DataSource;
