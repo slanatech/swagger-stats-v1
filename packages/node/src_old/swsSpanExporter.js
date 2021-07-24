@@ -7,6 +7,10 @@ const core_1 = require('@opentelemetry/core');
  */
 /* eslint-disable no-console */
 class SwsSpanExporter {
+  constructor(processor) {
+    this.processor = processor;
+  }
+
   /**
    * Export spans.
    * @param spans
@@ -48,6 +52,7 @@ class SwsSpanExporter {
   _processSpans(spans, done) {
     for (const span of spans) {
       debug(this._exportInfo(span));
+      this.processor.processSpan(span);
     }
     if (done) {
       return done({ code: core_1.ExportResultCode.SUCCESS });

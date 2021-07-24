@@ -7,6 +7,7 @@ const { NodeTracerProvider } = require('@opentelemetry/node');
 const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 const { SwsSpanExporter } = require('./swsSpanExporter');
 const swsSettings = require('./swssettings');
+const swsProcessor = require('./swsProcessor');
 const debug = require('debug')('sws:monitor');
 
 // TODO Tracer
@@ -37,7 +38,7 @@ class SwsMonitor {
     // TODO Support exporters configuration
     //provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
     //this.provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-    this.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new SwsSpanExporter()));
+    this.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new SwsSpanExporter(swsProcessor)));
     debug(`OpenTelemetry initialized`);
   }
 }

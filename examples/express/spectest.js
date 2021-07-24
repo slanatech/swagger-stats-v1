@@ -28,13 +28,14 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
 // Set service name
 swsMonitor.tracerProvider.resource.attributes['service.name'] = 'spectest';
+/*
 const collectorOptions = {
   url: 'grpc://localhost:4327',
 };
 const exporterCollector = new CollectorTraceExporter(collectorOptions);
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
-
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+*/
 
 // Can register instrumentations subsequently multiple times
 //registerInstrumentations({

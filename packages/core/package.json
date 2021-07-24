@@ -64,7 +64,6 @@
     "@opentelemetry/exporter-jaeger": "^0.23.0",
     "@opentelemetry/exporter-collector-grpc": "^0.23.0",
     "uuid": "^8.3.2"
-
   },
   "peerDependencies": {
   },

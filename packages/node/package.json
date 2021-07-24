@@ -2,11 +2,19 @@
   "name": "@swaggerstats/node",
   "version": "1.0.0-alpha.1",
   "private": true,
-  "description": "swagger-stats node monitoring",
-  "main": "src/index.js",
+  "description": "swagger-stats node embedded observability",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
   "scripts": {
-    "start": "node example/app.js",
-    "build": "echo BUILD-swaggerstats/node"
+    "compile": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "jest",
+    "test2": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
+    "tdd": "npm run test -- --watch-extensions ts --watch",
+    "codecov": "nyc report --reporter=json && codecov -f coverage/*.json -p ../../",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "watch": "tsc --build --watch"
   },
   "keywords": [
     "opentracing",
@@ -76,6 +84,7 @@
     "ncp": "^2.0.0",
     "nyc": "^15.1.0",
     "prom-client": "^13.1.0",
-    "swagger-parser": "^10.0.2"
+    "swagger-parser": "^10.0.2",
+    "@types/debug": "^4.1.7"
   }
 }
