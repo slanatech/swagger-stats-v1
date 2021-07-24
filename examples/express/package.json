@@ -29,6 +29,7 @@
     "uuid": "^8.3.2",
     "prom-client": "^13.1.0",
     "axios": "^0.21.1",
-    "@swaggerstats/node": "1.0.0-alpha.1"
+    "@swaggerstats/node": "1.0.0-alpha.1",
+    "@opentelemetry/instrumentation-express": "^0.23.0"
   }
 }

@@ -1,11 +1,11 @@
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
-//const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
+import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 //const { HapiInstrumentation } = require('@opentelemetry/instrumentation-hapi');
 import { NodeTracerProvider } from '@opentelemetry/node';
 //const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
-//import { SimpleSpanProcessor } from '@opentelemetry/tracing';
-//const { SwsSpanExporter } = require('./swsSpanExporter');
+import { SimpleSpanProcessor } from '@opentelemetry/tracing';
+import { SwsSpanExporter } from './swsspanexporter';
 //const swsSettings = require('./swssettings');
 //const swsProcessor = require('./swsProcessor');
 import Debug from 'debug';
@@ -33,16 +33,25 @@ export class SwsMonitor {
     registerInstrumentations({
       // This enables all available Instrumentations
       tracerProvider: this.tracerProvider,
-      //instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation()],
+      instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation()],
       // Skip express for now
-      instrumentations: [new HttpInstrumentation({})],
+      //instrumentations: [new HttpInstrumentation({})],
     });
+
     // TODO Support exporters configuration
     //provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
     //this.provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
-    // TODO Enable !!!!
-    //this.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new SwsSpanExporter(swsProcessor)));
+    // TODO Supply processor
+    this.tracerProvider.addSpanProcessor(
+      new SimpleSpanProcessor(
+        new SwsSpanExporter({
+          processSpan: () => {
+            debug('TEMP');
+          },
+        })
+      )
+    );
     debug(`OpenTelemetry initialized`);
   }
 }

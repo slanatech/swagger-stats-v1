@@ -13,7 +13,8 @@ const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tra
 
 // opa2
 
-const { swsMonitor } = require('@swaggerstats/node');
+const { SwsMonitor } = require('@swaggerstats/node');
+const swsMonitor = new SwsMonitor();
 swsMonitor.start({});
 
 /* This exports traces to OpenTelemetry Collector Jaeger receiver
