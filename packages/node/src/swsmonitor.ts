@@ -1,9 +1,11 @@
+import { Span } from '@opentelemetry/api';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 //const { HapiInstrumentation } = require('@opentelemetry/instrumentation-hapi');
 import { NodeTracerProvider } from '@opentelemetry/node';
 //const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+import { ClientRequest, IncomingMessage, ServerResponse } from 'http';
 import { SimpleSpanProcessor } from '@opentelemetry/tracing';
 import { SwsSpanExporter } from './swsspanexporter';
 //const swsSettings = require('./swssettings');
@@ -26,6 +28,11 @@ export class SwsMonitor {
     this.initializeOpenTracing(options);
   }
 
+  // This is how to add custom attributes to span based on request / response
+  handleHttpCustomAttribute(span: Span, request: ClientRequest | IncomingMessage, response: IncomingMessage | ServerResponse) {
+    debug(`Got something !`);
+  }
+
   initializeOpenTracing(options: any) {
     this.tracerProvider.register();
     // TODO Support Instrumentations configurations
@@ -33,7 +40,12 @@ export class SwsMonitor {
     registerInstrumentations({
       // This enables all available Instrumentations
       tracerProvider: this.tracerProvider,
-      instrumentations: [new HttpInstrumentation({}), new ExpressInstrumentation()],
+      instrumentations: [
+        new HttpInstrumentation({
+          applyCustomAttributesOnSpan: this.handleHttpCustomAttribute,
+        }),
+        new ExpressInstrumentation(),
+      ],
       // Skip express for now
       //instrumentations: [new HttpInstrumentation({})],
     });
