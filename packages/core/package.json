@@ -68,5 +68,7 @@
   "peerDependencies": {
   },
   "devDependencies": {
+    "arquero": "^4.8.4",
+    "apache-arrow": "^5.0.0"
   }
 }
