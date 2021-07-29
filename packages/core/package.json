@@ -9,6 +9,7 @@
     "compile": "tsc --build",
     "clean": "tsc --build --clean",
     "test": "jest",
+    "test-mem": "node --expose-gc ../../node_modules/jest/bin/jest.js --runInBand --logHeapUsage",
     "test2": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
     "tdd": "npm run test -- --watch-extensions ts --watch",
     "codecov": "nyc report --reporter=json && codecov -f coverage/*.json -p ../../",
