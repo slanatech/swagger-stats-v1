@@ -2,7 +2,7 @@
 //const { pathOr } = require('ramda');
 import * as aq from 'arquero';
 
-describe('Arquero Test', function () {
+describe.skip('Arquero Test', function () {
   it('Should create simple tables to and from arrow', async () => {
     const dt = aq.table({
       Seattle: [69, 108, 178, 207, 253, 268, 312, 281, 221, 142, 72, 52],

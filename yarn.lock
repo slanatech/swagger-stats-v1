@@ -1639,6 +1639,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.17.tgz#ffd44c2801fc527a6fe6e86bc9b900261df1c87e"
   integrity sha512-so8EHl4S6MmatPS0f9sE1ND94/ocbcEshW5OpyYthRqeRpiYyW2uXYTo/84kmfdfeNrDycARkvuiXl6nO40NGg==
 
+"@types/node@^13.7.4":
+  version "13.13.52"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.52.tgz#03c13be70b9031baaed79481c0c0cfb0045e53f7"
+  integrity sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==
+
 "@types/node@^14.14.41":
   version "14.17.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.6.tgz#cc61c8361c89e70c468cda464d1fa3dd7e5ebd62"
@@ -1705,6 +1710,11 @@
   integrity sha512-SlEHKcLG36PlU+rLJwp8p4dpC9Hp/LiH6n0REX2m4iEB15PWe1qKQzgNSZrYKhTHDFvkeEM/F2gcYwfighsEuQ==
   dependencies:
     ts-toolbelt "^6.15.1"
+
+"@types/randomatic@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@types/randomatic/-/randomatic-3.1.2.tgz#3485f0e113bf47fe25fee62fc20ca27713642975"
+  integrity sha512-lLsR0U1lUTjJ8vy1r3VGWlgprGtB/QPVwxs+QVSe28b0MS/7sR5tUfvhDd9XLV/AWc50OmDADAhzdqujavdykg==
 
 "@types/range-parser@*":
   version "1.2.4"
@@ -5208,6 +5218,14 @@ istanbul@^0.4.5:
     supports-color "^3.1.0"
     which "^1.1.1"
     wordwrap "^1.0.0"
+
+ix@4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/ix/-/ix-4.4.1.tgz#8ec5f4f420c504a9906ffc2e2234f50147b9488a"
+  integrity sha512-Jsl7cUf7CA1MkznzAuVy4K6V1Zsfx+EAh0ZgiGhGAADaEGKiMV+sJx8Qe4hx0CsyI475Yt3ppoRS8M8oOueqlA==
+  dependencies:
+    "@types/node" "^13.7.4"
+    tslib "^2.3.0"
 
 jaeger-client@^3.15.0:
   version "3.18.1"

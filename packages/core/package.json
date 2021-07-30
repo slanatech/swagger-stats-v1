@@ -8,7 +8,7 @@
   "scripts": {
     "compile": "tsc --build",
     "clean": "tsc --build --clean",
-    "test": "jest",
+    "test": "jest --verbose",
     "test-mem": "node --expose-gc ../../node_modules/jest/bin/jest.js --runInBand --logHeapUsage",
     "test2": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
     "tdd": "npm run test -- --watch-extensions ts --watch",
@@ -69,7 +69,9 @@
   "peerDependencies": {
   },
   "devDependencies": {
+    "@types/randomatic": "^3.1.2",
     "arquero": "^4.8.4",
-    "apache-arrow": "^5.0.0"
+    "apache-arrow": "^5.0.0",
+    "ix": "4.4.1"
   }
 }
