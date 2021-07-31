@@ -23,7 +23,7 @@ import * as generate from './generate-test-data';
 // @ts-ignore
 import { validateTable } from './generated-data-validators';
 // @ts-ignore
-import { Table, Schema, Field, DataType, Int32, Float32, Utf8, DataFrame } from 'apache-arrow';
+import { Table, Schema, Field, DataType, Int32, Float32, Utf8, DataFrame, Int, Vector, Data } from 'apache-arrow';
 
 const toSchema = (...xs: [string, DataType][]) => new Schema(xs.map((x) => new Field(...x)));
 const schema1 = toSchema(['a', new Int32()], ['b', new Float32()], ['c', new Utf8()]);
@@ -70,6 +70,21 @@ describe('Table.assign()', () => {
     const used2 = process.memoryUsage().heapUsed / 1024 / 1024;
     console.log(`The script uses approximately ${Math.round(used2 * 100) / 100} MB`);
     //validateTable({ ...f([0, 1, 2], [3, 4, 5]), table }).run();
+  });
+
+  it(`should create multiple large tables`, () => {
+    //const t1hs = generate.table([10], schema3);
+    const generated = generate.recordBatch(1, schema3);
+    //const generated2 = generate.recordBatch(1, schema3);
+    const t2hs = new Table(schema3, [generated.recordBatch]);
+    //expect(t1hs.table.schema.fields.map((f) => f.name)).toEqual(['a', 'b', 'c']);
+    expect(t2hs.schema.fields.map((f) => f.name)).toEqual(['a', 'b', 'c']);
+    let t3hs = t2hs;
+    for (let i = 0; i < 100000; i++) {
+      t3hs = t2hs.slice(0, 100000 - 1);
+      //t3hs = t2hs.concat(generated2.recordBatch);
+      expect(t3hs.schema.fields.map((f) => f.name)).toEqual(['a', 'b', 'c']);
+    }
   });
 
   it(`should add large number of rows`, () => {

@@ -187,6 +187,7 @@ export type GeneratedVector<TVec extends Vector = Vector> = {
 
 export const table = (lengths = [100], schema: Schema = new Schema(defaultRecordBatchChildren(), new Map([['foo', 'bar']]))): GeneratedTable => {
   const generated = lengths.map((length) => recordBatch(length, schema));
+  const generatedTest = generated.map(({ recordBatch }) => recordBatch);
   const rowBatches = generated.map(({ rows }) => rows);
   const colBatches = generated.map(({ cols }) => cols);
   const keyBatches = generated.map(({ keys }) => keys);
@@ -203,7 +204,7 @@ export const table = (lengths = [100], schema: Schema = new Schema(defaultRecord
     keyBatches,
     table: new Table(
       schema,
-      generated.map(({ recordBatch }) => recordBatch)
+      generatedTest //generated.map(({ recordBatch }) => recordBatch)
     ),
   };
 };
@@ -222,6 +223,20 @@ export const recordBatch = (length = 100, schema: Schema = new Schema(defaultRec
 
   return { rows, cols, keys, recordBatch: new RecordBatch(schema, length, vecs) };
 };
+/*
+export const recordBatchTest = (length = 100, schema: Schema = new Schema(defaultRecordBatchChildren())): GeneratedRecordBatch => {
+  const generated = schema.fields.map((f) => vectorGenerator.visit(f.type, length));
+  const vecs = generated.map(({ vector }) => vector);
+  const keys = memoize(() => generated.map(({ keys }) => keys));
+  const cols = memoize(() => generated.map(({ values }) => values()));
+  const rows = ((_cols: () => any[][]) =>
+    memoize((rows: any[][] = [], cols: any[][] = _cols()) => {
+      for (let i = -1; ++i < length; rows[i] = cols.map((vals) => vals[i]));
+      return rows;
+    }))(cols);
+  return { rows, cols, keys, recordBatch: new RecordBatch(schema, length, vecs) };
+};
+*/
 
 export const null_ = (length = 100) => vectorGenerator.visit(new Null(), length);
 export const bool = (length = 100, nullCount = (length * 0.2) | 0) => vectorGenerator.visit(new Bool(), length, nullCount);
