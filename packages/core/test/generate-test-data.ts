@@ -16,7 +16,7 @@
 // under the License.
 
 //import randomatic from 'randomatic';
-import { VectorType as V } from 'apache-arrow/interfaces';
+import { VectorType as V } from '@apache-arrow/ts/interfaces';
 
 import {
   Data,
@@ -74,7 +74,7 @@ import {
   TimeUnit,
   UnionMode,
   util,
-} from 'apache-arrow';
+} from '@apache-arrow/ts';
 
 type TKeys = Int8 | Int16 | Int32 | Uint8 | Uint16 | Uint32;
 

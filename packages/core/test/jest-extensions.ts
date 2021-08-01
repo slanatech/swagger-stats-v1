@@ -17,7 +17,7 @@
 // under the License.
 
 import { zip } from 'ix/iterable/zip';
-import { Table, Vector, RecordBatch, Column, util } from 'apache-arrow';
+import { Table, Vector, RecordBatch, Column, util } from '@apache-arrow/ts';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

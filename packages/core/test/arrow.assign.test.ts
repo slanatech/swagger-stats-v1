@@ -23,7 +23,7 @@ import * as generate from './generate-test-data';
 // @ts-ignore
 import { validateTable } from './generated-data-validators';
 // @ts-ignore
-import { Table, Schema, Field, DataType, Int32, Float32, Utf8, DataFrame, Int, Vector, Data } from 'apache-arrow';
+import { Table, Schema, Field, DataType, Int32, Float32, Utf8, DataFrame, Int, Vector, IntVector, Data } from '@apache-arrow/ts';
 
 const toSchema = (...xs: [string, DataType][]) => new Schema(xs.map((x) => new Field(...x)));
 const schema1 = toSchema(['a', new Int32()], ['b', new Float32()], ['c', new Utf8()]);
@@ -31,7 +31,7 @@ const schema1 = toSchema(['a', new Int32()], ['b', new Float32()], ['c', new Utf
 const partialOverlapWith1 = toSchema(['a', new Int32()], ['b', new Float32()], ['f', new Utf8()]);
 // @ts-ignore
 const schema2 = toSchema(['d', new Int32()], ['e', new Float32()], ['f', new Utf8()]);
-const schema3 = toSchema(['a', new Int32()], ['b', new Float32()], ['c', new Int32()]);
+const schema3 = toSchema(['a', new Int32()], ['b', new Int32()], ['c', new Int32()]);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // @ts-ignore
@@ -70,6 +70,42 @@ describe('Table.assign()', () => {
     const used2 = process.memoryUsage().heapUsed / 1024 / 1024;
     console.log(`The script uses approximately ${Math.round(used2 * 100) / 100} MB`);
     //validateTable({ ...f([0, 1, 2], [3, 4, 5]), table }).run();
+  });
+
+  it(`should add row to the table`, () => {
+    const t1 = generate.table([5], schema3).table;
+    let t2 = t1;
+    const columns = t1.schema.fields.map((f) => f.name);
+    expect(columns).toEqual(['a', 'b', 'c']);
+    // 10K -> 560 ms !!!
+    for (let i = 0; i < 10000; i++) {
+      const newColumnsVectors = [];
+      for (const columnName of columns) {
+        const column = t2.getColumn(columnName);
+        const columnArray = column.toArray();
+        //const cA2 = [...columnArray]; // Js Array
+        const ArrayType = column.ArrayType;
+        const len = columnArray.length + 1;
+        const newArray = new ArrayType(len);
+        newArray[0] = i;
+        newArray.set(columnArray, 1);
+        newColumnsVectors.push(IntVector.from(newArray));
+        //console.log(`${columnName}: ${JSON.stringify(cA2)} => ${JSON.stringify([...newArray])}`);
+      }
+      t2 = Table.new(newColumnsVectors, columns);
+    }
+    expect(t2.schema.fields.map((f) => f.name)).toEqual(['a', 'b', 'c']);
+    //console.log('Table 2:\n' + getMarkdown(new DataFrame(t2)));
+
+    /*
+    expect(t2hs.schema.fields.map((f) => f.name)).toEqual(['a', 'b', 'c']);
+    let t3hs = t2hs;
+    for (let i = 0; i < 100000; i++) {
+      t3hs = t2hs.slice(0, 100000 - 1);
+      //t3hs = t2hs.concat(generated2.recordBatch);
+      expect(t3hs.schema.fields.map((f) => f.name)).toEqual(['a', 'b', 'c']);
+    }
+    */
   });
 
   it(`should create multiple large tables`, () => {

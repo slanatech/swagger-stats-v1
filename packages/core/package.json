@@ -70,8 +70,7 @@
   },
   "devDependencies": {
     "@types/randomatic": "^3.1.2",
-    "arquero": "^4.8.4",
-    "apache-arrow": "^5.0.0",
+    "@apache-arrow/ts": "^5.0.0",
     "ix": "4.4.1"
   }
 }

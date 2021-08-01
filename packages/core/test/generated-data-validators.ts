@@ -18,7 +18,7 @@
 //import '../jest-extensions';
 import { GeneratedTable, GeneratedRecordBatch, GeneratedVector } from './generate-test-data';
 
-import { util } from 'apache-arrow';
+import { util } from '@apache-arrow/ts';
 const { createElementComparator: compare } = util;
 
 type DeferredTest = { description: string; tests?: DeferredTest[]; run: (...args: any[]) => any };
