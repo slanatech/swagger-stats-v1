@@ -69,8 +69,5 @@
   "peerDependencies": {
   },
   "devDependencies": {
-    "@types/randomatic": "^3.1.2",
-    "@apache-arrow/ts": "^5.0.0",
-    "ix": "4.4.1"
   }
 }
