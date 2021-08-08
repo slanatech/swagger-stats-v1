@@ -9,6 +9,7 @@ const { pathOr } = require('ramda');
 
 // TODO How to do logging for both backend and frontend ?
 
+// @ts-ignore
 class RestOp extends OpResult {
   constructor(options = {}) {
     super(false, '', null);
@@ -20,17 +21,17 @@ class RestOp extends OpResult {
 
   execute() {
     let apiop = this;
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       let startTs = Date.now();
       axios(apiop.options)
-        .then(function(response) {
+        .then(function (response) {
           apiop.success = true;
           apiop.code = pathOr(0, ['status'], response);
           apiop.data = pathOr(null, ['data'], response);
           apiop.message = '';
           //logger.debug(`${apiop.options.method.toUpperCase()} ${apiop.options.url} ${apiop.code}`);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           apiop.success = false;
           apiop.code = pathOr(-1, ['response', 'status'], error);
           apiop.message = pathOr(error.message, ['response', 'statusText'], error);

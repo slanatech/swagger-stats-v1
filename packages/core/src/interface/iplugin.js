@@ -13,6 +13,7 @@
 
 const { OpError } = require('../opresult');
 
+// @ts-ignore
 class IPlugin {
   constructor() {}
 

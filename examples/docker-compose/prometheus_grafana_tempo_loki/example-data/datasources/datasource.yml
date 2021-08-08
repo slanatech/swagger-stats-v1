@@ -9,7 +9,7 @@ datasources:
   type: prometheus
   access: proxy
   orgId: 1
-  url: http://localhost:9090
+  url: http://prometheus:9090
   basicAuth: false
   isDefault: false
   version: 1
@@ -18,7 +18,7 @@ datasources:
   type: tempo
   access: proxy
   orgId: 1
-  url: http://localhost:3150
+  url: http://tempo:3150
   basicAuth: false
   isDefault: false
   version: 1
@@ -44,7 +44,7 @@ datasources:
   type: loki
   access: proxy
   orgId: 1
-  url: http://localhost:3100
+  url: http://loki:3100
   basicAuth: false
   isDefault: false
   version: 1
