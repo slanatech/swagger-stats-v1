@@ -11,12 +11,11 @@
  }
 */
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { OpError } = require('../opresult');
 
 // @ts-ignore
 class IPlugin {
-  constructor() {}
-
   // Register data soource
   async registerDataSource(ds) {
     return new OpError('Not implemented');
