@@ -7,7 +7,7 @@
   "types": "build/src/index.d.ts",
   "scripts": {
     "compile": "tsc --build",
-    "postbuild": "cpy '**/*' '!**/*.ts' ../build/src --cwd=src/ --no-overwrite --parents",
+    "postcompile": "cpy '**/*' '!**/*.ts' ../build/src --cwd=src/ --no-overwrite --parents",
     "list": "tsc --listFiles",
     "clean": "tsc --build --clean",
     "test": "jest --verbose",

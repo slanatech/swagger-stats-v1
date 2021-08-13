@@ -1,3 +1,6 @@
+/** Swagger-Stats Node monitor.
+ *  Initializes OpenTracing, enables auto-instrumentation for node app, and sets up embedded swagger-stats monitoring */
+
 import { Span } from '@opentelemetry/api';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
@@ -7,9 +10,9 @@ import { NodeTracerProvider } from '@opentelemetry/node';
 //const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 import { ClientRequest, IncomingMessage, ServerResponse } from 'http';
 import { SimpleSpanProcessor } from '@opentelemetry/tracing';
+import { SwsOptions } from './swsoptions';
 import { SwsSpanExporter } from './swsspanexporter';
-//const swsSettings = require('./swssettings');
-//const swsProcessor = require('./swsProcessor');
+import { SwsProcessor } from './swsprocessor';
 import Debug from 'debug';
 const debug = Debug('sws:monitor');
 
@@ -17,15 +20,21 @@ const debug = Debug('sws:monitor');
 //  const opentelemetry = require('@opentelemetry/api');
 //  const tracer = opentelemetry.trace.getTracer('spectest');
 
-export class SwsMonitor {
+/** Swagger-Stats Node monitor.
+ *  Initializes OpenTracing, enables auto-instrumentation for node app, and sets up embedded swagger-stats monitoring */
+export class SwsNode {
+  public options: SwsOptions;
+  public processor: SwsProcessor;
   public tracerProvider: NodeTracerProvider;
 
-  constructor() {
+  constructor(options: SwsOptions) {
+    this.options = new SwsOptions(options);
+    this.processor = new SwsProcessor();
     this.tracerProvider = new NodeTracerProvider();
   }
 
-  start(options: any) {
-    this.initializeOpenTracing(options);
+  start() {
+    this.initializeOpenTracing(this.options);
   }
 
   // This is how to add custom attributes to span based on request / response

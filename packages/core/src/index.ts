@@ -10,6 +10,8 @@ export * from './utils/datetimeutils';
 */
 
 import { DataSource } from './entity/datasource';
+import { SwsSpan } from './entity/swsspan';
+export * from './entity/swsspan';
 
 const { OpResult, OpSuccess, OpError, isSuccess } = require('./opresult');
 const RestOp = require('./restop');
@@ -29,4 +31,5 @@ module.exports = {
   getLogger,
   prometheusTransforms,
   dateTimeUtils,
+  SwsSpan,
 };
