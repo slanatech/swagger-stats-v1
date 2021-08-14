@@ -70,7 +70,8 @@
     "request": "^2.88.2",
     "send": "^0.17.1",
     "uuid": "^8.3.2",
-    "@swaggerstats/core": "1.0.0-alpha.1"
+    "@swaggerstats/core": "1.0.0-alpha.1",
+    "ws":"^8.1.0"
   },
   "peerDependencies": {
     "prom-client": ">= 10 <= 13"
@@ -85,6 +86,7 @@
     "nyc": "^15.1.0",
     "prom-client": "^13.1.0",
     "swagger-parser": "^10.0.2",
-    "@types/debug": "^4.1.7"
+    "@types/debug": "^4.1.7",
+    "@types/ws": "^7.4.7"
   }
 }
