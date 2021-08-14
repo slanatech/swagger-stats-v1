@@ -1,6 +1,6 @@
 /**
- * Created by sv2 on 2/18/17.
  * API usage statistics data
+ * TEMP TODO Revisit
  */
 
 'use strict';

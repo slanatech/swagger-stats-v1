@@ -27,62 +27,69 @@ const SwsCoreStats = require('./swsCoreStats');
 export class SwsProcessor {
   public options: SwsOptions;
 
+  // Timestamp when collecting statistics started
+  protected startts: number;
+
+  // Name: Should be name of the service provided by this component
+  protected name: string;
+
+  // Version of this component
+  protected version: string;
+
+  // This node hostname
+  protected hostname: string;
+  protected nodehostname: string;
+
+  // IP
+  protected ip: string;
+
+  // Node name: there could be multiple nodes in this service
+  protected nodename: string;
+
+  // Node address: there could be multiple nodes in this service
+  protected nodeaddress: string;
+
+  // onResponseFinish callback, if specified in options
+  protected onResponseFinish: any | null;
+
+  // If set to true via options, track only API defined in swagger spec
+  protected swaggerOnly: boolean;
+
+  // Core statistics
+  protected coreStats: any | null;
+
+  // Tick timer id
+  private timer: any;
+
   constructor(options: SwsOptions) {
     this.options = options;
 
-    // Timestamp when collecting statistics started
     this.startts = Date.now();
-
-    // Name: Should be name of the service provided by this component
     this.name = 'sws';
-
-    // Options
-    //this.options = null;
-
-    // Version of this component
     this.version = '';
-
-    // This node hostname
+    this.hostname = '';
     this.nodehostname = '';
-
-    // Node name: there could be multiple nodes in this service
+    this.ip = '';
     this.nodename = '';
-
-    // Node address: there could be multiple nodes in this service
     this.nodeaddress = '';
-
-    // onResponseFinish callback, if specified in options
     this.onResponseFinish = null;
-
-    // If set to true via options, track only API defined in swagger spec
     this.swaggerOnly = false;
-
-    // System statistics
-    this.sysStats = new SwsSysStats();
-
-    // Core statistics
-    this.coreStats = new SwsCoreStats();
+    this.coreStats = null; //new SwsCoreStats();
 
     // Core Egress statistics
-    this.coreEgressStats = new SwsCoreStats();
-
+    //this.coreEgressStats = new SwsCoreStats();
     // Timeline
-    this.timeline = new swsTimeline();
-
+    //this.timeline = new swsTimeline();
     // API Stats
-    this.apiStats = new swsAPIStats();
-
+    //this.apiStats = new swsAPIStats();
     // Errors
-    this.errorsStats = new swsErrors();
-
+    //this.errorsStats = new swsErrors();
     // Last Errors
-    this.lastErrors = new swsLastErrors();
-
+    //this.lastErrors = new swsLastErrors();
     // Longest Requests
-    this.longestRequests = new swsLongestRequests();
-
+    //this.longestRequests = new swsLongestRequests();
     // ElasticSearch Emitter
-    this.elasticsearchEmitter = new swsElasticsearchEmitter();
+    //this.elasticsearchEmitter = new swsElasticsearchEmitter();
   }
 
   init() {
@@ -90,49 +97,49 @@ export class SwsProcessor {
 
     this.coreStats.initialize();
 
-    this.sysStats.initialize();
-    this.coreEgressStats.initialize('egress_');
-    this.timeline.initialize(swsSettings);
-    this.apiStats.initialize(swsSettings);
-    this.elasticsearchEmitter.initialize(swsSettings);
+    //this.sysStats.initialize();
+    //this.coreEgressStats.initialize('egress_');
+    //this.timeline.initialize(swsSettings);
+    //this.apiStats.initialize(swsSettings);
+    //this.elasticsearchEmitter.initialize(swsSettings);
 
-    // Start tick
-    this.timer = setInterval(this.tick, 200, this);
+    // Start tick timer
+    this.timer = setInterval(() => this.tick, 200);
   }
 
   // Stop
-  stop() {
+  stop(): void {
     clearInterval(this.timer);
   }
 
-  processOptions() {
-    this.name = swsSettings.name;
-    this.hostname = swsSettings.hostname;
-    this.version = swsSettings.version;
-    this.ip = swsSettings.ip;
-    this.onResponseFinish = swsSettings.onResponseFinish;
-    this.swaggerOnly = swsSettings.swaggerOnly;
+  processOptions(): void {
+    this.name = this.options.name;
+    this.hostname = this.options.hostname;
+    this.version = this.options.version;
+    this.ip = this.options.ip;
+    this.onResponseFinish = this.options.onResponseFinish;
+    this.swaggerOnly = this.options.swaggerOnly;
   }
 
   // Tick - called with specified interval to refresh timelines
-  tick(that) {
-    let ts = Date.now();
-    let totalElapsedSec = (ts - that.startts) / 1000;
-    that.sysStats.tick(ts, totalElapsedSec);
-    that.coreStats.tick(ts, totalElapsedSec);
-    that.timeline.tick(ts, totalElapsedSec);
-    that.apiStats.tick(ts, totalElapsedSec);
-    that.elasticsearchEmitter.tick(ts, totalElapsedSec);
+  tick(): void {
+    const ts = Date.now();
+    const totalElapsedSec = (ts - this.startts) / 1000;
+    this.coreStats.tick(ts, totalElapsedSec);
+    //that.sysStats.tick(ts, totalElapsedSec);
+    //that.timeline.tick(ts, totalElapsedSec);
+    //that.apiStats.tick(ts, totalElapsedSec);
+    //that.elasticsearchEmitter.tick(ts, totalElapsedSec);
   }
 
   // Collect all data for request/response pair
   // TODO Support option to add arbitrary extra properties to sws request/response record
   collectRequestResponseData(res) {
-    var req = res._swsReq;
+    const req = res._swsReq;
 
-    var codeclass = swsUtil.getStatusCodeClass(res.statusCode);
+    const codeclass = swsUtil.getStatusCodeClass(res.statusCode);
 
-    var rrr = {
+    const rrr = {
       path: req.sws.originalUrl,
       method: req.method,
       query: req.method + ' ' + req.sws.originalUrl,
@@ -160,14 +167,14 @@ export class SwsProcessor {
     // Request Headers
     if ('headers' in req) {
       rrr.http.request.headers = {};
-      for (var hdr in req.headers) {
+      for (const hdr in req.headers) {
         rrr.http.request.headers[hdr] = req.headers[hdr];
       }
       // TODO Split Cookies
     }
 
     // Response Headers
-    var responseHeaders = res.getHeaders();
+    const responseHeaders = res.getHeaders();
     if (responseHeaders) {
       rrr.http.response.headers = responseHeaders;
     }
@@ -198,7 +205,7 @@ export class SwsProcessor {
       if ('tags' in req.sws) rrr.api.tags = req.sws.tags;
 
       // Get API parameter values per definition in swagger spec
-      var apiParams = this.apiStats.getApiOpParameterValues(req.sws.api_path, req.method, req, res);
+      const apiParams = this.apiStats.getApiOpParameterValues(req.sws.api_path, req.method, req, res);
       if (apiParams !== null) {
         rrr.api.params = apiParams;
       }
@@ -243,10 +250,10 @@ export class SwsProcessor {
   }
 
   getRemoteRealIP(req) {
-    var remoteaddress = null;
-    var xfwd = req.headers['x-forwarded-for'];
+    let remoteaddress = null;
+    const xfwd = req.headers['x-forwarded-for'];
     if (xfwd) {
-      var fwdaddrs = xfwd.split(','); // Could be "client IP, proxy 1 IP, proxy 2 IP"
+      const fwdaddrs = xfwd.split(','); // Could be "client IP, proxy 1 IP, proxy 2 IP"
       remoteaddress = fwdaddrs[0];
     }
     if (!remoteaddress) {
@@ -261,18 +268,18 @@ export class SwsProcessor {
     }
 
     // Try to get header
-    let hcl = res.getHeader('content-length');
+    const hcl = res.getHeader('content-length');
     if (hcl !== undefined && hcl && !isNaN(hcl)) {
       return parseInt(hcl);
     }
 
     // If this does not work, calculate using bytesWritten
     // taking into account res._header
-    let initial = req.sws.initialBytesWritten || 0;
+    const initial = req.sws.initialBytesWritten || 0;
     let written = req.socket.bytesWritten - initial;
     if ('_header' in res) {
       const hbuf = Buffer.from(res['_header']);
-      let hslen = hbuf.length;
+      const hslen = hbuf.length;
       written -= hslen;
     }
     return written;
@@ -283,9 +290,9 @@ export class SwsProcessor {
     req.sws = req.sws || {};
 
     // Setup sws props and pass to stats processors
-    var ts = Date.now();
+    const ts = Date.now();
 
-    var reqContentLength = 0;
+    let reqContentLength = 0;
     if ('content-length' in req.headers) {
       reqContentLength = parseInt(req.headers['content-length']);
     }
@@ -320,11 +327,11 @@ export class SwsProcessor {
   }
 
   processResponse(res) {
-    let req = res._swsReq;
+    const req = res._swsReq;
 
     req.sws = req.sws || {};
 
-    let startts = req.sws.startts || 0;
+    const startts = req.sws.startts || 0;
     req.sws.endts = Date.now();
     req.sws.duration = req.sws.endts - startts;
     //let timelineid = req.sws.timelineid || 0;
@@ -335,7 +342,7 @@ export class SwsProcessor {
 
     req.sws.res_clength = this.getResponseContentLength(req, res);
 
-    var route_path = '';
+    let route_path = '';
     if ('route_path' in req.sws) {
       // Route path could be pre-set in sws by previous handlers/hooks ( Fastify )
       route_path = req.sws.route_path;
@@ -366,7 +373,7 @@ export class SwsProcessor {
     this.errorsStats.countResponse(res);
 
     // Collect request / response record
-    var rrr = this.collectRequestResponseData(res);
+    const rrr = this.collectRequestResponseData(res);
 
     // Pass through last errors
     this.lastErrors.processReqResData(rrr);
@@ -395,20 +402,20 @@ export class SwsProcessor {
     query = typeof query !== 'undefined' ? query : {};
     query = query !== null ? query : {};
 
-    var statfields = []; // Default
+    let statfields = []; // Default
 
     // Check if we have query parameter "fields"
     if ('fields' in query) {
       if (query.fields instanceof Array) {
         statfields = query.fields;
       } else {
-        var fieldsstr = query.fields;
+        const fieldsstr = query.fields;
         statfields = fieldsstr.split(',');
       }
     }
 
     // sys, ingress and egress core statistics are returned always
-    let result = {
+    const result = {
       startts: this.startts,
     };
     result.all = this.coreStats.getStats();
@@ -422,9 +429,9 @@ export class SwsProcessor {
     result.ip = this.ip;
     result.apdexThreshold = swsSettings.apdexThreshold;
 
-    var fieldMask = 0;
-    for (var i = 0; i < statfields.length; i++) {
-      var fld = statfields[i];
+    let fieldMask = 0;
+    for (let i = 0; i < statfields.length; i++) {
+      const fld = statfields[i];
       if (fld in swsUtil.swsStatFields) fieldMask |= swsUtil.swsStatFields[fld];
     }
 
