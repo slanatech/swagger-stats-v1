@@ -71,7 +71,8 @@
     "send": "^0.17.1",
     "uuid": "^8.3.2",
     "@swaggerstats/core": "1.0.0-alpha.1",
-    "ws":"^8.1.0"
+    "ws":"^8.1.0",
+    "node-static": "^0.7.11"
   },
   "peerDependencies": {
     "prom-client": ">= 10 <= 13"
@@ -87,6 +88,7 @@
     "prom-client": "^13.1.0",
     "swagger-parser": "^10.0.2",
     "@types/debug": "^4.1.7",
-    "@types/ws": "^7.4.7"
+    "@types/ws": "^7.4.7",
+    "@types/node-static": "^0.7.7"
   }
 }
