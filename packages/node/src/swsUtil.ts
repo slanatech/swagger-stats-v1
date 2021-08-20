@@ -16,18 +16,18 @@ export function isError(code: number): boolean {
 }
 
 // Supported Stat Fields with masks
-module.exports.swsStatFields = {
-  method: 1 << 0,
-  timeline: 1 << 1,
-  lasterrors: 1 << 2,
-  longestreq: 1 << 3,
-  apidefs: 1 << 4,
-  apistats: 1 << 5,
-  apiop: 1 << 6,
-  errors: 1 << 7,
-  all: parseInt('11111111', 2),
-  '*': parseInt('11111111', 2),
-};
+export enum swsStatFields {
+  method = 1 << 0,
+  timeline = 1 << 1,
+  lasterrors = 1 << 2,
+  longestreq = 1 << 3,
+  apidefs = 1 << 4,
+  apistats = 1 << 5,
+  apiop = 1 << 6,
+  errors = 1 << 7,
+  all = parseInt('11111111', 2),
+  '*' = parseInt('11111111', 2),
+}
 
 // Supported properties in Swagger Parameter object
 module.exports.swsParameterProperties = {

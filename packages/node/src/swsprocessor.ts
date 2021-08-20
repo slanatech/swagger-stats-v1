@@ -3,16 +3,15 @@
  */
 import { SwsOptions } from './swsoptions';
 import { SwsSpan } from '@swaggerstats/core';
+import { SwsCoreStats } from './swsCoreStats';
+import * as swsUtil from './swsUtil';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('sws:processor');
 //const debugrrr = require('debug')('sws:rrr');
 
-const swsUtil = require('./swsUtil');
-const pathToRegexp = require('path-to-regexp');
-const moment = require('moment');
-
-const SwsCoreStats = require('./swsCoreStats');
+//const pathToRegexp = require('path-to-regexp');
+//const moment = require('moment');
 
 //const swsReqResStats = require('./swsReqResStats');
 //const SwsSysStats = require('./swssysstats');
@@ -56,7 +55,7 @@ export class SwsProcessor {
   protected swaggerOnly: boolean;
 
   // Core statistics
-  protected coreStats: any | null;
+  protected coreStats: SwsCoreStats;
 
   // Tick timer id
   private timer: any;
@@ -74,7 +73,8 @@ export class SwsProcessor {
     this.nodeaddress = '';
     this.onResponseFinish = null;
     this.swaggerOnly = false;
-    this.coreStats = null; //new SwsCoreStats();
+
+    this.coreStats = new SwsCoreStats(this.options);
 
     // Core Egress statistics
     //this.coreEgressStats = new SwsCoreStats();
@@ -134,6 +134,7 @@ export class SwsProcessor {
 
   // Collect all data for request/response pair
   // TODO Support option to add arbitrary extra properties to sws request/response record
+  /*
   collectRequestResponseData(res) {
     const req = res._swsReq;
 
@@ -232,8 +233,9 @@ export class SwsProcessor {
 
     return rrr;
   }
+  */
 
-  getRemoteIP(req) {
+  getRemoteIP(req: any): string {
     let ip = '';
     try {
       ip = req.connection.remoteAddress;
@@ -241,7 +243,7 @@ export class SwsProcessor {
     return ip;
   }
 
-  getPort(req) {
+  getPort(req: any): number {
     let p = 0;
     try {
       p = req.connection.localPort;
@@ -249,7 +251,7 @@ export class SwsProcessor {
     return p;
   }
 
-  getRemoteRealIP(req) {
+  getRemoteRealIP(req: any): string {
     let remoteaddress = null;
     const xfwd = req.headers['x-forwarded-for'];
     if (xfwd) {
@@ -262,7 +264,7 @@ export class SwsProcessor {
     return remoteaddress;
   }
 
-  getResponseContentLength(req, res) {
+  getResponseContentLength(req: any, res: any): number {
     if ('contentLength' in res && res['_contentLength'] !== null) {
       return res['_contentLength'];
     }
@@ -285,6 +287,7 @@ export class SwsProcessor {
     return written;
   }
 
+  /*
   processRequest(req, res) {
     // Placeholder for sws-specific attributes
     req.sws = req.sws || {};
@@ -320,12 +323,14 @@ export class SwsProcessor {
     this.coreStats.countRequest(req, res);
 
     // Timeline
-    this.timeline.countRequest(req, res);
+    //this.timeline.countRequest(req, res);
 
     // TODO Check if needed
-    this.apiStats.countRequest(req, res);
+    //this.apiStats.countRequest(req, res);
   }
+  */
 
+  /*
   processResponse(res) {
     const req = res._swsReq;
 
@@ -364,41 +369,42 @@ export class SwsProcessor {
     this.coreStats.countResponse(res);
 
     // Pass through Timeline
-    this.timeline.countResponse(res);
+    //this.timeline.countResponse(res);
 
     // Pass through API Statistics
-    this.apiStats.countResponse(res);
+    //this.apiStats.countResponse(res);
 
     // Pass through Errors
-    this.errorsStats.countResponse(res);
+    //this.errorsStats.countResponse(res);
 
     // Collect request / response record
-    const rrr = this.collectRequestResponseData(res);
+    //const rrr = this.collectRequestResponseData(res);
 
     // Pass through last errors
-    this.lastErrors.processReqResData(rrr);
+    //this.lastErrors.processReqResData(rrr);
 
     // Pass through longest request
-    this.longestRequests.processReqResData(rrr);
+    //this.longestRequests.processReqResData(rrr);
 
     // Pass to app if callback is specified
-    if (this.onResponseFinish !== null) {
-      this.onResponseFinish(req, res, rrr);
-    }
+    //if (this.onResponseFinish !== null) {
+    //  this.onResponseFinish(req, res, rrr);
+    //}
 
     // Push Request/Response Data to Emitter(s)
-    this.elasticsearchEmitter.processRecord(rrr);
+    //this.elasticsearchEmitter.processRecord(rrr);
 
     //debugrrr('%s', JSON.stringify(rrr));
   }
+  */
 
   // TEMP IMPLEMENTATION TODO REFINE
-  processSpan(span: SwsSpan) {
+  processSpan(span: SwsSpan): void {
     debug(`Got span: ${JSON.stringify(span)}`);
   }
 
   // Get stats according to fields and params specified in query
-  getStats(query) {
+  getStats(query: any = {}): any {
     query = typeof query !== 'undefined' ? query : {};
     query = query !== null ? query : {};
 
@@ -415,19 +421,19 @@ export class SwsProcessor {
     }
 
     // sys, ingress and egress core statistics are returned always
-    const result = {
+    const result: any = {
       startts: this.startts,
     };
     result.all = this.coreStats.getStats();
-    result.egress = this.coreEgressStats.getStats();
-    result.sys = this.sysStats.getStats();
+    //result.egress = this.coreEgressStats.getStats();
+    //result.sys = this.sysStats.getStats();
 
     // add standard properties, returned always
     result.name = this.name;
     result.version = this.version;
     result.hostname = this.hostname;
     result.ip = this.ip;
-    result.apdexThreshold = swsSettings.apdexThreshold;
+    result.apdexThreshold = this.options.apdexThreshold;
 
     let fieldMask = 0;
     for (let i = 0; i < statfields.length; i++) {
@@ -439,16 +445,16 @@ export class SwsProcessor {
 
     // Populate per mask
     if (fieldMask & swsUtil.swsStatFields.method) result.method = this.coreStats.getMethodStats();
-    if (fieldMask & swsUtil.swsStatFields.timeline) result.timeline = this.timeline.getStats();
-    if (fieldMask & swsUtil.swsStatFields.lasterrors) result.lasterrors = this.lastErrors.getStats();
-    if (fieldMask & swsUtil.swsStatFields.longestreq) result.longestreq = this.longestRequests.getStats();
-    if (fieldMask & swsUtil.swsStatFields.apidefs) result.apidefs = this.apiStats.getAPIDefs();
-    if (fieldMask & swsUtil.swsStatFields.apistats) result.apistats = this.apiStats.getAPIStats();
-    if (fieldMask & swsUtil.swsStatFields.errors) result.errors = this.errorsStats.getStats();
+    //if (fieldMask & swsUtil.swsStatFields.timeline) result.timeline = this.timeline.getStats();
+    //if (fieldMask & swsUtil.swsStatFields.lasterrors) result.lasterrors = this.lastErrors.getStats();
+    //if (fieldMask & swsUtil.swsStatFields.longestreq) result.longestreq = this.longestRequests.getStats();
+    //if (fieldMask & swsUtil.swsStatFields.apidefs) result.apidefs = this.apiStats.getAPIDefs();
+    //if (fieldMask & swsUtil.swsStatFields.apistats) result.apistats = this.apiStats.getAPIStats();
+    //if (fieldMask & swsUtil.swsStatFields.errors) result.errors = this.errorsStats.getStats();
 
     if (fieldMask & swsUtil.swsStatFields.apiop) {
       if ('path' in query && 'method' in query) {
-        result.apiop = this.apiStats.getAPIOperationStats(query.path, query.method);
+        //result.apiop = this.apiStats.getAPIOperationStats(query.path, query.method);
       }
     }
 

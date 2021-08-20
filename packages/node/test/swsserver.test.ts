@@ -27,25 +27,7 @@ describe('SwsServer Test', function () {
     expect(opened).toBeTruthy();
   }, 3000);
 
-  it('Should wait', async () => {
+  it.skip('Should wait', async () => {
     await delay(60000);
   }, 150000);
-
-  /*
-  it('Should register Prometheus data source', async () => {
-    const ds = new DataSource({
-      id: '1',
-      type: 'prometheus',
-      settings: {
-        url: prometheusURL,
-      },
-    });
-
-    const testResult = await prometheus.testDataSource(ds);
-    expect(testResult.success).toBeTruthy();
-
-    const registerResult = await prometheus.registerDataSource(ds);
-    expect(registerResult.success).toBeTruthy();
-  });
-  */
 });

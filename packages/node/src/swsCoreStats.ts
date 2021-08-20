@@ -1,56 +1,53 @@
+import { SwsOptions } from './swsoptions';
+
 /**
- * API usage statistics data
- * TEMP TODO Revisit
+ * Core statistics data
  */
 
-'use strict';
-
-const util = require('util');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('sws:corestats');
+
 const promClient = require('prom-client');
-const swsSettings = require('./swssettings');
 const swsMetrics = require('./swsmetrics');
-const swsUtil = require('./swsUtil');
-const SwsReqResStats = require('./swsReqResStats');
+
+//import * as swsUtil from './swsUtil';
+import { SwsReqResStats } from './swsReqResStats';
 
 /* swagger=stats Prometheus metrics */
-class SwsCoreStats {
-  constructor() {
+export class SwsCoreStats {
+  // Options
+  protected options: SwsOptions;
+
+  // Statistics for all requests
+  protected all: SwsReqResStats;
+
+  // Statistics for requests by method
+  // Initialized with most frequent ones, other methods will be added on demand if actually used
+  protected method: any | null = null;
+
+  // Prometheus metrics
+  protected promClientMetrics: any = {};
+
+  constructor(options: SwsOptions) {
+    this.options = options;
     // Statistics for all requests
-    this.all = null;
-
-    // Statistics for requests by method
-    // Initialized with most frequent ones, other methods will be added on demand if actually used
-    this.method = null;
-
-    // Additional prefix for prometheus metrics. Used if this coreStats instance
-    // plays special role, i.e. count stats for egress
-    this.metricsRolePrefix = '';
-
-    // Prometheus metrics
-    this.promClientMetrics = {};
-  }
-
-  // Initialize
-  initialize(metricsRolePrefix) {
-    this.metricsRolePrefix = metricsRolePrefix || '';
-
-    // Statistics for all requests
-    this.all = new SwsReqResStats(swsSettings.apdexThreshold);
-
+    this.all = new SwsReqResStats(this.options.apdexThreshold);
     // Statistics for requests by method
     // Initialized with most frequent ones, other methods will be added on demand if actually used
     this.method = {
-      GET: new SwsReqResStats(swsSettings.apdexThreshold),
-      POST: new SwsReqResStats(swsSettings.apdexThreshold),
-      PUT: new SwsReqResStats(swsSettings.apdexThreshold),
-      DELETE: new SwsReqResStats(swsSettings.apdexThreshold),
+      GET: new SwsReqResStats(this.options.apdexThreshold),
+      POST: new SwsReqResStats(this.options.apdexThreshold),
+      PUT: new SwsReqResStats(this.options.apdexThreshold),
+      DELETE: new SwsReqResStats(this.options.apdexThreshold),
     };
+  }
 
+  // Initialize
+  initialize() {
     // metrics
     swsMetrics.clearPrometheusMetrics(this.promClientMetrics);
 
-    let prefix = swsSettings.metricsPrefix + this.metricsRolePrefix;
+    const prefix = this.options.metricsPrefix;
     this.promClientMetrics = swsMetrics.getPrometheusMetrics(prefix, swsMetrics.coreMetricsDefs);
   }
 
@@ -63,15 +60,16 @@ class SwsCoreStats {
   }
 
   // Update timeline and stats per tick
-  tick(ts, totalElapsedSec) {
+  tick(ts: number, totalElapsedSec: number): void {
     // Rates
     this.all.updateRates(totalElapsedSec);
-    for (let mname of Object.keys(this.method)) {
-      this.method[mname].updateRates(totalElapsedSec);
+    for (const methodName of Object.keys(this.method)) {
+      this.method[methodName].updateRates(totalElapsedSec);
     }
   }
 
   // Count request
+  /*
   countRequest(req) {
     // Count in all
     this.all.countRequest(req.sws.req_clength);
@@ -93,7 +91,23 @@ class SwsCoreStats {
       250000
     );
   }
+  */
 
+  /*
+      if("sws" in req) {
+          startts = req.sws.startts;
+          timelineid = req.sws.timelineid;
+          var endts = Date.now();
+          req['sws'].endts = endts;
+          duration = endts - startts;
+          req['sws'].duration = duration;
+          req['sws'].res_clength = resContentLength;
+          path = req['sws'].api_path;
+          clearTimeout(req.sws.inflightTimer);
+      }
+   */
+
+  /*
   countResponse(res) {
     var req = res._swsReq;
 
@@ -102,20 +116,6 @@ class SwsCoreStats {
     let resContentLength = req.sws.res_clength || 0;
     // let timelineid = req.sws.timelineid || 0;
     // let path = req.sws.api_path || req.sws.originalUrl || req.originalUrl;
-
-    /*
-        if("sws" in req) {
-            startts = req.sws.startts;
-            timelineid = req.sws.timelineid;
-            var endts = Date.now();
-            req['sws'].endts = endts;
-            duration = endts - startts;
-            req['sws'].duration = duration;
-            req['sws'].res_clength = resContentLength;
-            path = req['sws'].api_path;
-            clearTimeout(req.sws.inflightTimer);
-        }
-        */
 
     // Determine status code type
     var codeclass = swsUtil.getStatusCodeClass(res.statusCode);
@@ -149,6 +149,5 @@ class SwsCoreStats {
     }
     this.promClientMetrics.api_all_request_in_processing_total.dec();
   }
+  */
 }
-
-module.exports = SwsCoreStats;

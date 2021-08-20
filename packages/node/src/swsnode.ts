@@ -29,7 +29,7 @@ export class SwsNode {
 
   constructor(options: SwsOptions) {
     this.options = new SwsOptions(options);
-    this.processor = new SwsProcessor();
+    this.processor = new SwsProcessor(this.options);
     this.tracerProvider = new NodeTracerProvider();
   }
 

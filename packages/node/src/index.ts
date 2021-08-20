@@ -1,1 +1,1 @@
-export * from './swsmonitor';
+export * from './swsnode';
