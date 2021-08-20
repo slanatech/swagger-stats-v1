@@ -1,5 +1,5 @@
 {
-  "name": "@swagger-stats/collector",
+  "name": "@swaggerstats/collector",
   "version": "1.0.0-alpha.1",
   "private": true,
   "main": "collector_server.js",

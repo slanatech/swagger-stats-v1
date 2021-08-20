@@ -437,8 +437,12 @@ export class SwsProcessor {
 
     let fieldMask = 0;
     for (let i = 0; i < statfields.length; i++) {
-      const fld = statfields[i];
-      if (fld in swsUtil.swsStatFields) fieldMask |= swsUtil.swsStatFields[fld];
+      let fld: keyof typeof swsUtil.swsStatFields;
+      // TODO Double-check if this works
+      if (statfields[i] in swsUtil.swsStatFields) {
+        fld = statfields[i];
+        fieldMask |= swsUtil.swsStatFields[fld];
+      }
     }
 
     //console.log('Field mask:' + fieldMask.toString(2) );

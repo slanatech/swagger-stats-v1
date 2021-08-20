@@ -5,10 +5,10 @@ import { SwsOptions } from './swsoptions';
  */
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const debug = require('debug')('sws:corestats');
+//const debug = require('debug')('sws:corestats');
 
-const promClient = require('prom-client');
-const swsMetrics = require('./swsmetrics');
+//const promClient = require('prom-client');
+import { SwsMetrics } from './swsmetrics';
 
 //import * as swsUtil from './swsUtil';
 import { SwsReqResStats } from './swsReqResStats';
@@ -28,6 +28,9 @@ export class SwsCoreStats {
   // Prometheus metrics
   protected promClientMetrics: any = {};
 
+  // TODO Revisit - keep all metrics in one place - move up to processor
+  protected swsMetrics: SwsMetrics = new SwsMetrics();
+
   constructor(options: SwsOptions) {
     this.options = options;
     // Statistics for all requests
@@ -45,10 +48,10 @@ export class SwsCoreStats {
   // Initialize
   initialize() {
     // metrics
-    swsMetrics.clearPrometheusMetrics(this.promClientMetrics);
+    this.swsMetrics.clearPrometheusMetrics(this.promClientMetrics);
 
     const prefix = this.options.metricsPrefix;
-    this.promClientMetrics = swsMetrics.getPrometheusMetrics(prefix, swsMetrics.coreMetricsDefs);
+    this.promClientMetrics = this.swsMetrics.getPrometheusMetrics(prefix, this.swsMetrics.coreMetricsDefs);
   }
 
   getStats() {
