@@ -107,8 +107,8 @@ export class SwsMetrics {
       const metricConfig = {
         name: prefix + metricId,
         help: metricDef.help,
-        labelNames: undefined,
-        buckets: undefined,
+        labelNames: [],
+        buckets: [],
       };
       if ('labelNames' in metricDef) {
         metricConfig.labelNames = metricDef.labelNames;

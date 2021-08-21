@@ -1,7 +1,12 @@
+import { SwsOptions } from '../src/swsoptions';
+import { SwsProcessor } from '../src/swsprocessor';
 import { SwsServer } from '../src/swsserver';
 import WebSocket from 'ws';
 
-const swsServer = new SwsServer();
+const swsOptions = new SwsOptions();
+const swsProcessor = new SwsProcessor(swsOptions);
+swsProcessor.init();
+const swsServer = new SwsServer(swsOptions, swsProcessor);
 let swsClient: any | null = null;
 
 const delay = function (t: number) {

@@ -13,8 +13,10 @@ import { SimpleSpanProcessor } from '@opentelemetry/tracing';
 import { SwsOptions } from './swsoptions';
 import { SwsSpanExporter } from './swsspanexporter';
 import { SwsProcessor } from './swsprocessor';
+import { SwsServer } from './swsserver';
+
 import Debug from 'debug';
-const debug = Debug('sws:monitor');
+const debug = Debug('sws:node');
 
 // TODO Tracer
 //  const opentelemetry = require('@opentelemetry/api');
@@ -26,15 +28,18 @@ export class SwsNode {
   public options: SwsOptions;
   public processor: SwsProcessor;
   public tracerProvider: NodeTracerProvider;
+  public server: SwsServer;
 
-  constructor(options: SwsOptions) {
+  constructor(options: any = {}) {
     this.options = new SwsOptions(options);
     this.processor = new SwsProcessor(this.options);
     this.tracerProvider = new NodeTracerProvider();
+    this.server = new SwsServer(this.options, this.processor);
   }
 
   start() {
     this.initializeOpenTracing(this.options);
+    this.server.start();
   }
 
   // This is how to add custom attributes to span based on request / response

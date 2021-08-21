@@ -7,6 +7,7 @@
   "types": "build/src/index.d.ts",
   "scripts": {
     "compile": "tsc --build",
+    "postcompile": "ncp ../../node_modules/@swaggerstats/ui/dist ./build/ui",
     "clean": "tsc --build --clean",
     "test": "jest",
     "test2": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
@@ -89,6 +90,7 @@
     "swagger-parser": "^10.0.2",
     "@types/debug": "^4.1.7",
     "@types/ws": "^7.4.7",
-    "@types/node-static": "^0.7.7"
+    "@types/node-static": "^0.7.7",
+    "@swaggerstats/ui": "1.0.0-alpha.1"
   }
 }

@@ -1,20 +1,34 @@
 import { createServer, Server } from 'http';
+import * as path from 'path';
 import { parse } from 'url';
 import * as WebSocket from 'ws';
 const WebSocketServer = WebSocket.Server;
 // @ts-ignore
 import * as NodeStatic from 'node-static';
+import { SwsOptions } from './swsoptions';
+import { SwsProcessor } from './swsprocessor';
+
 import Debug from 'debug';
 const debug = Debug('sws:server');
 
+// TODO how to suppress traces on internal swagger-stats API calls ?
+
+// Swagger-stats server - serves metrics, API and UI on designated port
+// Supports web sockets for efficient data push to UI
 export class SwsServer {
+  protected _options: SwsOptions;
+  protected _processor: SwsProcessor;
+  protected _port: number;
   protected _stopped = true;
   protected _server: Server | null = null;
   protected _wss: any | null = null;
   protected _staticServer: any | null = null;
 
-  constructor() {
+  constructor(options: SwsOptions, processor: SwsProcessor) {
     this._stopped = true;
+    this._options = options;
+    this._processor = processor;
+    this._port = this._options.port || 8086;
   }
 
   start(): void {
@@ -22,7 +36,8 @@ export class SwsServer {
       this.handleReq(req, res);
     });
     this._wss = new WebSocketServer({ noServer: true });
-    this._staticServer = new NodeStatic.Server('./public');
+    // Expect 'ui' folder to be located under build, i.e. /build/ui
+    this._staticServer = new NodeStatic.Server(path.join(__dirname, '..', 'ui'));
 
     this._wss.on('connection', (ws: any) => {
       debug(`Got wss on connection!`);
@@ -39,14 +54,25 @@ export class SwsServer {
       }
     });
 
-    this._server.listen(8086);
+    this._server.keepAliveTimeout = 61 * 1000;
+    this._server.headersTimeout = 65 * 1000;
+    // bind to all interfaces
+    this._server.listen(this._port, '0.0.0.0', () => {
+      debug(`swagger-stats server started on port ${this._port}, URI http://localhost:${this._port}`);
+    });
   }
 
   handleReq(req: any, res: any) {
-    debug(`Got req`);
-    //res.setHeader('Content-Type', 'application/json;charset=utf-8');
-    //return res.end(JSON.stringify({ status: 'ok' }));
-    // TODO Handle API first, then fallback to serving static files if it's not API request
+    //debug(`Got req`);
+    // Handle API first, then fallback to serving static files if it's not API request
+    if (req.url.startsWith('/test')) {
+      res.setHeader('Content-Type', 'application/json;charset=utf-8');
+      return res.end(JSON.stringify({ status: 'ok' }));
+    }
+    // Support vue router history mode - if req starts with /sws, serve index.html
+    if (req.url.startsWith('/sws')) {
+      req.url = '/index.html';
+    }
     req
       .addListener('end', () => {
         this._staticServer.serve(req, res);

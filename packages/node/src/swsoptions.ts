@@ -5,6 +5,11 @@ import os from 'os';
 
 /* swagger=stats settings */
 export class SwsOptions {
+  // Port for embedded swagger-stats server that serves metrics, API and UI.
+  // Must be different than the main port[s] of node service where swagger-stats is used.
+  // Using separate port is more secure, allowing, for example, not exposing metrics and UI via LB
+  public port: number;
+
   // Hostname. Will attempt to detect if not explicitly provided
   public hostname: string;
 
@@ -119,7 +124,8 @@ export class SwsOptions {
   // Prometheus metrics prefix. Will be prepended to metric name if specified.
   public metricsPrefix: string;
 
-  constructor(options: any) {
+  constructor(options: any = {}) {
+    this.port = 8086;
     this.hostname = os.hostname();
     this.name = this.hostname;
     this.version = '';

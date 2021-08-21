@@ -11,11 +11,9 @@ const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
-// opa2
-
-const { SwsMonitor } = require('@swaggerstats/node');
-const swsMonitor = new SwsMonitor();
-swsMonitor.start({});
+const { SwsNode } = require('@swaggerstats/node');
+const swsNode = new SwsNode();
+swsNode.start();
 
 /* This exports traces to OpenTelemetry Collector Jaeger receiver
 let exporter = new JaegerExporter({
@@ -28,7 +26,7 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 */
 
 // Set service name
-swsMonitor.tracerProvider.resource.attributes['service.name'] = 'spectest';
+swsNode.tracerProvider.resource.attributes['service.name'] = 'spectest';
 /*
 const collectorOptions = {
   url: 'grpc://localhost:4327',
@@ -45,31 +43,27 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSp
 //});
 
 const http = require('http');
-const path = require('path');
 const debug = require('debug')('sws:spectest');
 
 //http.globalAgent.keepAlive = true;
 
 // Prometheus Client
 const promClient = require('prom-client');
-const collectDefaultMetrics = promClient.collectDefaultMetrics;
-// Probe every 1 second
-collectDefaultMetrics({ timeout: 1000 });
+//const collectDefaultMetrics = promClient.collectDefaultMetrics;
+//collectDefaultMetrics({ timeout: 1000 });
 
 const RestOp = require('./restop');
 
 // Server
-var server = null;
+let server = null;
 
 // Express and middlewares
-var express = require('express');
-var expressBodyParser = require('body-parser');
+let express = require('express');
+let expressBodyParser = require('body-parser');
 
-var swaggerParser = require('swagger-parser');
+let swaggerParser = require('swagger-parser');
 
-var swStats = require('@swaggerstats/node'); // require('swagger-stats');
-
-var app = (module.exports = express());
+let app = (module.exports = express());
 app.use(expressBodyParser.json());
 app.use(expressBodyParser.urlencoded({ extended: true }));
 
@@ -96,17 +90,17 @@ app.get('/metrics', function (req, res) {
 });
 
 // Testing validation of 3rd-party API spec
-var swaggerSpec = null;
-var parser = new swaggerParser();
+let swaggerSpec = null;
+let parser = new swaggerParser();
 
-//var specLocation = 'petstore3.yaml';
-var specLocation = 'petstore.yaml';
+//let specLocation = 'petstore3.yaml';
+let specLocation = 'petstore.yaml';
 
 if (process.env.SWS_SPECTEST_URL) {
   specLocation = process.env.SWS_SPECTEST_URL;
 }
 
-var tlBucket = 60000;
+let tlBucket = 60000;
 if (process.env.SWS_SPECTEST_TIMEBUCKET) {
   tlBucket = parseInt(process.env.SWS_SPECTEST_TIMEBUCKET);
 }
@@ -118,7 +112,7 @@ parser.validate(specLocation, function (err, api) {
     debug('Success validating swagger file!');
     swaggerSpec = api;
 
-    var swsOptions = {
+    let swsOptions = {
       name: 'swagger-stats-spectest',
       version: '0.95.19',
       hostname: 'hostname',
@@ -195,16 +189,16 @@ parser.validate(specLocation, function (err, api) {
 //             payloadsize:<size of payload JSON to generate>
 //           }
 function mockApiImplementation(req, res, next) {
-  var code = 500;
-  var message = 'MOCK API RESPONSE';
-  var delay = 0;
-  var payloadsize = 0;
+  let code = 500;
+  let message = 'MOCK API RESPONSE';
+  let delay = 0;
+  let payloadsize = 0;
 
   // get header
-  var hdrSwsRes = req.header('x-sws-res');
+  let hdrSwsRes = req.header('x-sws-res');
 
   if (typeof hdrSwsRes !== 'undefined') {
-    var swsRes = JSON.parse(hdrSwsRes);
+    let swsRes = JSON.parse(hdrSwsRes);
     if ('code' in swsRes) code = swsRes.code;
     if ('message' in swsRes) message = swsRes.message;
     if ('delay' in swsRes) delay = swsRes.delay;
@@ -225,11 +219,11 @@ function mockApiSendResponse(res, code, message, payloadsize) {
     res.status(code).send(message);
   } else {
     // generate dummy payload of approximate size
-    var dummyPayload = [];
-    var adjSize = payloadsize - 4;
+    let dummyPayload = [];
+    let adjSize = payloadsize - 4;
     if (adjSize <= 0) adjSize = 1;
-    var str = '';
-    for (var i = 0; i < adjSize; i++) str += 'a';
+    let str = '';
+    for (let i = 0; i < adjSize; i++) str += 'a';
     dummyPayload.push(str);
     res.status(code).json(dummyPayload);
   }

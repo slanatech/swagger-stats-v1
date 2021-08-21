@@ -5,19 +5,19 @@ import Test from './views/Test.vue';
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
-  { path: '/', redirect: '/admin/perspective' },
+  { path: '/', redirect: '/sws/perspective' },
   {
-    path: '/admin',
+    path: '/sws',
     component: Admin,
-    redirect: '/admin/perspective',
+    redirect: '/sws/perspective',
     children: [
       {
-        path: '/admin/perspective',
+        path: '/sws/perspective',
         component: Perspective,
         name: 'perspective',
       },
       {
-        path: '/admin/test',
+        path: '/sws/test',
         component: Test,
         name: 'test',
       },
