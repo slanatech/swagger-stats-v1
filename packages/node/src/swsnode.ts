@@ -1,6 +1,9 @@
 /** Swagger-Stats Node monitor.
  *  Initializes OpenTracing, enables auto-instrumentation for node app, and sets up embedded swagger-stats monitoring */
 
+// TODO Refactor using latest packages names and auto-instrumentations-node
+//  https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/metapackages/auto-instrumentations-node
+
 import { Span } from '@opentelemetry/api';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
@@ -8,6 +11,9 @@ import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 //const { HapiInstrumentation } = require('@opentelemetry/instrumentation-hapi');
 import { NodeTracerProvider } from '@opentelemetry/node';
 //const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+
+// Reconsider order of imports - Open Telemetry must be imported before everything else, i.e. before http imports
+
 import { ClientRequest, IncomingMessage, ServerResponse } from 'http';
 import { SimpleSpanProcessor } from '@opentelemetry/tracing';
 import { SwsOptions } from './swsoptions';
@@ -38,8 +44,10 @@ export class SwsNode {
   }
 
   start() {
-    this.initializeOpenTracing(this.options);
+    //
     this.server.start();
+    // Consider using ignoreIncomingPaths option of http instrumentation to suppress tracing of swagger-stats API
+    this.initializeOpenTracing(this.options);
   }
 
   // This is how to add custom attributes to span based on request / response
