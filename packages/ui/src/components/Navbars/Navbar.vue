@@ -12,12 +12,12 @@
       <div :class="{ hidden: !showMenu, flex: showMenu }" class="lg:flex lg:flex-grow items-center">
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
           <li class="nav-item">
-            <router-link to="/sws/test">
+            <router-link to="/swsux/test">
               <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"> <i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Test</span> </a>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/sws/perspective">
+            <router-link to="/swsux/perspective">
               <a v-bind:class="{ 'opacity-60': !perspectiveActive, 'opacity-100': perspectiveActive }" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
                 <!--<i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Perspective</span>-->
                 <BeakerIcon class="h-5 w-5" /><span class="ml-2">Perspective</span>

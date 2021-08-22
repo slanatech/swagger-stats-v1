@@ -12,9 +12,6 @@
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "connect-history-api-fallback": "^1.6.0",
-    "body-parser": "^1.18.2",
     "moment": "^2.29.1",
     "uuid": "^8.3.2",
     "axios": "^0.21.1",
@@ -50,6 +47,8 @@
     "vue-sidebar-menu": "^4.7.4",
     "d3": "^7.0.0",
     "@observablehq/stdlib": "^3.8.0",
-    "loglevel": "^1.7.1"
+    "loglevel": "^1.7.1",
+    "socket.io-client": "^4.1.3"
   }
 }
+

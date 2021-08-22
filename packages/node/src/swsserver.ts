@@ -1,6 +1,5 @@
 import { createServer, Server } from 'http';
 import * as path from 'path';
-import { parse } from 'url';
 import * as WebSocket from 'ws';
 const WebSocketServer = WebSocket.Server;
 // @ts-ignore
@@ -44,8 +43,7 @@ export class SwsServer {
     });
 
     this._server.on('upgrade', (request, socket, head) => {
-      const { pathname } = parse(request.url);
-      if (pathname === '/sws') {
+      if (request.url.startsWith('/sws')) {
         this._wss.handleUpgrade(request, socket, head, (ws: any) => {
           this._wss.emit('connection', ws, request);
         });
@@ -70,7 +68,7 @@ export class SwsServer {
       return res.end(JSON.stringify({ status: 'ok' }));
     }
     // Support vue router history mode - if req starts with /sws, serve index.html
-    if (req.url.startsWith('/sws')) {
+    if (req.url.startsWith('/swsux')) {
       req.url = '/index.html';
     }
     req

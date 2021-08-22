@@ -2,191 +2,200 @@
   <div ref="container" class="db-d3-horizon"></div>
 </template>
 <script>
-import * as d3 from 'd3';
-import log from '../log';
-import DOMuid from './domuid.js';
-/**
- * D3 Directed Chord Diagram.
- * Based on https://observablehq.com/@d3/directed-chord-diagram
- *
- */
-export default {
-  name: 'DbChord',
-  props: {
-    /**
-     * Chart Data
-     */
-    data: {
-      type: Array,
-      default: () => []
+  import * as d3 from 'd3';
+  import log from '../../store/log';
+  import DOMuid from './domuid.js';
+  /**
+   * D3 Directed Chord Diagram.
+   * Based on https://observablehq.com/@d3/directed-chord-diagram
+   *
+   */
+  export default {
+    name: 'DbChord',
+    props: {
+      /**
+       * Chart Data
+       */
+      data: {
+        type: Array,
+        default: () => [],
+      },
+      /**
+       * Height of each series in pixels.
+       */
+      seriesHeight: {
+        type: Number,
+        default: 23,
+      },
+      /**
+       * Number of overlapping color steps, in range 1-9
+       */
+      colorSteps: {
+        type: Number,
+        default: 7,
+      },
+      /**
+       * Color scheme
+       * Use one of Discrete Diverging color schemes from d3-scale-chromatic:
+       *
+       * `schemeBrBG,schemePRGn, ...`
+       *
+       * See https://github.com/d3/d3-scale-chromatic
+       */
+      scheme: {
+        type: String,
+        default: 'schemePuBuGn',
+      },
+      curve: {
+        type: String,
+        default: 'curveBasis',
+      },
     },
-    /**
-     * Height of each series in pixels.
-     */
-    seriesHeight: {
-      type: Number,
-      default: 23
+    data() {
+      return {
+        graph: null,
+        overlap: 7,
+      };
     },
-    /**
-     * Number of overlapping color steps, in range 1-9
-     */
-    colorSteps: {
-      type: Number,
-      default: 7
-    },
-    /**
-     * Color scheme
-     * Use one of Discrete Diverging color schemes from d3-scale-chromatic:
-     *
-     * `schemeBrBG,schemePRGn, ...`
-     *
-     * See https://github.com/d3/d3-scale-chromatic
-     */
-    scheme: {
-      type: String,
-      default: 'schemePuBuGn'
-    },
-    curve: {
-      type: String,
-      default: 'curveBasis'
-    }
-  },
-  data() {
-    return {
-      graph: null,
-      overlap: 7
-    };
-  },
-  mounted() {
-    window.addEventListener('resize', this.handleResize);
-    this.$nextTick(() => {
-      this.render();
-    });
-  },
-  beforeDestroy: function() {
-    log.info('beforeDestroy!');
-    window.removeEventListener('resize', this.handleResize);
-  },
-  watch: {
-    data: function() {
-      // Rendering is triggered when data changed
-      // To force re-render if only options changed, call $refs.child.render
+    mounted() {
+      window.addEventListener('resize', this.handleResize);
       this.$nextTick(() => {
         this.render();
       });
     },
-    dark: function() {
-      this.$nextTick(() => {
-        this.render();
-      });
-    }
-  },
-  methods: {
-    handleResize(/*event*/) {
-      //console.log('handleResize!');
-      this.$nextTick(() => {
-        this.render();
-      });
+    beforeDestroy: function () {
+      log.info('beforeDestroy!');
+      window.removeEventListener('resize', this.handleResize);
     },
-    getColor(i) {
-      if (!this.dark) {
-        // For Light scheme, get color in straight order
-        return d3[this.scheme][Math.max(3, this.overlap)][i + Math.max(0, 3 - this.overlap)];
-      } else {
-        // For dark scheme, need to take color in reverse order
-        let csize = Math.max(3, this.overlap);
-        let cidx = csize - 1 - (i + Math.max(0, 3 - this.overlap));
-        return d3[this.scheme][csize][cidx];
-      }
+    watch: {
+      data: function () {
+        // Rendering is triggered when data changed
+        // To force re-render if only options changed, call $refs.child.render
+        this.$nextTick(() => {
+          this.render();
+        });
+      },
+      dark: function () {
+        this.$nextTick(() => {
+          this.render();
+        });
+      },
     },
-    render() {
-      log.info('Rendering d3 ...');
+    methods: {
+      handleResize(/*event*/) {
+        //console.log('handleResize!');
+        this.$nextTick(() => {
+          this.render();
+        });
+      },
+      getColor(i) {
+        if (!this.dark) {
+          // For Light scheme, get color in straight order
+          return d3[this.scheme][Math.max(3, this.overlap)][i + Math.max(0, 3 - this.overlap)];
+        } else {
+          // For dark scheme, need to take color in reverse order
+          let csize = Math.max(3, this.overlap);
+          let cidx = csize - 1 - (i + Math.max(0, 3 - this.overlap));
+          return d3[this.scheme][csize][cidx];
+        }
+      },
+      render() {
+        log.info('Rendering d3 ...');
 
-      let comp = this;
+        let comp = this;
 
-      // Clear whole content of container
-      while (this.$refs.container.lastChild) {
-        this.$refs.container.removeChild(this.$refs.container.lastChild);
-      }
+        // Clear whole content of container
+        while (this.$refs.container.lastChild) {
+          this.$refs.container.removeChild(this.$refs.container.lastChild);
+        }
 
-      let data = this.data;
+        let data = this.data;
 
-      let names = Array.from(new Set(data.flatMap(d => [d.source, d.target])));
-      const index = new Map(names.map((name, i) => [name, i]));
-      const matrix = Array.from(index, () => new Array(names.length).fill(0));
-      for (const {source, target, value} of data) matrix[index.get(source)][index.get(target)] += value;
+        let names = Array.from(new Set(data.flatMap((d) => [d.source, d.target])));
+        const index = new Map(names.map((name, i) => [name, i]));
+        const matrix = Array.from(index, () => new Array(names.length).fill(0));
+        for (const { source, target, value } of data) matrix[index.get(source)][index.get(target)] += value;
 
-      let margin = { top: 30, right: 10, bottom: 0, left: 10 };
+        let margin = { top: 30, right: 10, bottom: 0, left: 10 };
 
-      let height = this.$refs.container.clientHeight; //width;
-      let width = height; //this.$refs.container.clientWidth - 40;
+        let height = this.$refs.container.clientHeight; //width;
+        let width = height; //this.$refs.container.clientWidth - 40;
 
-      let innerRadius = Math.min(width, height) * 0.5 - 20
-      let outerRadius = innerRadius + 6;
+        let innerRadius = Math.min(width, height) * 0.5 - 20;
+        let outerRadius = innerRadius + 6;
 
-      let chord = d3.chordDirected()
-        .padAngle(12 / innerRadius)
-        .sortSubgroups(d3.descending)
-        .sortChords(d3.descending)
+        let chord = d3
+          .chordDirected()
+          .padAngle(12 / innerRadius)
+          .sortSubgroups(d3.descending)
+          .sortChords(d3.descending);
 
-      let arc = d3.arc()
-        .innerRadius(innerRadius)
-        .outerRadius(outerRadius)
+        let arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
 
-      let ribbon = d3.ribbonArrow()
-        .radius(innerRadius - 0.5)
-        .padAngle(1 / innerRadius)
+        let ribbon = d3
+          .ribbonArrow()
+          .radius(innerRadius - 0.5)
+          .padAngle(1 / innerRadius);
 
-      let color = d3.scaleOrdinal(names, d3.schemeCategory10);
+        let color = d3.scaleOrdinal(names, d3.schemeCategory10);
 
-      let formatValue = x => `${x.toFixed(0)}B`;
+        let formatValue = (x) => `${x.toFixed(0)}B`;
 
-      const svg = d3
-        .select(this.$refs.container.appendChild(DOMsvg(width, height)))
-        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+        const svg = d3.select(this.$refs.container.appendChild(DOMsvg(width, height))).attr('viewBox', [-width / 2, -height / 2, width, height]);
 
-      const chords = chord(matrix);
-      const textId = DOMuid("text");
+        const chords = chord(matrix);
+        const textId = DOMuid('text');
 
-      svg.append("path")
-        .attr("id", textId.id)
-        .attr("fill", "none")
-        .attr("d", d3.arc()({outerRadius, startAngle: 0, endAngle: 2 * Math.PI}));
+        svg
+          .append('path')
+          .attr('id', textId.id)
+          .attr('fill', 'none')
+          .attr('d', d3.arc()({ outerRadius, startAngle: 0, endAngle: 2 * Math.PI }));
 
-      svg.append("g")
-        .attr("fill-opacity", 0.75)
-        .selectAll("g")
-        .data(chords)
-        .join("path")
-        .attr("d", ribbon)
-        .attr("fill", d => color(names[d.target.index]))
-        .style("mix-blend-mode", "multiply")
-        .append("title")
-        .text(d => `${names[d.source.index]} owes ${names[d.target.index]} ${formatValue(d.source.value)}`);
+        svg
+          .append('g')
+          .attr('fill-opacity', 0.75)
+          .selectAll('g')
+          .data(chords)
+          .join('path')
+          .attr('d', ribbon)
+          .attr('fill', (d) => color(names[d.target.index]))
+          .style('mix-blend-mode', 'multiply')
+          .append('title')
+          .text((d) => `${names[d.source.index]} owes ${names[d.target.index]} ${formatValue(d.source.value)}`);
 
-
-      svg.append("g")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10)
-        .selectAll("g")
-        .data(chords.groups)
-        .join("g")
-        .call(g => g.append("path")
-          .attr("d", arc)
-          .attr("fill", d => color(names[d.index]))
-          .attr("stroke", "#fff"))
-        .call(g => g.append("text")
-          .attr("dy", -3)
-          .append("textPath")
-          .attr("xlink:href", textId.href)
-          .attr("startOffset", d => d.startAngle * outerRadius)
-          .text(d => names[d.index]))
-        .call(g => g.append("title")
-          .text(d => `${names[d.index]}
+        svg
+          .append('g')
+          .attr('font-family', 'sans-serif')
+          .attr('font-size', 10)
+          .selectAll('g')
+          .data(chords.groups)
+          .join('g')
+          .call((g) =>
+            g
+              .append('path')
+              .attr('d', arc)
+              .attr('fill', (d) => color(names[d.index]))
+              .attr('stroke', '#fff')
+          )
+          .call((g) =>
+            g
+              .append('text')
+              .attr('dy', -3)
+              .append('textPath')
+              .attr('xlink:href', textId.href)
+              .attr('startOffset', (d) => d.startAngle * outerRadius)
+              .text((d) => names[d.index])
+          )
+          .call((g) =>
+            g.append('title').text(
+              (d) => `${names[d.index]}
 owes ${formatValue(d3.sum(matrix[d.index]))}
-is owed ${formatValue(d3.sum(matrix, row => row[d.index]))}`));
+is owed ${formatValue(d3.sum(matrix, (row) => row[d.index]))}`
+            )
+          );
 
-      /*
+        /*
       let step = this.seriesHeight;
       // color steps range is 1-9
       this.overlap = this.colorSteps < 1 ? 1 : this.colorSteps > 9 ? 9 : this.colorSteps;
@@ -302,33 +311,33 @@ is owed ${formatValue(d3.sum(matrix, row => row[d.index]))}`));
       }
       */
 
-      function DOMcontext2d(width, height, dpi) {
-        if (dpi == null) dpi = devicePixelRatio;
-        let canvas = document.createElement('canvas');
-        canvas.width = width * dpi;
-        canvas.height = height * dpi;
-        canvas.style.width = width + 'px';
-        let context = canvas.getContext('2d');
-        context.scale(dpi, dpi);
-        return context;
-      }
+        function DOMcontext2d(width, height, dpi) {
+          if (dpi == null) dpi = devicePixelRatio;
+          let canvas = document.createElement('canvas');
+          canvas.width = width * dpi;
+          canvas.height = height * dpi;
+          canvas.style.width = width + 'px';
+          let context = canvas.getContext('2d');
+          context.scale(dpi, dpi);
+          return context;
+        }
 
-      function DOMsvg(width, height) {
-        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', [0, 0, width, height]);
-        svg.setAttribute('width', width);
-        svg.setAttribute('height', height);
-        return svg;
-      }
-    }
-  }
-};
+        function DOMsvg(width, height) {
+          let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('viewBox', [0, 0, width, height]);
+          svg.setAttribute('width', width);
+          svg.setAttribute('height', height);
+          return svg;
+        }
+      },
+    },
+  };
 </script>
 <style>
-.db-d3-horizon {
-  width: 100%;
-  height: 95%;
-  display: block;
-  position: relative;
-}
+  .db-d3-horizon {
+    width: 100%;
+    height: 95%;
+    display: block;
+    position: relative;
+  }
 </style>

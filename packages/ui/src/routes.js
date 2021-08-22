@@ -7,17 +7,17 @@ import Test from './views/Test.vue';
 export const routes = [
   { path: '/', redirect: '/sws/perspective' },
   {
-    path: '/sws',
+    path: '/swsux',
     component: Admin,
-    redirect: '/sws/perspective',
+    redirect: '/swsux/perspective',
     children: [
       {
-        path: '/sws/perspective',
+        path: '/swsux/perspective',
         component: Perspective,
         name: 'perspective',
       },
       {
-        path: '/sws/test',
+        path: '/swsux/test',
         component: Test,
         name: 'test',
       },
