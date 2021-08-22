@@ -4,7 +4,6 @@
 import { store } from './store';
 import log from './log';
 import { pathOr } from 'ramda';
-import io from 'socket.io-client';
 
 // WebSocket connection to Sws
 class WsConnection {
@@ -14,34 +13,33 @@ class WsConnection {
 
   init() {
     log.info('WS: Creating connection ...');
-    this.socket = io({
-      transportOptions: {
-        polling: {
-          extraHeaders: {},
-        },
-      },
-      path: '/sws',
-      transports: ['websocket'],
-    });
 
-    this.socket.on('connect', () => {
-      log.info(`WS: connected, socket ${this.socket.id}`);
+    let loc = window.location;
+    let wsUri = loc.protocol === 'https:' ? 'wss://' : 'ws://';
+    wsUri += loc.host;
+    wsUri += '/sws';
+    this.socket = new WebSocket(wsUri);
+
+    this.socket.onopen = () => {
+      log.info(`WS: connected`);
+      /*
       setTimeout(
         function (that) {
           that.requestTest();
         },
         500,
         this
-      );
-    });
+      );*/
+    };
 
-    this.socket.on('connect_error', (err) => {
-      log.error(`WS: error when trying to connect: ${err.message}`);
-    });
+    this.socket.onerror = (err) => {
+      log.error(`WS: error ${err.message}`);
+    };
 
-    this.socket.on('event', (evt) => {
-      this.handleEvent(evt);
-    });
+    this.socket.onmessage = (msg) => {
+      log.info(`WS: got message: ${msg.data}`);
+      //this.handleEvent(evt);
+    };
   }
 
   handleEvent(evt) {

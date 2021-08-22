@@ -40,6 +40,7 @@ export class SwsServer {
 
     this._wss.on('connection', (ws: any) => {
       debug(`Got wss on connection!`);
+      ws.send(JSON.stringify({ message: 'connected' }));
     });
 
     this._server.on('upgrade', (request, socket, head) => {
@@ -61,7 +62,7 @@ export class SwsServer {
   }
 
   handleReq(req: any, res: any) {
-    //debug(`Got req`);
+    debug(`Got req: ${req.url}`);
     // Handle API first, then fallback to serving static files if it's not API request
     if (req.url.startsWith('/test')) {
       res.setHeader('Content-Type', 'application/json;charset=utf-8');
