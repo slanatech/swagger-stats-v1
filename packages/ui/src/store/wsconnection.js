@@ -22,6 +22,7 @@ class WsConnection {
 
     this.socket.onopen = () => {
       log.info(`WS: connected`);
+      store.dispatch('setWsConnected', { wsConnected: true });
       /*
       setTimeout(
         function (that) {
@@ -34,6 +35,7 @@ class WsConnection {
 
     this.socket.onerror = (err) => {
       log.error(`WS: error ${err.message}`);
+      store.dispatch('setWsConnected', { wsConnected: false });
     };
 
     this.socket.onmessage = (msg) => {

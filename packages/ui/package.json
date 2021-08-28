@@ -5,6 +5,7 @@
   "description": "Swagger-stats UI",
   "main": "app.js",
   "scripts": {
+    "build": "vite build",
     "ui:dev": "vite --host",
     "ui:build": "vite build",
     "ui:check": "vue-tsc --noEmit --skipLibCheck",

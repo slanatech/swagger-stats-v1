@@ -5,7 +5,7 @@ import Test from './views/Test.vue';
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
-  { path: '/', redirect: '/sws/perspective' },
+  { path: '/', redirect: '/swsux/perspective' },
   {
     path: '/swsux',
     component: Admin,

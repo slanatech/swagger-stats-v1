@@ -39,8 +39,12 @@
               type="button"
               @click="handleDownload"
             >
-              <i class="fas fa-cloud-download-alt"></i> Download
+              <i class="fas fa-cloud-download-alt"></i> Trace
             </button>
+          </li>
+          <li>
+            <StatusOnlineIcon v-if="wsConnected" class="h-9 w-9 text-green-500" />
+            <StatusOfflineIcon v-else class="h-9 w-9 text-red-500" />
           </li>
           <!--<li class="nav-item">
                         <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
@@ -55,18 +59,21 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { mapActions } from 'vuex';
-  import { BeakerIcon } from '@heroicons/vue/solid';
+  import { mapActions, mapState } from 'vuex';
+  import { BeakerIcon, StatusOnlineIcon, StatusOfflineIcon } from '@heroicons/vue/solid';
 
   export default defineComponent({
     name: 'Navbar',
-    components: { BeakerIcon },
+    components: { BeakerIcon, StatusOnlineIcon, StatusOfflineIcon },
     data() {
       return {
         showMenu: false,
       };
     },
     computed: {
+      ...mapState({
+        wsConnected: (state) => state.wsConnected,
+      }),
       currentRouteName(): string {
         return this.$route.name;
       },
@@ -83,9 +90,6 @@
       },
       handleRefresh: function () {
         this.setRefresh();
-      },
-      handleDownload: function () {
-        console.log(`TO BE IMPLEMENTED`);
       },
     },
   });

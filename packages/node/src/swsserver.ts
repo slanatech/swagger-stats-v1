@@ -61,6 +61,7 @@ export class SwsServer {
     });
   }
 
+  // TODO Reconsider URLS - /swsux or /ux vs /sws for API/ws
   handleReq(req: any, res: any) {
     debug(`Got req: ${req.url}`);
     // Handle API first, then fallback to serving static files if it's not API request
