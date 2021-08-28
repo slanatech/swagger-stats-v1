@@ -31,6 +31,12 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/sws': {
+        target: 'http://localhost:8086',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
     },
   },
 });

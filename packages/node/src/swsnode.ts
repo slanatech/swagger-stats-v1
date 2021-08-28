@@ -77,15 +77,7 @@ export class SwsNode {
     //this.provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
     // TODO Supply processor
-    this.tracerProvider.addSpanProcessor(
-      new SimpleSpanProcessor(
-        new SwsSpanExporter({
-          processSpan: () => {
-            debug('TEMP');
-          },
-        })
-      )
-    );
+    this.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new SwsSpanExporter(this.processor)));
     debug(`OpenTelemetry initialized`);
   }
 }

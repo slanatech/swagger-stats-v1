@@ -9,6 +9,7 @@ import { pathOr } from 'ramda';
 class WsConnection {
   constructor() {
     this.socket = null;
+    this.connected = false;
   }
 
   init() {
@@ -22,6 +23,7 @@ class WsConnection {
 
     this.socket.onopen = () => {
       log.info(`WS: connected`);
+      this.connected = true;
       store.dispatch('setWsConnected', { wsConnected: true });
       /*
       setTimeout(
@@ -35,6 +37,7 @@ class WsConnection {
 
     this.socket.onerror = (err) => {
       log.error(`WS: error ${err.message}`);
+      this.connected = false;
       store.dispatch('setWsConnected', { wsConnected: false });
     };
 
@@ -42,6 +45,22 @@ class WsConnection {
       log.info(`WS: got message: ${msg.data}`);
       //this.handleEvent(evt);
     };
+  }
+
+  startTrace() {
+    if (!this.connected) {
+      log.info(`WS: startTrace: not connected - ignored`);
+      return;
+    }
+    this.socket.send(JSON.stringify({ request: 'startTrace' }));
+  }
+
+  stopTrace() {
+    if (!this.connected) {
+      log.info(`WS: stopTrace: not connected - ignored`);
+      return;
+    }
+    this.socket.send(JSON.stringify({ request: 'stopTrace' }));
   }
 
   handleEvent(evt) {

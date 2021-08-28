@@ -2,10 +2,12 @@ import { createServer, Server } from 'http';
 import * as path from 'path';
 import * as WebSocket from 'ws';
 const WebSocketServer = WebSocket.Server;
+//import { pathOr } from 'ramda';
 // @ts-ignore
 import * as NodeStatic from 'node-static';
 import { SwsOptions } from './swsoptions';
 import { SwsProcessor } from './swsprocessor';
+import { SwsSpan } from '@swaggerstats/core';
 
 import Debug from 'debug';
 const debug = Debug('sws:server');
@@ -22,6 +24,7 @@ export class SwsServer {
   protected _server: Server | null = null;
   protected _wss: any | null = null;
   protected _staticServer: any | null = null;
+  protected ws: any | null = null; // TEMP TODO Support many
 
   constructor(options: SwsOptions, processor: SwsProcessor) {
     this._stopped = true;
@@ -31,6 +34,10 @@ export class SwsServer {
   }
 
   start(): void {
+    // Subscribe to events from processor
+    this._processor.on('span', (span) => {
+      this.handleSpan(span);
+    });
     this._server = createServer((req, res) => {
       this.handleReq(req, res);
     });
@@ -40,7 +47,12 @@ export class SwsServer {
 
     this._wss.on('connection', (ws: any) => {
       debug(`Got wss on connection!`);
-      ws.send(JSON.stringify({ message: 'connected' }));
+      ws.send(JSON.stringify({ event: 'connected' }));
+      // TEMP TODO Support many
+      ws.on('message', (message: any) => {
+        this.handleMessage(message);
+      });
+      this.ws = ws;
     });
 
     this._server.on('upgrade', (request, socket, head) => {
@@ -61,6 +73,23 @@ export class SwsServer {
     });
   }
 
+  handleSpan(span: SwsSpan) {
+    debug(`WS: Got span: ${JSON.stringify(span)}`);
+    // TODO TEMP - Refine - send only to clients who started trace
+    this.ws.send(JSON.stringify(span));
+  }
+
+  handleMessage(message: Buffer) {
+    /*const type: string | null = pathOr(null, ['type'], message);
+    const data: any | null = pathOr(null, ['data'], message);
+    if (type !== 'Buffer' || !data) {
+      return;
+    }*/
+    const payload = message.toString();
+    debug(`WS: Got message: ${payload}`);
+    // +++
+  }
+
   // TODO Reconsider URLS - /swsux or /ux vs /sws for API/ws
   handleReq(req: any, res: any) {
     debug(`Got req: ${req.url}`);
@@ -70,7 +99,7 @@ export class SwsServer {
       return res.end(JSON.stringify({ status: 'ok' }));
     }
     // Support vue router history mode - if req starts with /sws, serve index.html
-    if (req.url.startsWith('/swsux')) {
+    if (req.url.startsWith('/ux')) {
       req.url = '/index.html';
     }
     req

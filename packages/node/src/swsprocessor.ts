@@ -1,6 +1,7 @@
 /**
  * swagger-stats Processor. Processes spans and traces, maintains metrics
  */
+import { EventEmitter } from 'events';
 import { SwsOptions } from './swsoptions';
 import { SwsSpan } from '@swaggerstats/core';
 import { SwsCoreStats } from './swsCoreStats';
@@ -23,7 +24,7 @@ const debug = require('debug')('sws:processor');
 //const swsElasticsearchEmitter = require('./swsElasticEmitter');
 
 // swagger-stats Processor. Processes requests / responses and maintains metrics
-export class SwsProcessor {
+export class SwsProcessor extends EventEmitter {
   public options: SwsOptions;
 
   // Timestamp when collecting statistics started
@@ -61,6 +62,7 @@ export class SwsProcessor {
   private timer: any;
 
   constructor(options: SwsOptions) {
+    super();
     this.options = options;
 
     this.startts = Date.now();
@@ -401,6 +403,7 @@ export class SwsProcessor {
   // TEMP IMPLEMENTATION TODO REFINE
   processSpan(span: SwsSpan): void {
     debug(`Got span: ${JSON.stringify(span)}`);
+    this.emit('span', span);
   }
 
   // Get stats according to fields and params specified in query

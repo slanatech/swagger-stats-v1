@@ -12,12 +12,12 @@
       <div :class="{ hidden: !showMenu, flex: showMenu }" class="lg:flex lg:flex-grow items-center">
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
           <li class="nav-item">
-            <router-link to="/swsux/test">
+            <router-link to="/ux/test">
               <a class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"> <i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Test</span> </a>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/swsux/perspective">
+            <router-link to="/ux/perspective">
               <a v-bind:class="{ 'opacity-60': !perspectiveActive, 'opacity-100': perspectiveActive }" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
                 <!--<i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Perspective</span>-->
                 <BeakerIcon class="h-5 w-5" /><span class="ml-2">Perspective</span>
@@ -35,11 +35,20 @@
                     </li>-->
           <li class="nav-item">
             <button
+              v-if="!trace"
               class="bg-green-500 text-white active:bg-green-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
               type="button"
-              @click="handleDownload"
+              @click="onStartTrace"
             >
-              <i class="fas fa-cloud-download-alt"></i> Trace
+              <PlayIcon class="h-5 w-5" />Trace
+            </button>
+            <button
+              v-else
+              class="bg-red-500 text-white active:bg-green-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+              type="button"
+              @click="onStopTrace"
+            >
+              <StopIcon class="h-5 w-5" /><span class="ml-2">Stop</span>
             </button>
           </li>
           <li>
@@ -60,11 +69,11 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { mapActions, mapState } from 'vuex';
-  import { BeakerIcon, StatusOnlineIcon, StatusOfflineIcon } from '@heroicons/vue/solid';
+  import { BeakerIcon, StatusOnlineIcon, StatusOfflineIcon, PlayIcon, StopIcon } from '@heroicons/vue/solid';
 
   export default defineComponent({
     name: 'Navbar',
-    components: { BeakerIcon, StatusOnlineIcon, StatusOfflineIcon },
+    components: { BeakerIcon, StatusOnlineIcon, StatusOfflineIcon, PlayIcon, StopIcon },
     data() {
       return {
         showMenu: false,
@@ -73,6 +82,7 @@
     computed: {
       ...mapState({
         wsConnected: (state) => state.wsConnected,
+        trace: (state) => state.trace,
       }),
       currentRouteName(): string {
         return this.$route.name;
@@ -83,6 +93,8 @@
     },
     methods: {
       ...mapActions({
+        startTrace: 'startTrace',
+        stopTrace: 'stopTrace',
         setRefresh: 'layout/setRefresh',
       }),
       toggleNavbar: function () {
@@ -90,6 +102,12 @@
       },
       handleRefresh: function () {
         this.setRefresh();
+      },
+      onStartTrace: function () {
+        this.startTrace();
+      },
+      onStopTrace: function () {
+        this.stopTrace();
       },
     },
   });
