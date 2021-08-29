@@ -76,7 +76,9 @@ export class SwsServer {
   handleSpan(span: SwsSpan) {
     debug(`WS: Got span: ${JSON.stringify(span)}`);
     // TODO TEMP - Refine - send only to clients who started trace
-    this.ws.send(JSON.stringify(span));
+    if (this.ws) {
+      this.ws.send(JSON.stringify(span));
+    }
   }
 
   handleMessage(message: Buffer) {

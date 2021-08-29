@@ -1,8 +1,6 @@
 // Swagger-Stats must be intialized first thing in the app, before importing other packages
 // Swagger-Stats will perform OpenTelemetry initialization
 
-process.env.OTEL_SERVICE_NAME = 'spectest';
-
 //const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 //const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 //const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
@@ -12,7 +10,9 @@ const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-gr
 const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
 const { SwsNode } = require('@swaggerstats/node');
-const swsNode = new SwsNode();
+const swsNode = new SwsNode({
+  name: 'spectest-service',
+});
 swsNode.start();
 
 /* This exports traces to OpenTelemetry Collector Jaeger receiver
@@ -26,7 +26,7 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 */
 
 // Set service name
-swsNode.tracerProvider.resource.attributes['service.name'] = 'spectest';
+//swsNode.tracerProvider.resource.attributes['service.name'] = 'spectest';
 /*
 const collectorOptions = {
   url: 'grpc://localhost:4327',
