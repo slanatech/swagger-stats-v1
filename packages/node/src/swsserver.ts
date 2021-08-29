@@ -47,7 +47,7 @@ export class SwsServer {
 
     this._wss.on('connection', (ws: any) => {
       debug(`Got wss on connection!`);
-      ws.send(JSON.stringify({ event: 'connected' }));
+      ws.send(JSON.stringify({ type: 'connected' }));
       // TEMP TODO Support many
       ws.on('message', (message: any) => {
         this.handleMessage(message);
@@ -77,7 +77,7 @@ export class SwsServer {
     debug(`WS: Got span: ${JSON.stringify(span)}`);
     // TODO TEMP - Refine - send only to clients who started trace
     if (this.ws) {
-      this.ws.send(JSON.stringify(span));
+      this.ws.send(JSON.stringify({ type: 'span', data: span }));
     }
   }
 

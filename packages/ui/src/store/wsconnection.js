@@ -4,6 +4,7 @@
 import { store } from './store';
 import log from './log';
 import { pathOr } from 'ramda';
+import { bus } from './bus';
 
 // WebSocket connection to Sws
 class WsConnection {
@@ -43,6 +44,17 @@ class WsConnection {
 
     this.socket.onmessage = (msg) => {
       log.info(`WS: got message: ${msg.data}`);
+      let event = null;
+      try {
+        event = JSON.parse(msg.data);
+      } catch (e) {
+        // TODO
+        return;
+      }
+
+      if (event.type === 'span') {
+        bus.emit('span', event.data);
+      }
       //this.handleEvent(evt);
     };
   }

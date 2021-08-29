@@ -17,6 +17,13 @@
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link to="/ux/spans">
+              <a v-bind:class="{ 'opacity-60': !perspectiveActive, 'opacity-100': perspectiveActive }" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                <BeakerIcon class="h-5 w-5" /><span class="ml-2">Spans</span>
+              </a>
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/ux/perspective">
               <a v-bind:class="{ 'opacity-60': !perspectiveActive, 'opacity-100': perspectiveActive }" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
                 <!--<i class="fas fa-server text-lg leading-lg text-white" /><span class="ml-2">Perspective</span>-->
@@ -36,7 +43,7 @@
           <li class="nav-item">
             <button
               v-if="!trace"
-              class="bg-green-500 text-white active:bg-green-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+              class="flex items-center bg-green-500 text-white active:bg-green-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
               type="button"
               @click="onStartTrace"
             >
@@ -44,7 +51,7 @@
             </button>
             <button
               v-else
-              class="bg-red-500 text-white active:bg-green-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+              class="flex items-center bg-red-500 text-white active:bg-green-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
               type="button"
               @click="onStopTrace"
             >

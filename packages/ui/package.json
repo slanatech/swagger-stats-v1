@@ -48,7 +48,8 @@
     "vue-sidebar-menu": "^4.7.4",
     "d3": "^7.0.0",
     "@observablehq/stdlib": "^3.8.0",
-    "loglevel": "^1.7.1"
+    "loglevel": "^1.7.1",
+    "mitt": "^3.0.0"
   }
 }
 
