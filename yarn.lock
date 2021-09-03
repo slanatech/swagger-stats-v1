@@ -557,13 +557,13 @@
   dependencies:
     ajv "^6.12.6"
 
-"@finos/perspective-viewer-d3fc@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-d3fc/-/perspective-viewer-d3fc-0.10.0.tgz#9c4005c5b25e2571c12358be43c7175e38167e0f"
-  integrity sha512-mdZb2PZ1FfiutgaIyv93l3lFMCoRGwucojjdzUPhDVcqu+pwdcgdw+hSsk6/zudT1SzJbleN56mXDgvUFcvNtA==
+"@finos/perspective-viewer-d3fc@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-d3fc/-/perspective-viewer-d3fc-0.10.3.tgz#1dec23d0f892bb39f3760e10a4ae213062cfa686"
+  integrity sha512-Ka5U9BdtmXFwaFE9x5iRduJ3TR5zYhr9wgmxTdrZv5BNmsUHUYJHzKnLKUXiAqhboHGqQogbjpTjqmaqKJ81yA==
   dependencies:
-    "@finos/perspective" "^0.10.0"
-    "@finos/perspective-viewer" "^0.10.0"
+    "@finos/perspective" "^0.10.3"
+    "@finos/perspective-viewer" "^0.10.3"
     babel-runtime "^6.26.0"
     chroma-js "^1.3.4"
     core-js "^3.6.4"
@@ -572,23 +572,22 @@
     d3fc "14.0.40"
     gradient-parser "0.1.5"
 
-"@finos/perspective-viewer-datagrid@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-datagrid/-/perspective-viewer-datagrid-0.10.0.tgz#9097071f539e1753630099e2eacec4ef74e43f76"
-  integrity sha512-icZQ3gmH+Fz7iDTPVAPOg96lyc1gL2zZd9hR6s9ofVn/kxizSW7aLA5oOKOXRhBt6dIGikt0cqOOSA/pW2gFZg==
+"@finos/perspective-viewer-datagrid@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-datagrid/-/perspective-viewer-datagrid-0.10.3.tgz#26f4aba6b2a33b209a4755ff1b41d7254b9bd9ba"
+  integrity sha512-xI31LLklXFl8lZB8XET7SUprCy3BBMU/fRiiwFbYvZy94Latgt+XX8Zg7lnBRdbmyQY0Vh3fp92XCGP8vsX+gA==
   dependencies:
-    "@finos/perspective" "^0.10.0"
-    "@finos/perspective-viewer" "^0.10.0"
+    "@finos/perspective" "^0.10.3"
+    "@finos/perspective-viewer" "^0.10.3"
     chroma-js "^1.3.4"
-    regular-table "=0.4.0"
+    regular-table "=0.4.1"
 
-"@finos/perspective-viewer@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@finos/perspective-viewer/-/perspective-viewer-0.10.0.tgz#b8b3270126da54c100205044d3097015a172dd49"
-  integrity sha512-jF5jtaPHMVcUr8FmtVaSQgopDu1zj3q3QkGmpwO/Jv32qfdIkd/HfE8BM8BzDgiVfFIv4jzSQeaIn1a8JBt6Ag==
+"@finos/perspective-viewer@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@finos/perspective-viewer/-/perspective-viewer-0.10.3.tgz#a9212597a3c7ca1cce55bbc63d76a1c161383a2b"
+  integrity sha512-j41OBq+ofJjoErhblnIvEi0HwredOwuhyzf/jyxV4zwnK7akMxpf1HvzYhNC6Yx6YDNPyMT0BLfRFeEt3Flxrw==
   dependencies:
-    "@babel/runtime" "^7.8.4"
-    "@finos/perspective" "^0.10.0"
+    "@finos/perspective" "^0.10.3"
     "@types/react" "^16.8.6"
     awesomplete "^1.1.2"
     core-js "^3.6.4"
@@ -600,10 +599,10 @@
     monaco-editor "0.24.0"
     monaco-editor-webpack-plugin "3.1.0"
 
-"@finos/perspective@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@finos/perspective/-/perspective-0.10.0.tgz#7eea7701e533dc3ee52e33760ca06e3b77328b32"
-  integrity sha512-PmsUiaOjChJaivDxGLNH8vAw8lG98OLlPjKCvci3iAFAEclGKMhSkHP/qYDU+NUZSPqsvk2Rf66TFsK8aiy/jg==
+"@finos/perspective@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@finos/perspective/-/perspective-0.10.3.tgz#a6ab9a941ff78091c7f876b63e78e5df84703d16"
+  integrity sha512-l2E/TkPU0T+pASsBYQW1GdHTrm0ur7IcRYTXv2PlWw5JyLZCBXCodT1ilIO/dfo3TnxlYsCjgmo0o1K/jNSYXg==
   dependencies:
     "@babel/runtime" "^7.8.4"
     core-js "^3.6.4"
@@ -8078,10 +8077,10 @@ regexpp@^3.1.0:
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-3.2.0.tgz#0425a2768d8f23bad70ca4b90461fa2f1213e1b2"
   integrity sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==
 
-regular-table@=0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/regular-table/-/regular-table-0.4.0.tgz#41d769e9dcd6a3a6c4d2f4832132562d88a63515"
-  integrity sha512-O44E81FcEnGZjWE/hilOZPODo3dAzbT42cYU8xosicTiAindrwbpkCF6h9seg8Fw1L8eqziugCoODPe5UnarWA==
+regular-table@=0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/regular-table/-/regular-table-0.4.1.tgz#808a683650d45567cd6eafbad9d4935f869a2d6b"
+  integrity sha512-POWutYgFTbrDXArkIcp3d14lrMevTi/JrnvDlkhj/wCNvIarPS6ET7MzCtUOmJ2eZPxjk+/hZI15364RLZ9BeQ==
 
 release-zalgo@^1.0.0:
   version "1.0.0"
