@@ -1,5 +1,6 @@
 <template>
   <div class="h-full">
+    <trace-viewer></trace-viewer>
     <perspective :data="perspectiveData" :schema="schema" />
   </div>
 </template>

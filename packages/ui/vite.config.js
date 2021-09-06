@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
+const customElements = ['trace-viewer', 'perspective-viewer'];
+
 export default defineConfig({
   base: '/',
   plugins: [
@@ -9,7 +11,7 @@ export default defineConfig({
       template: {
         compilerOptions: {
           isCustomElement: (tag) => {
-            return tag.startsWith('perspective-');
+            return customElements.includes(tag);
           },
         },
       },

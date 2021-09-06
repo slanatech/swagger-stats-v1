@@ -1,5 +1,5 @@
 <template>
-  <div>TRACE-VIEWER</div>
+  <div>TRACE-VIEWER CUSTOM ELEMENT</div>
 </template>
 
 <script lang="ts">

@@ -1,11 +1,8 @@
 import { defineCustomElement } from 'vue';
-import TraceViewerComponent from './components/TraceViewer.ce.vue';
+import TraceViewerCmp from './components/TraceViewer.ce.vue';
 
-const TraceViewer = defineCustomElement(TraceViewerComponent);
+export const TraceViewer = defineCustomElement(TraceViewerCmp);
 
-// export individual elements
-export { TraceViewer };
-
-export function register() {
-  customElements.register('trace-viewer', TraceViewer);
+export function registerTraceViewer(): void {
+  customElements.define('trace-viewer', TraceViewer);
 }

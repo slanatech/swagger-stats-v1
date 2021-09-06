@@ -3,7 +3,8 @@
   "version": "1.0.0-alpha.1",
   "private": true,
   "description": "Trace Viewer Web Component",
-  "main": "app.js",
+  "main": "dist/trace-viewer.cjs.js",
+  "module": "dist/trace-viewer.es.js",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

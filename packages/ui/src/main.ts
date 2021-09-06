@@ -11,6 +11,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 //import '@fortawesome/fontawesome-free/css/all.min.css';
 //import '@fortawesome/fontawesome-free/js/all.min.js';
 
+// @ts-ignore
+import { registerTraceViewer } from '@swaggerstats/trace-viewer';
+
 const app = createApp(App);
 
 const router = createRouter({
@@ -36,6 +39,8 @@ if (import.meta.hot) {
     router.replace('');
   });
 }
+
+registerTraceViewer();
 
 app.use(router);
 app.use(store);
