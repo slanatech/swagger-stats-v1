@@ -4,8 +4,6 @@
   "private": true,
   "description": "Fastify example",
   "main": "fastifytest.js",
-  "scripts": {
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/slanatech/swagger-stats"
@@ -18,14 +16,14 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@swaggerstats/node": "1.0.0-alpha.1",
+    "body-parser": "^1.18.2",
     "fastify": "^3.19.1",
     "fastify-express": "^0.3.3",
-    "body-parser": "^1.18.2",
+    "moment": "^2.29.1",
+    "prom-client": "^13.1.0",
     "serve-favicon": "^2.4.5",
     "serve-static": "^1.13.1",
-    "moment": "^2.29.1",
-    "uuid": "^8.3.2",
-    "prom-client": "^13.1.0",
-    "@swaggerstats/node": "1.0.0-alpha.1"
+    "uuid": "^8.3.2"
   }
 }

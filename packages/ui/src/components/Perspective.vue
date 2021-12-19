@@ -6,8 +6,9 @@
   //import '@finos/perspective-viewer/themes/all-themes.css';
   //import reportdata from "@/node_report.json"
   //import "@finos/perspective-viewer/themes/material.dark.css";
+  //import "@finos/perspective-viewer/themes/all-themes.css";
 
-  import '@finos/perspective-viewer/themes/material.css';
+  import "@finos/perspective-viewer/dist/umd/material-dense.css";
 
   // TODO Try composition API
   export default {

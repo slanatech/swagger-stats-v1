@@ -21,13 +21,13 @@
     "test": "jest --forceExit"
   },
   "dependencies": {
-    "@swaggerstats/core" : "1.0.0-alpha.1",
-    "qs": "^6.10.1",
-    "moment": "^2.24.0"
+    "@swaggerstats/core": "1.0.0-alpha.1",
+    "moment": "^2.24.0",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
-    "@types/ramda": "^0.27.44",
     "@types/qs": "^6.9.7",
+    "@types/ramda": "^0.27.44",
     "vfile-message": "^3.0.1"
   },
   "engines": {

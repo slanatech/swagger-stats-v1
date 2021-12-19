@@ -4,8 +4,6 @@
   "private": true,
   "description": "Hapi example",
   "main": "hapijstest.js",
-  "scripts": {
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/slanatech/swagger-stats"
@@ -20,14 +18,14 @@
   "dependencies": {
     "@hapi/hapi": "^20.1.2",
     "@hapi/inert": "^6.0.3",
+    "@opentelemetry/instrumentation-pg": "^0.23.0",
+    "@swaggerstats/node": "1.0.0-alpha.1",
     "body-parser": "^1.18.2",
+    "moment": "^2.29.1",
+    "pg-promise": "^10.10.2",
+    "prom-client": "^13.1.0",
     "serve-favicon": "^2.4.5",
     "serve-static": "^1.13.1",
-    "moment": "^2.29.1",
-    "uuid": "^8.3.2",
-    "prom-client": "^13.1.0",
-    "@swaggerstats/node": "1.0.0-alpha.1",
-    "@opentelemetry/instrumentation-pg": "^0.23.0",
-    "pg-promise": "^10.10.2"
+    "uuid": "^8.3.2"
   }
 }

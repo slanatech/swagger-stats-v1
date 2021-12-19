@@ -11,6 +11,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 //import '@fortawesome/fontawesome-free/css/all.min.css';
 //import '@fortawesome/fontawesome-free/js/all.min.js';
 
+import '@finos/perspective-viewer';
+
 // @ts-ignore
 import { registerTraceViewer } from '@swaggerstats/trace-viewer';
 

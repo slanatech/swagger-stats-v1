@@ -3,8 +3,6 @@
   "version": "1.0.0-alpha.1",
   "private": true,
   "main": "collector_server.js",
-  "scripts": {
-  },
   "keywords": [
     "opentelemetry",
     "nodejs",
@@ -20,16 +18,14 @@
   "devDependencies": {
     "pino-pretty": "^4.7.1"
   },
-  "peerDependencies": {
-  },
   "dependencies": {
-    "@swaggerstats/core": "1.0.0-alpha.1",
-    "@swaggerstats/prometheus": "1.0.0-alpha.1",
     "@grpc/grpc-js": "^1.2.12",
     "@grpc/proto-loader": "^0.6.0",
-    "ramda": "^0.27.1",
-    "prom-client": "^13.1.0",
+    "@swaggerstats/core": "1.0.0-alpha.1",
+    "@swaggerstats/prometheus": "1.0.0-alpha.1",
+    "express": "^4.17.1",
     "pino": "^6.11.3",
-    "express": "^4.17.1"
+    "prom-client": "^13.1.0",
+    "ramda": "^0.27.1"
   }
 }
