@@ -83,14 +83,20 @@
     "@types/debug": "^4.1.7",
     "@types/node-static": "^0.7.7",
     "@types/ws": "^7.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
     "chokidar": "^3.5.1",
     "concurrently": "^6.0.0",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
     "istanbul": "^0.4.5",
     "ncp": "^2.0.0",
     "nyc": "^15.1.0",
     "prom-client": "^13.1.0",
-    "swagger-parser": "^10.0.2"
+    "swagger-parser": "^10.0.2",
+    "typescript": "^4.3.5"
   }
 }

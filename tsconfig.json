@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "exclude": [
+    "packages/**/tests/**",
+    "packages/**/dist/**"
+  ],
+  "references": [
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/node"
+    }
+  ]
+}
