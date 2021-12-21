@@ -3,7 +3,7 @@
  */
 
 import { pathOr } from 'ramda';
-import { ReadableSpan } from '@opentelemetry/tracing';
+import { ReadableSpan } from '@opentelemetry/sdk-trace-base';
 
 export class SwsSpan {
   public valid: boolean;

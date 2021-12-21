@@ -9,10 +9,10 @@ import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
 //import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 //import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 //const { HapiInstrumentation } = require('@opentelemetry/instrumentation-hapi');
-import { NodeTracerProvider } from '@opentelemetry/node';
+import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
 //const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 import { ClientRequest, IncomingMessage, ServerResponse } from 'http';
-import { SimpleSpanProcessor } from '@opentelemetry/tracing';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 
 // Reconsider order of imports - Open Telemetry must be imported before everything else, i.e. before http imports
 
