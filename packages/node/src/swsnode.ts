@@ -1,7 +1,7 @@
 /** Swagger-Stats Node monitor.
  *  Initializes OpenTracing, enables auto-instrumentation for node app, and sets up embedded swagger-stats monitoring */
 
-import { Span } from "@opentelemetry/api";
+import { Span } from '@opentelemetry/api';
 import { Resource } from '@opentelemetry/resources';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';

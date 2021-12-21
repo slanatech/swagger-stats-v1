@@ -1,4 +1,4 @@
-import { SpanExporter, ReadableSpan } from '@opentelemetry/tracing';
+import { SpanExporter, ReadableSpan } from '@opentelemetry/sdk-trace-base';
 import { ExportResult, ExportResultCode, hrTimeToMicroseconds } from '@opentelemetry/core';
 import { SwsSpan } from '@swaggerstats/core';
 import Debug from 'debug';

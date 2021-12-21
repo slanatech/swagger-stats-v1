@@ -1,5 +1,6 @@
 {
   "name": "@swaggerstats/trace-viewer",
+  "packageManager": "yarn@3.1.1",
   "version": "1.0.0-alpha.1",
   "private": true,
   "description": "Trace Viewer Web Component",
@@ -28,8 +29,6 @@
     "@tailwindcss/line-clamp": "^0.3.0",
     "@tailwindcss/typography": "^0.5.0",
     "@types/tailwindcss": "^2.2.4",
-    "@typescript-eslint/eslint-plugin": "^5.8.0",
-    "@typescript-eslint/parser": "^5.8.0",
     "@vitejs/plugin-vue": "^2.0.1",
     "@vue/compiler-sfc": "^3.2.26",
     "@vue/eslint-config-prettier": "^6.0.0",
@@ -41,7 +40,7 @@
     "loglevel": "^1.7.1",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.7",
-    "vite": "^2.7.3",
-    "vue-tsc": "^0.2.2"
+    "vite": "^2.7.4",
+    "vue-tsc": "^0.30.0"
   }
 }

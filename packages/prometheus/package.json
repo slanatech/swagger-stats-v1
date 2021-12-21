@@ -1,5 +1,6 @@
 {
   "name": "@swaggerstats/prometheus",
+  "packageManager": "yarn@3.1.1",
   "version": "1.0.0-alpha.1",
   "description": "swagger-stats prometheus access",
   "author": "<sv2@github.com>",
@@ -23,7 +24,8 @@
   "dependencies": {
     "@swaggerstats/core": "1.0.0-alpha.1",
     "moment": "^2.24.0",
-    "qs": "^6.10.1"
+    "qs": "^6.10.1",
+    "ramda": "^0.27.1"
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
@@ -31,6 +33,6 @@
     "vfile-message": "^3.0.1"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 14"
   }
 }
