@@ -7,6 +7,13 @@
   //import reportdata from "@/node_report.json"
   //import "@finos/perspective-viewer/themes/material.dark.css";
   //import "@finos/perspective-viewer/themes/all-themes.css";
+  /*
+  import perspective from "@finos/perspective"
+  import "@finos/perspective-viewer";
+  import "@finos/perspective-viewer-datagrid";
+  import "@finos/perspective-viewer-d3fc";
+  import "@finos/perspective-viewer/dist/umd/material-dense.css";
+  */
 
   import "@finos/perspective-viewer/dist/umd/material-dense.css";
 
@@ -41,11 +48,15 @@
       // The `<perspective-viewer>` HTML element exposes the viewer API
       // below does not work in mounted
       const worker = perspective.worker();
-      this.table = await worker.table(this.schema); // Will fail here is schema is observed (Proxy)
+      const pdata = {
+        Sales: [500, 1000, 1500],
+        Profit: [100.25, 200.5, 300.75],
+      };
+      this.table = await worker.table(pdata); //(this.schema); // Will fail here is schema is observed (Proxy)
       const el = document.getElementsByTagName('perspective-viewer')[0];
       el.load(this.table);
       el.toggleConfig();
-      this.setData();
+      //this.setData();
     },
     methods: {
       async setData() {
