@@ -56,7 +56,7 @@ export class SwsServer {
     });
 
     this._server.on('upgrade', (request, socket, head) => {
-      if (request.url.startsWith('/sws')) {
+      if (request && request.url && request.url.startsWith('/sws')) {
         this._wss.handleUpgrade(request, socket, head, (ws: any) => {
           this._wss.emit('connection', ws, request);
         });

@@ -2124,6 +2124,8 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.8.0
     "@typescript-eslint/parser": ^5.8.0
     cpy-cli: ^3.1.1
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-prettier: ^4.0.0
     ramda: ^0.27.1
     uuid: ^8.3.2
   languageName: unknown
@@ -2185,8 +2187,26 @@ __metadata:
   resolution: "@swaggerstats/node@workspace:packages/node"
   dependencies:
     "@opentelemetry/api": ^1.0.3
+    "@opentelemetry/auto-instrumentations-node": ^0.27.0
+    "@opentelemetry/core": ^1.0.1
+    "@opentelemetry/exporter-jaeger": ^1.0.1
+    "@opentelemetry/exporter-trace-otlp-grpc": ^0.27.0
+    "@opentelemetry/exporter-trace-otlp-http": ^0.27.0
+    "@opentelemetry/instrumentation": ^0.27.0
+    "@opentelemetry/instrumentation-http": ^0.26.0
+    "@opentelemetry/instrumentation-ioredis": ^0.25.0
+    "@opentelemetry/instrumentation-pg": ^0.25.0
+    "@opentelemetry/resources": ^1.0.1
+    "@opentelemetry/sdk-trace-base": ^1.0.1
+    "@opentelemetry/sdk-trace-node": ^1.0.1
+    "@opentelemetry/semantic-conventions": ^1.0.1
     "@swaggerstats/core": 1.0.0-alpha.1
     "@swaggerstats/ui": 1.0.0-alpha.1
+    "@types/debug": ^4.1.7
+    "@types/jest": ^27.0.3
+    "@types/node": ^17.0.2
+    "@types/reflect-metadata": ^0.1.0
+    "@types/ws": ^8.2.2
     "@typescript-eslint/eslint-plugin": ^5.8.0
     "@typescript-eslint/parser": ^5.8.0
     basic-auth: ^2.0.1
@@ -2198,6 +2218,7 @@ __metadata:
     debug: ^4.3.1
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^4.0.0
+    jest: ^27.4.5
     moment: ^2.29.1
     ncp: ^2.0.0
     node-static: ^0.7.11
@@ -2209,6 +2230,7 @@ __metadata:
     request: ^2.88.2
     send: ^0.17.1
     swagger-parser: ^10.0.2
+    ts-jest: ^27.1.2
     uuid: ^8.3.2
     ws: ^8.1.0
   peerDependencies:
@@ -2829,6 +2851,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/reflect-metadata@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@types/reflect-metadata@npm:0.1.0"
+  dependencies:
+    reflect-metadata: "*"
+  checksum: 9325a43186aafdf72f14977bdaed95b4a40005a919c8a96622de14bb2f2dbf41d9882e50bfcff4169f9a00df0d9dcee931fdd999d15776f8e5485fba40ff5b99
+  languageName: node
+  linkType: hard
+
 "@types/serve-static@npm:*":
   version: 1.13.10
   resolution: "@types/serve-static@npm:1.13.10"
@@ -2866,6 +2897,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: b4c9b8ad209620c9b21e78314ce4ff07515c0cadab9af101c1651e7bfb992d7fd933bd8b9c99d110738fd6db523ed15f82f29f50b45510288da72e964dedb1a3
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "@types/ws@npm:8.2.2"
+  dependencies:
+    "@types/node": "*"
+  checksum: 308957864b9a5a0378ac82f1b084fa31b1bbe85106fb0d84ed2b392e4829404f21ab6ab2c1eb782d556e59cd33d57c75ad2d0cedc4b9b9d0ca3b2311bc915578
   languageName: node
   linkType: hard
 
@@ -10325,6 +10365,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"reflect-metadata@npm:*":
+  version: 0.1.13
+  resolution: "reflect-metadata@npm:0.1.13"
+  checksum: 798d379a7b6f6455501145419505c97dd11cbc23857a386add2b9ef15963ccf15a48d9d15507afe01d4cd74116df8a213247200bac00320bd7c11ddeaa5e8fb4
+  languageName: node
+  linkType: hard
+
 "regex-not@npm:^1.0.0, regex-not@npm:^1.0.2":
   version: 1.0.2
   resolution: "regex-not@npm:1.0.2"
@@ -11287,7 +11334,7 @@ __metadata:
     jest: ^27.4.5
     prettier: ^2.5.1
     ts-jest: ^27.1.2
-    typescript: 4.3
+    typescript: ^4.5.4
   languageName: unknown
   linkType: soft
 
@@ -11704,23 +11751,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.3":
-  version: 4.3.5
-  resolution: "typescript@npm:4.3.5"
+"typescript@npm:^4.5.4":
+  version: 4.5.4
+  resolution: "typescript@npm:4.5.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bab033b5e2b0790dd35b77fd005df976ef80b8d84fd2c6e63cc31808151875beae9216e5a315fe7068e8499905c3c354248fe83272cdfc13b7705635f0c66c97
+  checksum: 59f3243f9cd6fe3161e6150ff6bf795fc843b4234a655dbd938a310515e0d61afd1ac942799e7415e4334255e41c2c49b7dd5d9fd38a17acd25a6779ca7e0961
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.3#~builtin<compat/typescript>":
-  version: 4.3.5
-  resolution: "typescript@patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=de8f8a"
+"typescript@patch:typescript@^4.5.4#~builtin<compat/typescript>":
+  version: 4.5.4
+  resolution: "typescript@patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 365df18cf979c971ef9543b2acaa8694377a803f98e1804c41d0ede0b09d7046cb0cd98f2eaf3884b0fe923c01a60af1f653841bd8805c9715d5479c09a4ebe4
+  checksum: 2e488dde7d2c4a2fa2e79cf2470600f8ce81bc0563c276b72df8ff412d74456ae532ba824650ae936ce207440c79720ddcfaa25e3cb4477572b8534fa4e34d49
   languageName: node
   linkType: hard
 

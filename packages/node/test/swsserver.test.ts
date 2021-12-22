@@ -1,7 +1,7 @@
 import { SwsOptions } from '../src/swsoptions';
 import { SwsProcessor } from '../src/swsprocessor';
 import { SwsServer } from '../src/swsserver';
-import WebSocket from 'ws';
+import { WebSocket } from 'ws';
 
 const swsOptions = new SwsOptions();
 const swsProcessor = new SwsProcessor(swsOptions);

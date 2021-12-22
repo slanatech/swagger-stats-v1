@@ -1,6 +1,6 @@
 /* swagger-stats Options */
 
-import os from 'os';
+import * as os from 'os';
 //const debug = require('debug')('sws:settings');
 
 /* swagger=stats settings */

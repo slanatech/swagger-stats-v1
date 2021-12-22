@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "build"
+    "outDir": "build",
+    "skipLibCheck": true,
+    "types": ["jest", "node"]
   },
   "include": [
     "src/**/*.ts",

@@ -17,8 +17,6 @@
     "target": "esnext",
     "incremental": true,
     "newLine": "LF",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
