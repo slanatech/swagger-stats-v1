@@ -21,7 +21,7 @@
     data() {
       return {
         progressValue: 57,
-        intervalId: null,
+        intervalId: 0,
       };
     },
     watch: {
@@ -29,7 +29,7 @@
         handler: function () {
           if (this.intervalId) {
             clearInterval(this.intervalId);
-            this.intervalId = null;
+            this.intervalId = 0;
           }
           console.log(`progress: data changed: ${this.progress}`);
           this.showProgress();

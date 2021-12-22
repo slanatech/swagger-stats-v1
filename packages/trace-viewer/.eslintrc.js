@@ -9,7 +9,6 @@ module.exports = {
     node: true,
     es2021: true,
   },
-  plugins: ['prettier'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'eslint:recommended',

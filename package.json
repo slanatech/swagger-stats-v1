@@ -48,8 +48,5 @@
   },
   "engines": {
     "node": ">= 14"
-  },
-  "dependencies": {
-    "@rushstack/eslint-patch": "^1.1.0"
   }
 }
