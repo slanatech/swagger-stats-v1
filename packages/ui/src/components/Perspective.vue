@@ -1,6 +1,6 @@
 /* Perspective * Perspective viewer: https://perspective.finos.org/ */
 <template>
-  <perspective-viewer style="width: 100%; height: 100%; resize: vertical" class="perspective-viewer-material" />
+  <perspective-viewer style="width: 100%; height: calc(100vh - 4rem); resize: vertical" class="perspective-viewer-material" />
 </template>
 <script>
   //import '@finos/perspective-viewer/themes/all-themes.css';
@@ -15,7 +15,7 @@
   import "@finos/perspective-viewer/dist/umd/material-dense.css";
   */
 
-  import "@finos/perspective-viewer/dist/umd/material-dense.css";
+  import '@finos/perspective-viewer/dist/umd/material-dense.css';
 
   // TODO Try composition API
   export default {

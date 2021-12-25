@@ -2295,7 +2295,6 @@ __metadata:
     autoprefixer: ^10.4.0
     axios: ^0.24.0
     d3: ^7.0.0
-    d3-array: ^3.1.1
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^3.1.0
     eslint-plugin-prettier-vue: ^3.1.0
@@ -4605,7 +4604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:2.5.0 - 3, d3-array@npm:3, d3-array@npm:^3.1.1":
+"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:2.5.0 - 3, d3-array@npm:3":
   version: 3.1.1
   resolution: "d3-array@npm:3.1.1"
   dependencies:

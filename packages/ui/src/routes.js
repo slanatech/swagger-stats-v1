@@ -1,4 +1,5 @@
-import Admin from './layouts/Admin.vue';
+//import Admin from './layouts/Admin.vue';
+import BaseLayout from './layouts/BaseLayout.vue';
 import NotFound from './views/NotFound.vue';
 import Perspective from './views/Perspective.vue';
 import SpansView from './views/SpansView.vue';
@@ -9,7 +10,7 @@ export const routes = [
   { path: '/', redirect: '/ux/perspective' },
   {
     path: '/ux',
-    component: Admin,
+    component: BaseLayout,
     redirect: '/ux/spans',
     children: [
       {

@@ -1,7 +1,62 @@
 <template>
-  <div class="h-full">
-    <trace-viewer></trace-viewer>
+  <div>
+    <!--<trace-viewer></trace-viewer>-->
     <perspective :data="perspectiveData" :schema="schema" />
+    <!--<div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+      <div>Data</div>
+    </div>-->
   </div>
 </template>
 <script>
