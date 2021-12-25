@@ -7,30 +7,10 @@
     </div>
 
     <!--<div v-if="true" class="bg-blue-300 sticky" style="top: 4rem; height: calc(100vh - 4rem)">-->
-    <div v-if="true" class="bg-blue-300 sticky" style="top: 4rem; height: calc(100vh - 4rem)">
+    <div v-if="true" class="sticky" style="top: 4rem; height: calc(100vh - 4rem)">
       <!-- Sidebar -->
-      <div class="h-full md:w-60 w-0" style="overflow-y: auto">
-        <div>
-          <div>Sidebar</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-          <div>Menu</div>
-        </div>
+      <div class="h-full" style="overflow-y: auto">
+        <sidebar></sidebar>
       </div>
     </div>
 
@@ -54,6 +34,7 @@
 <script>
   //import Navbar from '@/components/Navbars/Navbar.vue';
   import NavbarExt from '@/components/Navbars/NavbarExt.vue';
+  import Sidebar from '@/components/Sidebar/Sidebar.vue';
   import ProgressBar from '@/components/Progress.vue';
   import wsConnection from '../store/wsconnection';
   import { defineComponent } from 'vue';
@@ -61,7 +42,7 @@
 
   export default defineComponent({
     name: 'BaseLayout',
-    components: { NavbarExt, ProgressBar },
+    components: { NavbarExt, ProgressBar, Sidebar },
     data() {
       return {};
     },
