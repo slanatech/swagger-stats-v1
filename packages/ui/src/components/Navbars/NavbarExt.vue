@@ -30,8 +30,18 @@
           </div>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+          <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" @click="onStartTrace">
             <span class="sr-only">View notifications</span>
+            <PlayIcon class="h-6 w-6" aria-hidden="true" />
+          </button>
+
+          <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" @click="onStopTrace">
+            <span class="sr-only">View notifications</span>
+            <StopIcon class="h-6 w-6" aria-hidden="true" />
+          </button>
+
+          <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+            <span class="sr-only">Start Trace</span>
             <BellIcon class="h-6 w-6" aria-hidden="true" />
           </button>
 
@@ -85,12 +95,13 @@
 
 <script>
   import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-  import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
+  import { BellIcon, PlayIcon, StopIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
+  import { mapActions } from 'vuex';
 
   const navigation = [
-    { name: 'Perspective', to:'/ux/perspective', current: true },
-    { name: 'Spans', to:'/ux/spans', current: false },
-    { name: 'Test', to:'/ux/test', current: false },
+    { name: 'Perspective', to: '/ux/perspective', current: true },
+    { name: 'Spans', to: '/ux/spans', current: false },
+    { name: 'Test', to: '/ux/test', current: false },
   ];
 
   export default {
@@ -105,11 +116,27 @@
       BellIcon,
       MenuIcon,
       XIcon,
+      PlayIcon,
+      StopIcon,
     },
     setup() {
       return {
         navigation,
       };
+    },
+    methods: {
+      ...mapActions({
+        startTrace: 'startTrace',
+        stopTrace: 'stopTrace',
+      }),
+      onStartTrace: function () {
+        console.log('Starting trace ...');
+        this.startTrace();
+      },
+      onStopTrace: function () {
+        console.log('Stopping trace ...');
+        this.stopTrace();
+      },
     },
   };
 </script>

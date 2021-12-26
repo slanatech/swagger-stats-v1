@@ -13,14 +13,17 @@ import { DataSource } from './entity/datasource';
 import { SwsSpan } from './entity/swsspan';
 export * from './entity/swsspan';
 
-const { OpResult, OpSuccess, OpError, isSuccess } = require('./opresult');
+/*
+import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';
 const RestOp = require('./restop');
 const IPlugin = require('./interface/iplugin');
 const getLogger = require('./logging/logger');
 const prometheusTransforms = require('./transforms/prometheustransforms');
 const dateTimeUtils = require('./utils/datetimeutils');
+*/
 
 module.exports = {
+  /*
   OpResult,
   OpSuccess,
   OpError,
@@ -31,5 +34,7 @@ module.exports = {
   getLogger,
   prometheusTransforms,
   dateTimeUtils,
+ */
+  DataSource,
   SwsSpan,
 };

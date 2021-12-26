@@ -1,3 +1,5 @@
+process.env.DEBUG = 'sws:*';
+
 // Swagger-Stats must be intialized first thing in the app, before importing other packages
 // Swagger-Stats will perform OpenTelemetry initialization
 
@@ -5,9 +7,9 @@
 //const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 //const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
 const opentelemetry = require('@opentelemetry/api');
-const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
-const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
-const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
+//const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+//const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
+//const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
 
 const { SwsNode } = require('@swaggerstats/node');
 const swsNode = new SwsNode({

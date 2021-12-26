@@ -17,10 +17,8 @@
     "target": "esnext",
     "incremental": true,
     "newLine": "LF",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": false
+    "module": "commonjs",
+    "moduleResolution": "node"
   },
   "exclude": [
     "node_modules"

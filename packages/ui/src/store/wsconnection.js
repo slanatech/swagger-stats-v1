@@ -64,6 +64,7 @@ class WsConnection {
       log.info(`WS: startTrace: not connected - ignored`);
       return;
     }
+    log.info(`WS: startTrace`);
     this.socket.send(JSON.stringify({ request: 'startTrace' }));
   }
 
@@ -72,6 +73,7 @@ class WsConnection {
       log.info(`WS: stopTrace: not connected - ignored`);
       return;
     }
+    log.info(`WS: stopTrace`);
     this.socket.send(JSON.stringify({ request: 'stopTrace' }));
   }
 

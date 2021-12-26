@@ -1484,7 +1484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api@npm:^1.0.3":
+"@opentelemetry/api@npm:^1.0.3, @opentelemetry/api@npm:^1.0.4":
   version: 1.0.4
   resolution: "@opentelemetry/api@npm:1.0.4"
   checksum: 793e9b5c21666b647a60c58c46c3e00ad1dac38505102b026ad0ef617571d637aca54a18533a73c1e288c95b5ac77e2db17f96467f11833ac1165338e1184260
@@ -1545,18 +1545,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/core@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "@opentelemetry/core@npm:0.23.0"
-  dependencies:
-    "@opentelemetry/semantic-conventions": 0.23.0
-    semver: ^7.1.3
-  peerDependencies:
-    "@opentelemetry/api": ^1.0.1
-  checksum: 5b17d5cf44adba81f21c32a8fcac53f15403b328199351332c20be1711a2ef641c91d53dcb3b87284fd4e962c439bbca68aba4e1df56a4130ca001140b1ed1c8
-  languageName: node
-  linkType: hard
-
 "@opentelemetry/exporter-jaeger@npm:^1.0.1":
   version: 1.0.1
   resolution: "@opentelemetry/exporter-jaeger@npm:1.0.1"
@@ -1610,20 +1598,6 @@ __metadata:
   peerDependencies:
     "@opentelemetry/api": ^1.0.2
   checksum: 29bcdb151f0ec0d42ac699b3b88d2856879de0b217cf9df36eeb8646bc135230d1ed0b2431e6445124c77e8e1df5d7177d5c5b65719f6a42bd7b4fea01e6c2c4
-  languageName: node
-  linkType: hard
-
-"@opentelemetry/instrumentation-express@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "@opentelemetry/instrumentation-express@npm:0.23.0"
-  dependencies:
-    "@opentelemetry/core": ^0.23.0
-    "@opentelemetry/instrumentation": ^0.23.0
-    "@opentelemetry/semantic-conventions": ^0.23.0
-    "@types/express": 4.17.12
-  peerDependencies:
-    "@opentelemetry/api": ^1.0.1
-  checksum: 8a9b4d557fab1d4685212ac4fc9177587b777806ae255c128fbb13ab8e24f27874550465427828733cdf9511fc2f114c081a5428071ee405ac61e7672aefea90
   languageName: node
   linkType: hard
 
@@ -1935,13 +1909,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/semantic-conventions@npm:0.23.0, @opentelemetry/semantic-conventions@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "@opentelemetry/semantic-conventions@npm:0.23.0"
-  checksum: 829e5c39eee15c3b551086661b37c5e71f7e8962a1748ab7d9d00d5e8f03156835c6cce51c00db57b7e323b76b9bebb375de43270f6c48f678bc1585c94aac0d
-  languageName: node
-  linkType: hard
-
 "@opentelemetry/semantic-conventions@npm:1.0.0":
   version: 1.0.0
   resolution: "@opentelemetry/semantic-conventions@npm:1.0.0"
@@ -1953,6 +1920,13 @@ __metadata:
   version: 1.0.1
   resolution: "@opentelemetry/semantic-conventions@npm:1.0.1"
   checksum: c17dd6494185587b92eb2147114e280c29ecdc1cec081adc4cf02919c04ed63ed0d96a6a1247b8147536b985ec376804327be5b7aca868aa3890d428ac2c6cc7
+  languageName: node
+  linkType: hard
+
+"@opentelemetry/semantic-conventions@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "@opentelemetry/semantic-conventions@npm:0.23.0"
+  checksum: 829e5c39eee15c3b551086661b37c5e71f7e8962a1748ab7d9d00d5e8f03156835c6cce51c00db57b7e323b76b9bebb375de43270f6c48f678bc1585c94aac0d
   languageName: node
   linkType: hard
 
@@ -2119,15 +2093,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@swaggerstats/examples-express@workspace:examples/express"
   dependencies:
-    "@opentelemetry/instrumentation-express": ^0.23.0
+    "@opentelemetry/api": ^1.0.4
+    "@opentelemetry/instrumentation-express": ^0.27.0
     "@swaggerstats/node": 1.0.0-alpha.1
     axios: ^0.21.1
     body-parser: ^1.18.2
+    debug: ^4.3.3
     express: ^4.17.1
     moment: ^2.29.1
     prom-client: ^13.1.0
+    ramda: ^0.27.1
     serve-favicon: ^2.4.5
     serve-static: ^1.13.1
+    swagger-parser: ^10.0.3
     uuid: ^8.3.2
   languageName: unknown
   linkType: soft
@@ -2197,7 +2175,7 @@ __metadata:
     ramda: ^0.27.1
     request: ^2.88.2
     send: ^0.17.1
-    swagger-parser: ^10.0.2
+    swagger-parser: ^10.0.3
     ts-jest: ^27.1.2
     uuid: ^8.3.2
     ws: ^8.1.0
@@ -2497,18 +2475,6 @@ __metadata:
     "@types/qs": "*"
     "@types/serve-static": "*"
   checksum: 12a2a0e6c4b993fc0854bec665906788aea0d8ee4392389d7a98a5de1eefdd33c9e1e40a91f3afd274011119c506f7b4126acb97fae62ae20b654974d44cba12
-  languageName: node
-  linkType: hard
-
-"@types/express@npm:4.17.12":
-  version: 4.17.12
-  resolution: "@types/express@npm:4.17.12"
-  dependencies:
-    "@types/body-parser": "*"
-    "@types/express-serve-static-core": ^4.17.18
-    "@types/qs": "*"
-    "@types/serve-static": "*"
-  checksum: 5869f575f66e5ea891a00fd253719577a1afe8d39fba47f3f24539188dac351d61f4511a168c6b5b5c902c724b26809950421325887896f5e23f28a3a2aa9458
   languageName: node
   linkType: hard
 
@@ -5132,7 +5098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2":
+"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3":
   version: 4.3.3
   resolution: "debug@npm:4.3.3"
   dependencies:
@@ -10661,7 +10627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.x, semver@npm:^7.1.3, semver@npm:^7.2.1, semver@npm:^7.3.2, semver@npm:^7.3.5":
+"semver@npm:7.x, semver@npm:^7.2.1, semver@npm:^7.3.2, semver@npm:^7.3.5":
   version: 7.3.5
   resolution: "semver@npm:7.3.5"
   dependencies:
@@ -11247,7 +11213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-parser@npm:^10.0.2":
+"swagger-parser@npm:^10.0.3":
   version: 10.0.3
   resolution: "swagger-parser@npm:10.0.3"
   dependencies:
@@ -11275,6 +11241,9 @@ __metadata:
     prettier: ^2.5.1
     ts-jest: ^27.1.2
     typescript: ^4.5.4
+  dependenciesMeta:
+    eslint@8.5.0:
+      unplugged: true
   languageName: unknown
   linkType: soft
 
