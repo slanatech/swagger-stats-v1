@@ -11,8 +11,11 @@ const defaultSidebarItems = [
   { title: 'Longest Requests', link: '/longestrequests', icon: 'timer-sand-empty' },
 ];
 
+const altSidebarItems = [{ title: 'Alternative', link: '/', icon: 'chart-bar' }];
+
 const state = {
   items: defaultSidebarItems,
+  routePath: '',
 };
 
 const getters = {};
@@ -22,11 +25,19 @@ const mutations = {
     localStorage['sws-dark-mode'] = dark;
     state.dark = dark;
   },
+  SET_ROUTE_PATH(state, { routePath }) {
+    console.log(`Store:sidebar: set new routePath ${routePath}`);
+    state.routePath = routePath;
+    state.items = altSidebarItems;
+  },
 };
 
 const actions = {
   setDark({ commit }, { dark }) {
     commit('SET_DARK', { dark: dark });
+  },
+  setRoutePath({ commit }, { routePath }) {
+    commit('SET_ROUTE_PATH', { routePath: routePath });
   },
 };
 
