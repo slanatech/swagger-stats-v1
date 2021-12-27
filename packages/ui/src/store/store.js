@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import data from '@/store/modules/data';
 import layout from '@/store/modules/layout';
+import sidebar from '@/store/modules/sidebar';
 import wsConnection from '../store/wsconnection';
 
 export const store = createStore({
@@ -11,6 +12,7 @@ export const store = createStore({
   modules: {
     data,
     layout,
+    sidebar,
   },
   mutations: {
     SET_WS_CONNECTED(state, { wsConnected }) {

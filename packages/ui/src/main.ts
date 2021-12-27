@@ -13,6 +13,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import '@finos/perspective-viewer';
 
+import mdiVue from 'mdi-vue/v3';
+import * as mdijs from '@mdi/js';
+
 // @ts-ignore
 import { registerTraceViewer } from '@swaggerstats/trace-viewer';
 
@@ -43,6 +46,12 @@ if (import.meta.hot) {
 }
 
 registerTraceViewer();
+
+// MDI icons, see
+// https://github.com/therufa/mdi-vue
+app.use(mdiVue, {
+  icons: mdijs,
+});
 
 app.use(router);
 app.use(store);

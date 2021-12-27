@@ -10,7 +10,7 @@
     <div v-if="true" class="sticky" style="top: 4rem; height: calc(100vh - 4rem)">
       <!-- Sidebar -->
       <div class="h-full" style="overflow-y: auto">
-        <sidebar></sidebar>
+        <sidebar :items="sidebarItems"></sidebar>
       </div>
     </div>
 
@@ -49,6 +49,7 @@
     computed: {
       ...mapState({
         progress: (state) => state.layout.progress,
+        sidebarItems: (state) => state.sidebar.items,
       }),
     },
     mounted() {

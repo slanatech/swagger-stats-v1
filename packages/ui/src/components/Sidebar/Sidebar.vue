@@ -2,68 +2,52 @@
 <template>
   <div class="md:w-60 w-0">
     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-      <a v-for="item in solutions" :key="item.name" :href="item.href" class="-m-3 p-2 flex items-start rounded-lg hover:bg-gray-50">
-        <component :is="item.icon" class="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true" />
-        <div class="ml-4">
+      <router-link v-for="item in items" :key="item.name" :to="item.link" class="-m-3 p-2 flex items-start rounded-lg hover:bg-gray-50">
+        <!--<component :is="item.icon" class="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true" />-->
+        <mdicon :name="item.icon" class="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true"></mdicon>
+        <div v-if="true" class="ml-4">
           <p class="text-base font-medium text-gray-900">
-            {{ item.name }}
+            {{ item.title }}
           </p>
           <!--<p class="mt-1 text-sm text-gray-500">
             {{ item.description }}
           </p>-->
         </div>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
 
-<script>
-  import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue';
-  import { BookmarkAltIcon, CalendarIcon, ChartBarIcon, CursorClickIcon, MenuIcon, PhoneIcon, PlayIcon, RefreshIcon, ShieldCheckIcon, SupportIcon, ViewGridIcon, XIcon } from '@heroicons/vue/outline';
-  import { ChevronDownIcon } from '@heroicons/vue/solid';
+<script lang="js">
+  //import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue';
+  //import { BookmarkAltIcon, CalendarIcon, ChartBarIcon, CursorClickIcon, MenuIcon, PhoneIcon, PlayIcon, RefreshIcon, ShieldCheckIcon, SupportIcon, ViewGridIcon, XIcon } from '@heroicons/vue/outline';
+  //import { ChevronDownIcon } from '@heroicons/vue/solid';
 
-  const solutions = [
-    {
-      name: 'Analytics',
-      description: 'Get a better understanding of where your traffic is coming from.',
-      href: '#',
-      icon: ChartBarIcon,
-    },
-    {
-      name: 'Engagement',
-      description: 'Speak directly to your customers in a more meaningful way.',
-      href: '#',
-      icon: CursorClickIcon,
-    },
-    { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
-    {
-      name: 'Integrations',
-      description: "Connect with third-party tools that you're already using.",
-      href: '#',
-      icon: ViewGridIcon,
-    },
-    {
-      name: 'Automations',
-      description: 'Build strategic funnels that will drive your customers to convert',
-      href: '#',
-      icon: RefreshIcon,
-    },
-  ];
+  import { useRoute } from 'vue-router';
+  import { ref, watch } from 'vue';
 
   export default {
-    components: {
-      Popover,
-      PopoverButton,
-      PopoverGroup,
-      PopoverPanel,
-      ChevronDownIcon,
-      MenuIcon,
-      XIcon,
+    components: {},
+    props: {
+      items: {
+        type: Array,
+        default: () => [],
+      },
     },
     setup() {
-      return {
-        solutions,
-      };
+      const route = useRoute();
+      const currentRoute = ref();
+      watch(
+        () => route.path,
+        async (newPath) => {
+          currentRoute.value = newPath;
+          console.log(`WATCH: newPath=${newPath}`);
+        }
+      );
+      return { route };
+    },
+    mounted() {
+      console.log(`Sidebar mounted, ${this.items.length} menu items, routePath: ${this.route.path}`);
     },
   };
 </script>

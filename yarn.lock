@@ -1386,6 +1386,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mdi/js@npm:*, @mdi/js@npm:^6.5.95":
+  version: 6.5.95
+  resolution: "@mdi/js@npm:6.5.95"
+  checksum: b1db7713d216c119f584bf973514a2f9d8f2e671e91bf19ce8e56cfa7a9843c0a060328e794507ac31f2bded1032123294f39ff8e987ea5acb2719ab522ef146
+  languageName: node
+  linkType: hard
+
 "@mrmlnc/readdir-enhanced@npm:^2.2.1":
   version: 2.2.1
   resolution: "@mrmlnc/readdir-enhanced@npm:2.2.1"
@@ -2259,6 +2266,7 @@ __metadata:
     "@finos/perspective-viewer-datagrid": ^1.0.7
     "@headlessui/vue": ^1.4.2
     "@heroicons/vue": ^1.0.5
+    "@mdi/js": ^6.5.95
     "@swaggerstats/trace-viewer": 1.0.0-alpha.1
     "@tailwindcss/aspect-ratio": ^0.4.0
     "@tailwindcss/forms": ^0.4.0
@@ -2278,6 +2286,7 @@ __metadata:
     eslint-plugin-prettier-vue: ^3.1.0
     eslint-plugin-vue: ^8.2.0
     loglevel: ^1.7.1
+    mdi-vue: ^3.0.12
     mitt: ^3.0.0
     moment: ^2.29.1
     postcss: ^8.4.5
@@ -8583,6 +8592,18 @@ __metadata:
   dependencies:
     object-visit: ^1.0.0
   checksum: c27045a5021c344fc19b9132eb30313e441863b2951029f8f8b66f79d3d8c1e7e5091578075a996f74e417479506fe9ede28c44ca7bc351a61c9d8073daec36a
+  languageName: node
+  linkType: hard
+
+"mdi-vue@npm:^3.0.12":
+  version: 3.0.12
+  resolution: "mdi-vue@npm:3.0.12"
+  dependencies:
+    "@mdi/js": "*"
+  peerDependencies:
+    "@mdi/js": "*"
+    vue: "*"
+  checksum: 739932e1a0c12b4d1ddc83594f30d1476d549a6676a146ea40282f7be9a5c0d83668ffbc9a090615fff2bf3267c51274e3ddc53999cededebabc7184d5c0ff6d
   languageName: node
   linkType: hard
 
