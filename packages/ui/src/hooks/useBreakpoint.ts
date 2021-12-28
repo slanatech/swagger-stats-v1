@@ -1,29 +1,31 @@
 import { onMounted, reactive } from 'vue';
+import { pathOr } from 'ramda';
 
-// TODO take from tailwind config
+import resolveConfig from 'tailwindcss/resolveConfig';
+// @ts-ignore
+import * as tailwindConfig from 'tailwind.config.js';
+const fullTailwindConfig = resolveConfig(tailwindConfig);
+
 const screens = {
-  xs: 320,
-  sm: 640,
-  md: 768,
-  lg: 1024,
-  xl: 1280,
+  sm: parseInt(pathOr('640', ['theme', 'screens', 'sm'], fullTailwindConfig)),
+  md: parseInt(pathOr('768', ['theme', 'screens', 'md'], fullTailwindConfig)),
+  lg: parseInt(pathOr('1024', ['theme', 'screens', 'lg'], fullTailwindConfig)),
+  xl: parseInt(pathOr('1280', ['theme', 'screens', 'lg'], fullTailwindConfig)),
 };
 
-const breakpoints = reactive({ w: 0, h: 0, is: 'xs' });
+const breakpoints = reactive({ w: 0, h: 0, is: 'sm' });
 
-const xs = (val: number) => val >= screens.xs && val < screens.sm;
 const sm = (val: number) => val >= screens.sm && val < screens.md;
 const md = (val: number) => val >= screens.md && val < screens.lg;
 const lg = (val: number) => val >= screens.lg && val < screens.xl;
 const xl = (val: number) => val >= screens.xl;
 
 const getBreakpoint = (w: number) => {
-  if (xs(w)) return 'xs';
-  else if (sm(w)) return 'sm';
+  if (sm(w)) return 'sm';
   else if (md(w)) return 'md';
   else if (lg(w)) return 'lg';
   else if (xl(w)) return 'xl';
-  else return 'all';
+  else return 'xs';
 };
 
 const setBreakpoint = () => {
@@ -37,6 +39,7 @@ const useBreakpoint = () => {
     setBreakpoint();
     window.addEventListener('resize', () => {
       setBreakpoint();
+      //console.log(`Screens2: ${JSON.stringify(screens2)}`);
     });
   });
 

@@ -2272,6 +2272,7 @@ __metadata:
     "@tailwindcss/forms": ^0.4.0
     "@tailwindcss/line-clamp": ^0.3.0
     "@tailwindcss/typography": ^0.5.0
+    "@types/ramda": ^0.27.62
     "@types/tailwindcss": ^2.2.4
     "@typescript-eslint/eslint-plugin": ^5.8.0
     "@vitejs/plugin-vue": ^2.0.1
@@ -2777,6 +2778,15 @@ __metadata:
   dependencies:
     ts-toolbelt: ^6.15.1
   checksum: 7d7d9f82d0e9fecd72b38be900428c1b4bf2b2c5599c7d759440a6fbc6f9f2c68b6ebc7dc64192ca0d5bd82b3ba46e6cea853bdab690b8979470e820c057a125
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0.27.62":
+  version: 0.27.62
+  resolution: "@types/ramda@npm:0.27.62"
+  dependencies:
+    ts-toolbelt: ^6.15.1
+  checksum: fb42398becc45ce94fae3b27c358960172b16a92f7395eba5d66eaf63d0ad962762a9fa956b1a5e3ff3f2403f5538e12efe205377b956497a7a397d71355d51d
   languageName: node
   linkType: hard
 

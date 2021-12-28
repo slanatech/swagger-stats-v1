@@ -15,7 +15,7 @@ module.exports = {
     //'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
     'plugin:vue/vue3-recommended',
-    //"plugin:vue/recommended",
+    //'plugin:vue/recommended',
     'plugin:prettier-vue/recommended',
     'prettier',
   ],
