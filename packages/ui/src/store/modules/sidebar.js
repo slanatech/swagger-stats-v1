@@ -27,16 +27,12 @@ function getSidebarItemsByRoutePath(routePath) {
 
 const state = {
   routePath: '',
-  items: getSidebarItemsByRoutePath(''),
+  items: [],
 };
 
 const getters = {};
 
 const mutations = {
-  SET_DARK(state, { dark }) {
-    localStorage['sws-dark-mode'] = dark;
-    state.dark = dark;
-  },
   SET_ROUTE_PATH(state, { routePath }) {
     console.log(`Store:sidebar: set new routePath ${routePath}`);
     const opa = getSidebarItemsByRoutePath(routePath); //altSidebarItems;
@@ -46,9 +42,6 @@ const mutations = {
 };
 
 const actions = {
-  setDark({ commit }, { dark }) {
-    commit('SET_DARK', { dark: dark });
-  },
   setRoutePath({ commit }, { routePath }) {
     commit('SET_ROUTE_PATH', { routePath: routePath });
   },

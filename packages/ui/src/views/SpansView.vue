@@ -1,3 +1,4 @@
+// Sample of configuring perspective views // https://bl.ocks.org/texodus/803de90736a3641ad91c5c7a1b49d0a7
 <template>
   <div class="h-full">
     <perspective-viewer style="width: 100%; height: 100%; resize: vertical" class="perspective-viewer-material" />
@@ -50,8 +51,25 @@
       }),
       async initialize() {
         this.worker = perspective.worker();
-        this.table = await this.worker.table({ spanId: 'string', traceId: 'string', name: 'string' }, { index: 'spanId' });
+        this.table = await this.worker.table(
+          {
+            spanId: 'string',
+            traceId: 'string',
+            parentSpanId: 'string',
+            service: 'string',
+            kind: 'string',
+            success: 'boolean',
+            name: 'string',
+            //attributes: 'object',
+            //'http.url': 'string',
+          },
+          { index: 'spanId' }
+        );
         //this.table = await this.worker.table([{ spanId: 'a' }], { index: 'spanId' });
+        //let schema = this.worker.table.get_schema();
+        //let types = schema.types();
+        let schema = await this.table.schema();
+        //let types = schema.types();
         const el = document.getElementsByTagName('perspective-viewer')[0];
         el.load(this.table);
         el.toggleConfig();

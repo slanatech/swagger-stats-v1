@@ -30,6 +30,12 @@
           </div>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+            <!--<svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>-->
+            <mdicon name="hamburger" class="flex-shrink-0 h-6 w-6 mr-2" aria-hidden="true"></mdicon>
+            <span>Todo</span>
+          </button>
+
           <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" @click="onStartTrace">
             <span class="sr-only">View notifications</span>
             <PlayIcon class="h-6 w-6" aria-hidden="true" />
