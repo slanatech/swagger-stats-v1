@@ -61,6 +61,8 @@
             success: 'boolean',
             name: 'string',
             startTime: 'datetime',
+            endTime: 'datetime',
+            duration: 'integer',
             //attributes: 'object',
             //'http.url': 'string',
           },
