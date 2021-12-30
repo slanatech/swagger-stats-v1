@@ -4,6 +4,7 @@
 
 import { pathOr } from 'ramda';
 import { ReadableSpan } from '@opentelemetry/sdk-trace-base';
+import { hrTimeToMilliseconds } from '@opentelemetry/core';
 
 export class SwsSpan {
   public valid: boolean;
@@ -17,6 +18,9 @@ export class SwsSpan {
   public service: string | null;
   public status: any | null;
   public success: boolean;
+  public startTime: number | null;
+  public endTime: number | null;
+  public duration: number | null;
   public attributes: any;
   public resourceAttributes: any;
   public instrumentationLibrary: string | null;
@@ -34,6 +38,10 @@ export class SwsSpan {
     // status
     this.status = null;
     this.success = false; // true or false
+    // timing
+    this.startTime = null;
+    this.endTime = null;
+    this.duration = null;
     // attributes
     this.attributes = {};
     this.resourceAttributes = {};
@@ -162,7 +170,10 @@ export class SwsSpan {
       this.success = true;
     }
 
-    // TODO Timing
+    // Timing
+    this.startTime = hrTimeToMilliseconds(span.startTime);
+    this.endTime = hrTimeToMilliseconds(span.endTime);
+    this.duration = hrTimeToMilliseconds(span.duration);
 
     // Attributes
     this.attributes = pathOr({}, ['attributes'], span);

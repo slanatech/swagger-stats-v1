@@ -60,6 +60,7 @@
             kind: 'string',
             success: 'boolean',
             name: 'string',
+            startTime: 'datetime',
             //attributes: 'object',
             //'http.url': 'string',
           },
