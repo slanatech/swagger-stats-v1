@@ -2056,18 +2056,9 @@ __metadata:
   resolution: "@swaggerstats/core@workspace:packages/core"
   dependencies:
     "@opentelemetry/api": ^1.0.3
-    "@opentelemetry/auto-instrumentations-node": ^0.27.0
     "@opentelemetry/core": ^1.0.1
-    "@opentelemetry/exporter-jaeger": ^1.0.1
-    "@opentelemetry/exporter-trace-otlp-grpc": ^0.27.0
-    "@opentelemetry/exporter-trace-otlp-http": ^0.27.0
-    "@opentelemetry/instrumentation": ^0.27.0
-    "@opentelemetry/instrumentation-http": ^0.26.0
-    "@opentelemetry/instrumentation-ioredis": ^0.25.0
-    "@opentelemetry/instrumentation-pg": ^0.25.0
     "@opentelemetry/resources": ^1.0.1
     "@opentelemetry/sdk-trace-base": ^1.0.1
-    "@opentelemetry/sdk-trace-node": ^1.0.1
     "@opentelemetry/semantic-conventions": ^1.0.1
     "@types/ramda": ^0.27.60
     "@typescript-eslint/eslint-plugin": ^5.8.0
@@ -2267,6 +2258,7 @@ __metadata:
     "@headlessui/vue": ^1.4.2
     "@heroicons/vue": ^1.0.5
     "@mdi/js": ^6.5.95
+    "@swaggerstats/core": 1.0.0-alpha.1
     "@swaggerstats/trace-viewer": 1.0.0-alpha.1
     "@tailwindcss/aspect-ratio": ^0.4.0
     "@tailwindcss/forms": ^0.4.0

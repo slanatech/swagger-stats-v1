@@ -4,10 +4,11 @@
     <perspective-viewer style="width: 100%; height: 100%; resize: vertical" class="perspective-viewer-material" />
   </div>
 </template>
-<script>
+<script lang="js">
   import { defineComponent } from 'vue';
   import { mapState, mapActions } from 'vuex';
   import { bus } from '@/store/bus';
+  import * as swsCore from '@swaggerstats/core';
   // w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start
 
   export default defineComponent({
@@ -99,7 +100,9 @@
           // 0
           this.testSpanId = span.spanId;
         }
-        const flatSpan = span.flatten();
+        //const opa = new DataSource();
+        //console.log(`ds: ${opa.id}`);
+        const flatSpan = swsCore.spanTransforms.flatten(span);
         this.table.update([flatSpan]);
         if (this.idx === -11) {
           // 11

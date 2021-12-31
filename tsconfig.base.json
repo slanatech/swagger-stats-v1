@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "allowJs": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,

@@ -14,9 +14,9 @@ class ApiOp {
 
   execute() {
     let apiop = this;
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       axios(apiop.options)
-        .then(function(response) {
+        .then(function (response) {
           apiop.success = true;
           apiop.code = response.status;
           apiop.payload = response.data;
@@ -24,7 +24,7 @@ class ApiOp {
           apiop.headers = response.headers;
           resolve(apiop);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           apiop.success = false;
           apiop.code = error.response.status;
           apiop.message = error.response.statusText;
