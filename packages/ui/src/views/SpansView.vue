@@ -64,7 +64,7 @@
             endTime: 'datetime',
             duration: 'integer',
             //attributes: 'object',
-            //'http.url': 'string',
+            'http.url': 'string',
           },
           { index: 'spanId' }
         );
@@ -99,7 +99,8 @@
           // 0
           this.testSpanId = span.spanId;
         }
-        this.table.update([span]);
+        const flatSpan = span.flatten();
+        this.table.update([flatSpan]);
         if (this.idx === -11) {
           // 11
           //this.table.update({ spanId: [this.testSpanId], name: ['opa'] });

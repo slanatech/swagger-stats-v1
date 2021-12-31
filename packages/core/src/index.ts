@@ -11,6 +11,8 @@ export * from './utils/datetimeutils';
 
 import { DataSource } from './entity/datasource';
 import { SwsSpan } from './entity/swsspan';
+import spanTransforms from './transforms/spantransforms';
+//export * from './transforms/spantransforms';
 export * from './entity/swsspan';
 
 /*
@@ -37,4 +39,5 @@ module.exports = {
  */
   DataSource,
   SwsSpan,
+  spanTransforms,
 };

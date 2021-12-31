@@ -187,4 +187,21 @@ export class SwsSpan {
 
     return this;
   }
+
+  // Convert to "flat" object, according to schema
+  // TODO Reconsider name
+  flatten() {
+    const schema = [
+      { name: 'spanId', path: 'spanId' },
+      { name: 'name', path: 'name' },
+      { name: 'http.url', path: 'attributes.http.uri' },
+    ];
+
+    const result: any = {};
+    schema.map((x) => {
+      const key = x.name;
+      result[key] = pathOr(null, x.path.split('.'), this);
+    });
+    return schema;
+  }
 }
