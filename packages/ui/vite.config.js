@@ -22,7 +22,8 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       'tailwind.config.js': path.resolve(__dirname, 'tailwind.config.js'),
-      '@opentelemetry/core/build/esm/src/platform/index.ts': require.resolve('@opentelemetry/core/build/esm/src/platform/browser/index.ts'),
+      './platform': require.resolve('@opentelemetry/core/build/esm/platform/browser/index.js'),
+      '../platform': require.resolve('@opentelemetry/core/build/esm/platform/browser/index.js'),
     },
   },
   optimizeDeps: {
