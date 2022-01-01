@@ -18,6 +18,7 @@
     "incremental": true,
     "newLine": "LF",
     "module": "commonjs",
+    "esModuleInterop": true,
     "moduleResolution": "node"
   },
   "exclude": [

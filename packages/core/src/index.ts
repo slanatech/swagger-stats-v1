@@ -11,9 +11,9 @@ export * from './utils/datetimeutils';
 
 //import { DataSource } from './entity/datasource';
 //import { SwsSpan } from './entity/swsspan';
-import { spanTransforms } from './transforms/spantransforms';
+//import { spanTransforms } from './transforms/spantransforms';
 
-//export * from './transforms/spantransforms';
+export * from './transforms/spantransforms';
 //export * from './entity/swsspan';
 //export * from './entity/datasource';
 
@@ -28,4 +28,4 @@ const dateTimeUtils = require('./utils/datetimeutils');
 
 //export { DataSource };
 
-export { spanTransforms };
+//export { spanTransforms };

@@ -8,7 +8,9 @@
   import { defineComponent } from 'vue';
   import { mapState, mapActions } from 'vuex';
   import { bus } from '@/store/bus';
-  import * as swsCore from '@swaggerstats/core';
+  import {spanTransforms} from '@swaggerstats/core';
+  import { hrTimeToMilliseconds } from '@opentelemetry/core';
+
   // w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start
 
   export default defineComponent({
@@ -102,7 +104,9 @@
         }
         //const opa = new DataSource();
         //console.log(`ds: ${opa.id}`);
-        const flatSpan = swsCore.spanTransforms.flatten(span);
+        const test = hrTimeToMilliseconds([0,100000]);
+        console.log(`tested something: ${test}`);
+        const flatSpan = spanTransforms.flatten(span);
         this.table.update([flatSpan]);
         if (this.idx === -11) {
           // 11
