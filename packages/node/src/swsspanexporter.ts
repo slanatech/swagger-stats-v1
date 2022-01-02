@@ -1,6 +1,7 @@
 import { SpanExporter, ReadableSpan } from '@opentelemetry/sdk-trace-base';
 import { ExportResult, ExportResultCode, hrTimeToMicroseconds } from '@opentelemetry/core';
-import { SwsSpan } from '@swaggerstats/core';
+//import { SwsSpan } from '@swaggerstats/core';
+import { fromReadableSpan } from '@swaggerstats/integrations';
 import Debug from 'debug';
 const debug = Debug('sws:spanexporter');
 
@@ -46,8 +47,8 @@ export class SwsSpanExporter implements SpanExporter {
   _processSpans(spans: ReadableSpan[]) {
     for (const span of spans) {
       debug(this._exportInfo(span));
-      // convert to span
-      const swsSpan = new SwsSpan().fromReadableSpan(span);
+      // convert to SwsSpan
+      const swsSpan = fromReadableSpan(span);
       this._processor.processSpan(swsSpan);
     }
   }

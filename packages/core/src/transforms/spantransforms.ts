@@ -10,15 +10,16 @@ class SpanTransforms {
 
   flatten(span: any): any {
     const schema = [
-      { name: 'spanId', path: 'spanId' },
-      { name: 'name', path: 'name' },
-      { name: 'http.url', path: 'attributes.http.uri' },
+      { name: 'spanId', path: ['spanId'] },
+      { name: 'name', path: ['name'] },
+      { name: 'http.url', path: ['attributes', 'http.url'] },
     ];
 
     const result: any = {};
     schema.map((x) => {
       const key = x.name;
-      result[key] = pathOr(null, x.path.split('.'), this);
+      const path = x.path;
+      result[key] = pathOr(null, path, span);
     });
     return result;
   }

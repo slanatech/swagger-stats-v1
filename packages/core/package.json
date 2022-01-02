@@ -4,7 +4,6 @@
   "version": "1.0.0-alpha.1",
   "private": true,
   "description": "swagger-stats core package",
-  "type": "module",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "module": "build/esm/index.js",

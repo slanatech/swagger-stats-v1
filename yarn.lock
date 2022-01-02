@@ -2136,7 +2136,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@swaggerstats/integrations@workspace:packages/integrations":
+"@swaggerstats/integrations@1.0.0-alpha.1, @swaggerstats/integrations@workspace:packages/integrations":
   version: 0.0.0-use.local
   resolution: "@swaggerstats/integrations@workspace:packages/integrations"
   dependencies:
@@ -2146,6 +2146,8 @@ __metadata:
     "@opentelemetry/sdk-trace-base": ^1.0.1
     "@opentelemetry/semantic-conventions": ^1.0.1
     "@swaggerstats/core": 1.0.0-alpha.1
+    "@types/jest": ^27.4.0
+    "@types/node": ^17.0.6
     "@types/ramda": ^0.27.60
     "@types/uuid": ^8.3.3
     "@typescript-eslint/eslint-plugin": ^5.8.0
@@ -2177,6 +2179,7 @@ __metadata:
     "@opentelemetry/sdk-trace-node": ^1.0.1
     "@opentelemetry/semantic-conventions": ^1.0.1
     "@swaggerstats/core": 1.0.0-alpha.1
+    "@swaggerstats/integrations": 1.0.0-alpha.1
     "@swaggerstats/ui": 1.0.0-alpha.1
     "@types/debug": ^4.1.7
     "@types/jest": ^27.0.3
@@ -2290,8 +2293,6 @@ __metadata:
     "@headlessui/vue": ^1.4.2
     "@heroicons/vue": ^1.0.5
     "@mdi/js": ^6.5.95
-    "@opentelemetry/api": ^1.0.4
-    "@opentelemetry/core": ^1.0.1
     "@swaggerstats/core": 1.0.0-alpha.1
     "@swaggerstats/trace-viewer": 1.0.0-alpha.1
     "@tailwindcss/aspect-ratio": ^0.4.0
@@ -2601,6 +2602,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jest@npm:^27.4.0":
+  version: 27.4.0
+  resolution: "@types/jest@npm:27.4.0"
+  dependencies:
+    jest-diff: ^27.0.0
+    pretty-format: ^27.0.0
+  checksum: d2350267f954f9a2e4a15e5f02fbf19a77abfb9fd9e57a954de1fb0e9a0d3d5f8d3646ac7d9c42aeb4b4d828d2e70624ec149c85bb50a48634a54eed8429e1f8
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.6, @types/json-schema@npm:^7.0.9":
   version: 7.0.9
   resolution: "@types/json-schema@npm:7.0.9"
@@ -2717,6 +2728,13 @@ __metadata:
   version: 17.0.2
   resolution: "@types/node@npm:17.0.2"
   checksum: a827d2542ef7adba5c79ba7f85b7c2ba8256d317bd99d77ed7af237cfebae0034dff5c4182e1845e6fbef29ae4c78186c4b4a7dbf236037a04120783aa30ba74
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^17.0.6":
+  version: 17.0.6
+  resolution: "@types/node@npm:17.0.6"
+  checksum: 36fda5555ec759132886721f59fa74333947f7148b7dcce3de0a78c36f37f57ec86a3d09fd38c835ba65c8de77905de6c01523ec99864d8cead83f404118a44a
   languageName: node
   linkType: hard
 

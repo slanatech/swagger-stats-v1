@@ -1,3 +1,4 @@
+import { pathOr } from 'ramda';
 import { ReadableSpan } from '@opentelemetry/sdk-trace-base';
 import { hrTimeToMilliseconds } from '@opentelemetry/core';
 import { SwsSpan } from '@swaggerstats/core';

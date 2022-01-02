@@ -7,7 +7,7 @@
   "main": "app.js",
   "scripts": {
     "build": "vite build",
-    "ui:dev": "vite --host --debug",
+    "ui:dev": "vite --host",
     "ui:build": "vite build",
     "ui:check": "vue-tsc --noEmit --skipLibCheck",
     "ui:serve": "vite preview",
@@ -30,8 +30,6 @@
     "@headlessui/vue": "^1.4.2",
     "@heroicons/vue": "^1.0.5",
     "@mdi/js": "^6.5.95",
-    "@opentelemetry/api": "^1.0.4",
-    "@opentelemetry/core": "^1.0.1",
     "@swaggerstats/core": "1.0.0-alpha.1",
     "@swaggerstats/trace-viewer": "1.0.0-alpha.1",
     "@tailwindcss/aspect-ratio": "^0.4.0",

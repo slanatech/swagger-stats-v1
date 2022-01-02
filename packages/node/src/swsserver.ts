@@ -8,7 +8,7 @@ import * as NodeStatic from 'node-static';
 import { SwsOptions } from './swsoptions';
 import { SwsProcessor } from './swsprocessor';
 import { SwsSpan } from '@swaggerstats/core';
-import { spanTransforms } from '@swaggerstats/core';
+//import { spanTransforms } from '@swaggerstats/core';
 
 import Debug from 'debug';
 const debug = Debug('sws:server');
@@ -78,8 +78,7 @@ export class SwsServer {
     debug(`WS: Got span: ${JSON.stringify(span)}`);
     // TODO TEMP - Refine - send only to clients who started trace
     if (this.ws) {
-      const f = spanTransforms.flatten(span);
-      this.ws.send(JSON.stringify({ type: 'span', data: f }));
+      this.ws.send(JSON.stringify({ type: 'span', data: span }));
     }
   }
 

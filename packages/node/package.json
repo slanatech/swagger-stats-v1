@@ -78,6 +78,7 @@
     "@opentelemetry/sdk-trace-node": "^1.0.1",
     "@opentelemetry/semantic-conventions": "^1.0.1",
     "@swaggerstats/core": "1.0.0-alpha.1",
+    "@swaggerstats/integrations": "1.0.0-alpha.1",
     "basic-auth": "^2.0.1",
     "cookies": "^0.8.0",
     "debug": "^4.3.1",
