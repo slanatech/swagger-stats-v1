@@ -13,9 +13,7 @@ export * from './utils/datetimeutils';
 //import { SwsSpan } from './entity/swsspan';
 //import { spanTransforms } from './transforms/spantransforms';
 
-export * from './transforms/spantransforms';
-export * from './entity/swsspan';
-export * from './entity/datasource';
+export * from './converters/readablespan';
 
 /*
 import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';

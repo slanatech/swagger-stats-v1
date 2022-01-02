@@ -2069,12 +2069,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@swaggerstats/core@workspace:packages/core"
   dependencies:
-    "@opentelemetry/api": ^1.0.3
-    "@opentelemetry/core": ^1.0.1
-    "@opentelemetry/resources": ^1.0.1
-    "@opentelemetry/sdk-trace-base": ^1.0.1
-    "@opentelemetry/semantic-conventions": ^1.0.1
     "@types/ramda": ^0.27.60
+    "@types/uuid": ^8.3.3
     "@typescript-eslint/eslint-plugin": ^5.8.0
     "@typescript-eslint/parser": ^5.8.0
     cpy-cli: ^3.1.1
@@ -2136,6 +2132,28 @@ __metadata:
     prom-client: ^13.1.0
     serve-favicon: ^2.4.5
     serve-static: ^1.13.1
+    uuid: ^8.3.2
+  languageName: unknown
+  linkType: soft
+
+"@swaggerstats/integrations@workspace:packages/integrations":
+  version: 0.0.0-use.local
+  resolution: "@swaggerstats/integrations@workspace:packages/integrations"
+  dependencies:
+    "@opentelemetry/api": ^1.0.3
+    "@opentelemetry/core": ^1.0.1
+    "@opentelemetry/resources": ^1.0.1
+    "@opentelemetry/sdk-trace-base": ^1.0.1
+    "@opentelemetry/semantic-conventions": ^1.0.1
+    "@swaggerstats/core": 1.0.0-alpha.1
+    "@types/ramda": ^0.27.60
+    "@types/uuid": ^8.3.3
+    "@typescript-eslint/eslint-plugin": ^5.8.0
+    "@typescript-eslint/parser": ^5.8.0
+    cpy-cli: ^3.1.1
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-prettier: ^4.0.0
+    ramda: ^0.27.1
     uuid: ^8.3.2
   languageName: unknown
   linkType: soft
@@ -2852,6 +2870,13 @@ __metadata:
   version: 2.0.6
   resolution: "@types/unist@npm:2.0.6"
   checksum: 25cb860ff10dde48b54622d58b23e66214211a61c84c0f15f88d38b61aa1b53d4d46e42b557924a93178c501c166aa37e28d7f6d994aba13d24685326272d5db
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:^8.3.3":
+  version: 8.3.3
+  resolution: "@types/uuid@npm:8.3.3"
+  checksum: 3f340155bb1161f9ffa7163926d6222fea8f3505c23619b72bcc230883354926672c08a06510c7a543f73553c792a84444cc1744cff631b4ba988763e4bd7a8f
   languageName: node
   linkType: hard
 

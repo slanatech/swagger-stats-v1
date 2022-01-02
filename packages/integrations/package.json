@@ -1,5 +1,5 @@
 {
-  "name": "@swaggerstats/core",
+  "name": "@swaggerstats/integrations",
   "packageManager": "yarn@3.1.1",
   "version": "1.0.0-alpha.1",
   "private": true,
@@ -9,9 +9,9 @@
   "types": "build/src/index.d.ts",
   "module": "build/esm/index.js",
   "scripts": {
-    "compile": "yarn run -T tsc --build tsconfig.all.json",
+    "compile": "yarn run -T tsc --build",
     "postcompile": "cpy **/* !**/*.ts ../build/src --cwd=./src --no-overwrite --parents",
-    "clean": "yarn run -T tsc --build --clean tsconfig.all.json",
+    "clean": "yarn run -T tsc --build --clean",
     "list": "yarn run -T tsc --listFiles",
     "test": "jest --verbose",
     "test-mem": "node --expose-gc ../../node_modules/jest/bin/jest.js --runInBand --logHeapUsage",
@@ -58,6 +58,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@opentelemetry/api": "^1.0.3",
+    "@opentelemetry/core": "^1.0.1",
+    "@opentelemetry/resources": "^1.0.1",
+    "@opentelemetry/sdk-trace-base": "^1.0.1",
+    "@opentelemetry/semantic-conventions": "^1.0.1",
+    "@swaggerstats/core": "1.0.0-alpha.1",
     "ramda": "^0.27.1",
     "uuid": "^8.3.2"
   },
