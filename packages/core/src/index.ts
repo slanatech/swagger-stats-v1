@@ -16,6 +16,7 @@ export * from './utils/datetimeutils';
 export * from './transforms/spantransforms';
 export * from './entity/swsspan';
 export * from './entity/datasource';
+export * from './schema/resolvecategory';
 
 /*
 import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';

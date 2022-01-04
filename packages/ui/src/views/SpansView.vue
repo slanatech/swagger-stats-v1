@@ -60,6 +60,7 @@
             parentSpanId: 'string',
             service: 'string',
             kind: 'string',
+            category: 'string',
             success: 'boolean',
             name: 'string',
             startTime: 'datetime',

@@ -2,6 +2,7 @@ import { pathOr } from 'ramda';
 import { ReadableSpan } from '@opentelemetry/sdk-trace-base';
 import { hrTimeToMilliseconds } from '@opentelemetry/core';
 import { SwsSpan } from '@swaggerstats/core';
+import { resolveCategory } from '@swaggerstats/core';
 
 export function fromReadableSpan(span: ReadableSpan): SwsSpan {
   const swsSpan = new SwsSpan();
@@ -48,6 +49,9 @@ export function fromReadableSpan(span: ReadableSpan): SwsSpan {
 
   // Instrumentation
   swsSpan.instrumentationLibrary = pathOr(null, ['instrumentationLibrary', 'name'], span);
+
+  // Category
+  resolveCategory(swsSpan);
 
   return swsSpan;
 }

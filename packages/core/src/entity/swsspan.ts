@@ -11,6 +11,7 @@ export class SwsSpan {
   public depth: number | null;
   public name: string | null;
   public kind: string | null;
+  public category: string | null;
   public service: string | null;
   public status: any | null;
   public success: boolean;
@@ -30,6 +31,7 @@ export class SwsSpan {
     this.depth = null;
     this.name = null;
     this.kind = 'internal'; // default
+    this.category = null;
     this.service = null;
     // status
     this.status = null;
