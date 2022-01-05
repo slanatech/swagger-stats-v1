@@ -3,11 +3,15 @@
 // const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { PgInstrumentation } = require('@opentelemetry/instrumentation-pg');
-const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
-const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
+const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 
-const { swsMonitor } = require('@swaggerstats/node');
-swsMonitor.start({});
+const { SwsNode } = require('@swaggerstats/node');
+const swsNode = new SwsNode({
+  name: 'hapitest',
+  port: 8087,
+});
+swsNode.start();
 
 /*
 let exporter = new JaegerExporter({
@@ -19,21 +23,17 @@ let exporter = new JaegerExporter({
 swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 */
 
-// Set service name
-swsMonitor.tracerProvider.resource.attributes['service.name'] = 'hapitest';
-
 /* This exports traces via OpenTelemetry protocol to specified destination */
 const collectorOptions = {
   url: 'grpc://localhost:4327', // url is optional and can be omitted - default is localhost:4317
 };
-const exporterCollector = new CollectorTraceExporter(collectorOptions);
-swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
-
-swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+const exporterCollector = new OTLPTraceExporter(collectorOptions);
+swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
 // Can register instrumentations subsequently multiple times after init
 registerInstrumentations({
-  tracerProvider: swsMonitor.tracerProvider,
+  tracerProvider: swsNode.tracerProvider,
   instrumentations: [new PgInstrumentation()],
 });
 
