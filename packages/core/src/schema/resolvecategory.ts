@@ -16,7 +16,7 @@ export function resolveCategory(span: SwsSpan): void {
   // Handle some well-known patterns first
   if (span.instrumentationLibrary.startsWith('@opentelemetry/instrumentation-')) {
     // I.e. "@opentelemetry/instrumentation-http"
-    span.category = span.instrumentationLibrary.slice(30);
+    span.category = span.instrumentationLibrary.slice(31);
     return;
   }
 
