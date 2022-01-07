@@ -8,7 +8,8 @@
   import { defineComponent } from 'vue';
   import { mapState, mapActions } from 'vuex';
   import { bus } from '@/store/bus';
-  import {spanTransforms} from '@swaggerstats/core';
+  import { spanTransforms } from '@swaggerstats/core';
+  import { perspectiveTables } from '@/store/perspectivetables';
 
   // w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start
 
@@ -52,6 +53,7 @@
         setProgress: 'layout/setProgress',
       }),
       async initialize() {
+        /*
         this.worker = perspective.worker();
         this.table = await this.worker.table(
           {
@@ -71,16 +73,19 @@
           },
           { index: 'spanId' }
         );
+         */
         //this.table = await this.worker.table([{ spanId: 'a' }], { index: 'spanId' });
         //let schema = this.worker.table.get_schema();
         //let types = schema.types();
-        let schema = await this.table.schema();
+        //let schema = await this.table.schema();
         //let types = schema.types();
         const el = document.getElementsByTagName('perspective-viewer')[0];
-        el.load(this.table);
+        const spansTable = await perspectiveTables.getTable('spans');
+        el.load(spansTable);
         el.toggleConfig();
       },
       async handleSpan(span) {
+        return;
         console.log(`SpanView: Got Span: ${this.idx} ${JSON.stringify(span)}`);
         if (this.idx === -1) {
           // This way we can update schema of the table - by re-creating it and re-loading data
