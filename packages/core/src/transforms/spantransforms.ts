@@ -12,8 +12,10 @@ class SpanTransforms {
     // TODO Move schema to dedicated class
     const schema = [
       { name: 'spanId', path: ['spanId'] },
+      { name: 'traceId', path: ['traceId'] },
       { name: 'name', path: ['name'] },
       { name: 'category', path: ['category'] },
+      { name: 'success', path: ['success'] },
       { name: 'http.url', path: ['attributes', 'http.url'] },
     ];
 

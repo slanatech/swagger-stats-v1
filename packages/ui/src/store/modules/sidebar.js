@@ -11,7 +11,10 @@ const allSidebarItems = {
     { title: 'Last Errors', link: '/lasterrors', icon: 'alert-circle' },
     { title: 'Longest Requests', link: '/longestrequests', icon: 'timer-sand-empty' },
   ],
-  '/ux/spans': [{ title: 'Alternative', link: '/', icon: 'chart-bar' }],
+  '/ux/spans': [
+    { title: 'Spans', link: '/ux/spans', icon: 'chart-bar' },
+    { title: 'Errors', link: '/ux/spans/errors', icon: 'chart-bar' },
+  ],
 };
 
 function getSidebarItemsByRoutePath(routePath) {
