@@ -14,6 +14,7 @@ const allSidebarItems = {
   '/ux/spans': [
     { title: 'Spans', link: '/ux/spans', icon: 'chart-bar' },
     { title: 'Errors', link: '/ux/spans/errors', icon: 'chart-bar' },
+    { title: 'Workspace', link: '/ux/spans/ws', icon: 'chart-circle' },
   ],
 };
 
@@ -38,6 +39,7 @@ const getters = {};
 const mutations = {
   SET_ROUTE_PATH(state, { routePath }) {
     console.log(`Store:sidebar: set new routePath ${routePath}`);
+    // TODO do not update if not changed
     const opa = getSidebarItemsByRoutePath(routePath); //altSidebarItems;
     state.items = opa;
     state.routePath = routePath;

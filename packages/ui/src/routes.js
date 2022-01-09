@@ -5,6 +5,7 @@ import Perspective from './views/Perspective.vue';
 import SpansView from './views/SpansView.vue';
 import SpansErrorsView from './views/SpansErrorsView.vue';
 import Test from './views/Test.vue';
+import PerspectiveWorkspace from './components/PerspectiveWorkspace.vue';
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
@@ -40,6 +41,11 @@ export const routes = [
         path: '/ux/spans/errors',
         component: SpansErrorsView,
         name: 'spanserrors',
+      },
+      {
+        path: '/ux/spans/ws',
+        component: PerspectiveWorkspace,
+        name: 'ws',
       },
     ],
   },
