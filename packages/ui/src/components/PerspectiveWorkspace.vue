@@ -1,6 +1,6 @@
 /* Perspective * Perspective workspace : https://perspective.finos.org/ */
 <template>
-  <perspective-workspace id="workspace" style="width: 100%; height: calc(100vh - 4rem); resize: vertical">
+  <perspective-workspace id="workspace">
     <perspective-viewer table="movies" class="perspective-viewer-material"></perspective-viewer>
   </perspective-workspace>
 </template>
@@ -10,7 +10,148 @@
   import { computed } from 'vue';
   import { perspectiveTables } from '@/store/perspectivetables';
   // TEMP
-  import * as layoutJson from '@/data/layout_test.json';
+  //import * as layoutJson from '@/data/layout_test.json';
+
+  const layoutJson = {
+    //sizes: [0.350418410041841, 0.649581589958159],
+    detail: {
+      main: {
+        type: 'split-area',
+        orientation: 'vertical',
+        children: [
+          {
+            type: 'tab-area',
+            widgets: ['PERSPECTIVE_GENERATED_ID_0', 'PERSPECTIVE_GENERATED_ID_3'],
+            currentIndex: 0,
+          },
+          {
+            type: 'tab-area',
+            widgets: ['PERSPECTIVE_GENERATED_ID_1'],
+            currentIndex: 0,
+          },
+        ],
+        sizes: [0.5, 0.5],
+      },
+    },
+    mode: 'globalFilters',
+    master: {
+      widgets: ['PERSPECTIVE_GENERATED_ID_2'],
+      sizes: [1],
+    },
+    viewers: {
+      PERSPECTIVE_GENERATED_ID_2: {
+        selectable: true,
+        plugin: 'Datagrid',
+        row_pivots: ['Distributor'],
+        aggregates: {
+          'IMDB Rating': 'avg',
+        },
+        sort: [['US Gross', 'desc']],
+        columns: ['US Gross'],
+        expressions: null,
+        column_pivots: null,
+        filter: null,
+        plugin_config: {
+          'IMDB Rating': {
+            number_color_mode: 'gradient',
+            pos_color: '#b87ff0',
+            neg_color: '#FF9485',
+            gradient: 8.1,
+          },
+          'US Gross': {
+            number_color_mode: 'gradient',
+            pos_color: '#126e3a',
+            neg_color: '#FF9485',
+            gradient: 19729862602,
+          },
+        },
+        master: true,
+        name: null,
+        table: 'movies',
+        linked: false,
+      },
+      PERSPECTIVE_GENERATED_ID_0: {
+        plugin: 'X/Y Scatter',
+        row_pivots: ['Title'],
+        aggregates: {
+          'IMDB Rating': 'avg',
+          'Rotten Tomatoes Rating': 'avg',
+          Director: 'last',
+          'Release Date': 'last',
+          'MPAA Rating': 'last',
+        },
+        sort: [['US Gross', 'asc']],
+        columns: ['Rotten Tomatoes Rating', 'IMDB Rating', 'US Gross', null, 'Director', 'Release Date', 'MPAA Rating'],
+        selectable: null,
+
+        expressions: null,
+        column_pivots: null,
+        filter: null,
+        plugin_config: {
+          realValues: ['Rotten Tomatoes Rating', 'IMDB Rating', 'US Gross', null, 'Director', 'Release Date', 'MPAA Rating'],
+          zoom: {
+            k: 1,
+            x: 0,
+            y: 0,
+          },
+        },
+        master: false,
+        name: null,
+        table: 'movies',
+        linked: false,
+      },
+      PERSPECTIVE_GENERATED_ID_3: {
+        plugin: 'Y Area',
+        expressions: ['bucket("Release Date", \'Y\')'],
+        row_pivots: ['bucket("Release Date", \'Y\')'],
+        aggregates: {
+          'Rotten Tomatoes Rating': 'avg',
+        },
+        columns: ['US Gross'],
+        column_pivots: ['Major Genre'],
+        selectable: null,
+
+        filter: null,
+        sort: null,
+        plugin_config: {
+          realValues: ['US Gross'],
+          legend: {
+            left: '91px',
+            top: '25px',
+          },
+        },
+        master: false,
+        name: 'US Gross by Genre',
+        table: 'movies',
+        linked: false,
+      },
+      PERSPECTIVE_GENERATED_ID_1: {
+        plugin: 'Y Line',
+        expressions: ['bucket("Release Date", \'Y\')'],
+        row_pivots: ['bucket("Release Date", \'Y\')'],
+        aggregates: {
+          'Rotten Tomatoes Rating': 'avg',
+        },
+        columns: ['US Gross', 'Rotten Tomatoes Rating', 'Production Budget', 'Worldwide Gross', 'US DVD Sales'],
+        selectable: null,
+        column_pivots: null,
+        filter: null,
+        sort: null,
+        plugin_config: {
+          realValues: ['US Gross', 'Rotten Tomatoes Rating', 'Production Budget', 'Worldwide Gross', 'US DVD Sales'],
+          splitMainValues: ['Rotten Tomatoes Rating'],
+          legend: {
+            left: '79px',
+            top: '174px',
+          },
+        },
+        master: false,
+        name: 'Ratings vs Sales',
+        table: 'movies',
+        linked: false,
+      },
+    },
+  };
 
   export default {
     props: {
@@ -38,7 +179,7 @@
       //const spansTable = await perspectiveTables.getTable('spans');
       //el.load(spansTable);
       //el.toggleConfig();
-      window.workspace.tables.set('movies', perspectiveTables.getTable('spans'));
+      window.workspace.tables.set('movies', perspectiveTables.getTable('movies'));
       window.workspace.restore(layoutJson);
       console.log(`Perspective Workspace mounted`);
     },
