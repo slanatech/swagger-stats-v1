@@ -2,6 +2,7 @@
  * Span Transforms
  */
 import { pathOr } from 'ramda';
+import { spanSchema } from '../schema/spanschema';
 
 class SpanTransforms {
   constructor() {
@@ -9,18 +10,8 @@ class SpanTransforms {
   }
 
   flatten(span: any): any {
-    // TODO Move schema to dedicated class
-    const schema = [
-      { name: 'spanId', path: ['spanId'] },
-      { name: 'traceId', path: ['traceId'] },
-      { name: 'name', path: ['name'] },
-      { name: 'category', path: ['category'] },
-      { name: 'success', path: ['success'] },
-      { name: 'http.url', path: ['attributes', 'http.url'] },
-    ];
-
     const result: any = {};
-    schema.map((x) => {
+    spanSchema.schemaData.map((x: any) => {
       const key = x.name;
       const path = x.path;
       result[key] = pathOr(null, path, span);

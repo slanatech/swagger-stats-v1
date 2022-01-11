@@ -4,6 +4,7 @@
 //import { pathOr } from 'ramda';
 // @ts-ignore
 import { bus } from '@/store/bus';
+import { spanSchema } from '@swaggerstats/core';
 import { spanTransforms } from '@swaggerstats/core';
 
 const MOVIES_URL = 'https://vega.github.io/editor/data/movies.json';
@@ -75,24 +76,8 @@ class PerspectiveTables {
   }
 
   async initSpansTable(): Promise<any> {
-    const table = await this.worker.table(
-      {
-        spanId: 'string',
-        traceId: 'string',
-        parentSpanId: 'string',
-        service: 'string',
-        kind: 'string',
-        category: 'string',
-        success: 'boolean',
-        name: 'string',
-        startTime: 'datetime',
-        endTime: 'datetime',
-        duration: 'integer',
-        //attributes: 'object',
-        'http.url': 'string',
-      },
-      { index: 'spanId' }
-    );
+    const tableSchema = spanSchema.toPerspectiveSchema();
+    const table = await this.worker.table(tableSchema, { index: 'spanId' });
     return table;
   }
   async handleSpan(span: any) {

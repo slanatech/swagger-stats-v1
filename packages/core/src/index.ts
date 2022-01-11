@@ -17,6 +17,7 @@ export * from './transforms/spantransforms';
 export * from './entity/swsspan';
 export * from './entity/datasource';
 export * from './schema/resolvecategory';
+export * from './schema/spanschema';
 
 /*
 import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';
