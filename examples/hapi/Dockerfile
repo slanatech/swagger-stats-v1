@@ -13,5 +13,5 @@ RUN yarn install --immutable --inline-builds
 # docker-build plugin runs `yarn pack` in all workspace dependencies and copies them to `packs` folder.
 COPY packs ./
 
-CMD yarn workspace @swaggerstats/examples-express start
+CMD yarn workspace @swaggerstats/examples-hapi start
 #CMD sh

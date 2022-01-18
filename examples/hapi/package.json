@@ -4,6 +4,9 @@
   "private": true,
   "description": "Hapi example",
   "main": "hapijstest.js",
+  "scripts": {
+    "start": "node hapijstest.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/slanatech/swagger-stats"

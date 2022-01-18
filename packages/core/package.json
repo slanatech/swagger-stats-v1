@@ -45,6 +45,11 @@
     "kibana",
     "grafana"
   ],
+  "files": [
+    "build/**/*",
+    "src/**/*",
+    "package.json"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/slanatech/swagger-stats"

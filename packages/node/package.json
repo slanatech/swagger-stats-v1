@@ -43,8 +43,9 @@
     "grafana"
   ],
   "files": [
-    "src/*",
-    "schema/*",
+    "build/**/*",
+    "src/**/*",
+    "schema/**/*",
     "package.json",
     "README.md",
     "CHANGELOG.md",
