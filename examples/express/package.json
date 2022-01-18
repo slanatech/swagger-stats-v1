@@ -4,6 +4,9 @@
   "private": true,
   "description": "Express example",
   "main": "spectest.js",
+  "scripts": {
+    "start": "node spectest.js"
+  },
   "config": {
     "imageName": "swaggerstats-examples-express"
   },

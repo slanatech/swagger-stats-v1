@@ -1,0 +1,10 @@
+FROM node:16-alpine AS builder
+
+# Install dependencies for building native libraries
+RUN apk add --update git openssh-client python make gcc g++
+
+WORKDIR /workspace
+
+
+
+FROM node:16-alpine
