@@ -16,10 +16,41 @@ This will install k3d with Nginx ingress (instead of traefik), and expose k3d in
 When deploying ingress for services, hostname could be specified as `<service>.localhost`, 
 and then to access service: http://portainer.localhost:8082/ 
 
+### Misc commands
+
+How to add port mapping to existing cluster
+
+```shell
+k3d cluster edit sws2 --port-add 443:443@loadbalancer
+```
+
 
 https://github.com/rancher/k3d/issues/292
 
-## Examples 
+## Install Grafana Stack in k3d
+
+```shell
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+```
+
+### Install Grafana
+
+```shell
+helm install -f grafana.values.yaml --create-namespace -n grafana grafana grafana/grafana 
+```
+
+### Install Loki-Stack - loki, promtail, prometheus
+
+```shell
+helm install -f loki-stack.values.yaml -n grafana lokistack grafana/loki-stack 
+```
+
+### TODO Install Prometheus separately
+
+### TODO Install Tempo
+
+## Additional Examples 
 
 ### Install Portainer in k3d 
 
@@ -32,6 +63,21 @@ helm install --create-namespace -n portainer portainer portainer/portainer \
   --set ingress.hosts[0].host=portainer.localhost \
   --set ingress.hosts[0].paths[0].path="/"
 ```
+
+### Install Kubernetes Dashboard in k3d
+
+```shell
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+```
+
+```shell
+helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
+  --set ingress.enabled=true \
+  --set ingress.annotations.'kubernetes\.io/ingress\.class'=nginx \
+  --set ingress.annotations."nginx\.ingress\.kubernetes\.io/backend-protocol"=HTTPS \
+  --set ingress.hosts[0]=dashboard.localhost
+```
+
 
 ## References 
 

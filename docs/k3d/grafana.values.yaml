@@ -1,0 +1,33 @@
+image:
+  tag: 8.3.4
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - grafana.localhost
+
+persistence:
+  enabled: true
+
+# Enable anonymous access as Admin
+grafana.ini:
+  users:
+    viewers_can_edit: true
+  auth:
+    disable_login_form: true
+    disable_signout_menu: true
+  auth.anonymous:
+    enabled: true
+    org_role: Admin
+
+# Provision out of the box datasources
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-prometheus-server
+      access: proxy
+      isDefault: true
