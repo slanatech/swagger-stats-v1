@@ -31,24 +31,35 @@ https://github.com/rancher/k3d/issues/292
 
 ```shell
 helm repo add grafana https://grafana.github.io/helm-charts
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 ```
 
 ### Install Grafana
 
 ```shell
-helm install -f grafana.values.yaml --create-namespace -n grafana grafana grafana/grafana 
+helm install -f grafana.values.yaml --create-namespace -n observability grafana grafana/grafana 
 ```
 
-### Install Loki-Stack - loki, promtail, prometheus
+### Install Loki-Stack - loki, promtail
 
 ```shell
-helm install -f loki-stack.values.yaml -n grafana lokistack grafana/loki-stack 
+helm install -f loki-stack.values.yaml --create-namespace -n observability loki grafana/loki-stack 
 ```
 
-### TODO Install Prometheus separately
+### Install Prometheus separately
 
-### TODO Install Tempo
+```shell
+helm install -f prometheus.values.yaml --create-namespace -n observability prometheus prometheus-community/prometheus 
+```
+
+
+### Install Tempo
+
+```shell
+helm install -f tempo.values.yaml --create-namespace -n observability tempo grafana/tempo 
+```
+
 
 ## Additional Examples 
 

@@ -1,0 +1,9 @@
+server:
+  image:
+    tag: v2.32.1
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - prometheus.localhost
+
