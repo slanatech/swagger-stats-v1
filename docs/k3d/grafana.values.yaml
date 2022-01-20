@@ -21,6 +21,12 @@ grafana.ini:
     enabled: true
     org_role: Admin
 
+# Install additional plugins
+plugins:
+  - grafana-clock-panel
+  - grafana-polystat-panel
+  - redis-datasource
+
 # Provision out of the box datasources
 datasources:
   datasources.yaml:
@@ -28,11 +34,13 @@ datasources:
     datasources:
     - name: Prometheus
       type: prometheus
+      uid: prometheus
       url: http://prometheus-server
       access: proxy
       isDefault: true
     - name: Loki
       type: loki
+      uid: loki
       url: http://loki:3100
       access: proxy
       isDefault: false
@@ -41,3 +49,68 @@ datasources:
       url: http://tempo:3100
       access: proxy
       isDefault: false
+      jsonData:
+        nodeGraph:
+          enabled: true
+        tracesToLogs:
+          datasourceUid: loki
+    - name: Redis
+      type: redis-datasource
+      uid: redis
+      typeName: Redis
+      access: proxy
+      isDefault: false
+      url: redis://redis.data.svc.cluster.local:6379
+    - name: Postrgres
+      type: postgres
+      uid: postgres
+      typeName: PostgreSQL
+      access: proxy
+      isDefault: false
+      url: postgres-postgresql.data.svc.cluster.local:5432
+      password: postgres
+      user: postgres
+      database: postgres
+      jsonData:
+        postgresVersion: 1200
+        sslmode: disable
+        tlsAuth: false
+        tlsAuthWithCACert: false
+        tlsConfigurationMethod: file-path
+        tlsSkipVerify: true
+
+
+# Install dashboards
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    #some-dashboard:
+    #  json: |
+    #    $RAW_JSON
+    #custom-dashboard:
+    #  file: dashboards/custom-dashboard.json
+    kubernetes:
+      gnetId: 315
+      revision: 3
+      datasource: Prometheus
+    redis:
+      gnetId: 12776
+      revision: 2
+      datasource: Redis
+    postgres:
+      gnetId: 9628
+      revision: 7
+      datasource: Prometheus
+

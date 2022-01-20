@@ -1,0 +1,12 @@
+image:
+  tag: 14.1.0-debian-10-r66
+
+service:
+  type: LoadBalancer
+
+postgresqlUsername: postgres
+postgresqlPassword: postgres
+postgresqlDatabase: postgres
+
+metrics:
+  enabled: true

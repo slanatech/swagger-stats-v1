@@ -27,7 +27,45 @@ k3d cluster edit sws2 --port-add 443:443@loadbalancer
 
 https://github.com/rancher/k3d/issues/292
 
-## Install Grafana Stack in k3d
+## Install Data Stack in k3d
+
+```shell
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+```
+
+### Postgres
+
+This deploys Postgres with LoadBalancer service type
+
+```shell
+helm install -f postgres.values.yaml --create-namespace -n data postgres bitnami/postgresql 
+helm uninstall -n data postgres 
+```
+
+To access from the outside of k3d cluster:
+
+```shell
+$ kubectl get services -n data
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+postgres-postgresql-headless   ClusterIP      None          <none>        5432/TCP         13m
+postgres-postgresql            LoadBalancer   10.43.45.71   172.25.0.3    5432:31910/TCP   13m
+```
+Connect to EXTERNAL-IP:5432  
+
+To access from the inside of k3d cluster - connect to `postgres-postgresql.data.svc.cluster.local:5432`
+
+
+### Redis
+
+Redis is deployed using manifest that creates a service with type: LoadBalancer, so it can be accessed externally.
+redislabs/redismod docker image is used. It contains redis with all the modules that can be used in experiments. 
+
+```shell
+kubectl create -f redis.yaml
+```
+
+## Install Observability Stack in k3d
 
 ```shell
 helm repo add grafana https://grafana.github.io/helm-charts
@@ -39,6 +77,7 @@ helm repo update
 
 ```shell
 helm install -f grafana.values.yaml --create-namespace -n observability grafana grafana/grafana 
+helm uninstall -n observability grafana
 ```
 
 ### Install Loki-Stack - loki, promtail
