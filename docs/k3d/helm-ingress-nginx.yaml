@@ -1,5 +1,6 @@
 # see https://rancher.com/docs/k3s/latest/en/helm/
 # see https://github.com/kubernetes/ingress-nginx/tree/master/charts/ingress-nginx
+# TODO Enable metrics
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
