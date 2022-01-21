@@ -5,7 +5,8 @@
   "description": "Express example",
   "main": "spectest.js",
   "scripts": {
-    "start": "node spectest.js"
+    "start": "node spectest.js",
+    "build:docker": "yarn docker build @swaggerstats/examples-express -t sws-example-express"
   },
   "config": {
     "imageName": "swaggerstats-examples-express"

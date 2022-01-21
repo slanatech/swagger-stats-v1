@@ -16,6 +16,13 @@ This will install k3d with Nginx ingress (instead of traefik), and expose k3d in
 When deploying ingress for services, hostname could be specified as `<service>.localhost`, 
 and then to access service: http://portainer.localhost:8082/ 
 
+## TODO Configure registries access
+
+https://k3d.io/v5.2.0/usage/registries/
+
+Add gcr.io 
+
+
 ### Misc commands
 
 How to add port mapping to existing cluster
@@ -97,6 +104,21 @@ helm install -f prometheus.values.yaml --create-namespace -n observability prome
 
 ```shell
 helm install -f tempo.values.yaml --create-namespace -n observability tempo grafana/tempo 
+```
+
+### Install Open Telemetry Collector
+
+OpenTelemetry Collector installed in standalone mode and configured to send traces to Tempo.
+Logs and Metrics pipelines are disabled in OpenTelemetry Collector - they are covered by Prometheus and Loki in this deployment. 
+
+```shell
+helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+```
+
+
+```shell
+helm install -f otelcollector.values.yaml --create-namespace -n observability collector open-telemetry/opentelemetry-collector 
+helm uninstall -n observability collector 
 ```
 
 

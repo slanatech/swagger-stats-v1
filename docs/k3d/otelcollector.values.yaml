@@ -1,0 +1,33 @@
+agentCollector:
+  enabled: false
+standaloneCollector:
+  enabled: true
+
+image:
+  tag: latest
+
+config:
+  exporters:
+    logging:
+      loglevel: debug
+    otlp:
+      endpoint: tempo:4317
+      tls:
+        insecure: true
+  receivers:
+    prometheus: null
+  service:
+    pipelines:
+      metrics: null
+      logs: null
+      traces:
+        exporters:
+          - logging
+          - otlp
+        processors:
+          - memory_limiter
+          - batch
+        receivers:
+          - otlp
+          - jaeger
+          - zipkin
