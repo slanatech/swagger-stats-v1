@@ -65,7 +65,7 @@ function waitfor(t, v) {
 const init = async () => {
   server = Hapi.server({
     port: process.env.PORT || 3050,
-    host: 'localhost',
+    host: '0.0.0.0',
   });
 
   server.route({
