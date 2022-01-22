@@ -8,8 +8,8 @@ process.env.DEBUG = 'sws:*';
 //const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
 const opentelemetry = require('@opentelemetry/api');
 //const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
-//const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
-//const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/tracing');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 
 const { SwsNode } = require('@swaggerstats/node');
 const swsNode = new SwsNode({
@@ -29,14 +29,13 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
 // Set service name
 //swsNode.tracerProvider.resource.attributes['service.name'] = 'spectest';
-/*
+
 const collectorOptions = {
-  url: 'grpc://localhost:4327',
+  url: 'grpc://collector-opentelemetry-collector.observability.svc.cluster.local:4317',
 };
-const exporterCollector = new CollectorTraceExporter(collectorOptions);
-swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
-swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-*/
+const exporterCollector = new OTLPTraceExporter(collectorOptions);
+swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
+//swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
 // Can register instrumentations subsequently multiple times
 //registerInstrumentations({

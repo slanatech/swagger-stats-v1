@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sws-example-hapi
+spec:
+  type: LoadBalancer
+  selector:
+    app: sws-example-hapi
+  ports:
+    - name: http
+      port: 3050
+      targetPort: 3050
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sws-example-hapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sws-example-hapi
+  template:
+    metadata:
+      labels:
+        app: sws-example-hapi
+    spec:
+      containers:
+        - name: sws-example-hapi
+          image: sws-example-hapi
+          ports:
+          - containerPort: 3050
+          env:
+          - name: PORT
+            value: "3050"
+          readinessProbe:
+            tcpSocket:
+              port: 3050
+            initialDelaySeconds: 5
+
+

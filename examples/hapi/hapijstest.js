@@ -3,8 +3,8 @@
 // const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { PgInstrumentation } = require('@opentelemetry/instrumentation-pg');
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
-const { ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 
 const { SwsNode } = require('@swaggerstats/node');
 const swsNode = new SwsNode({
@@ -25,11 +25,11 @@ swsMonitor.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
 /* This exports traces via OpenTelemetry protocol to specified destination */
 const collectorOptions = {
-  url: 'grpc://localhost:4327', // url is optional and can be omitted - default is localhost:4317
+  url: 'grpc://collector-opentelemetry-collector.observability.svc.cluster.local:4317',
 };
 const exporterCollector = new OTLPTraceExporter(collectorOptions);
 swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporterCollector));
-swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+//swsNode.tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
 // Can register instrumentations subsequently multiple times after init
 registerInstrumentations({
@@ -45,7 +45,7 @@ const Hapi = require('@hapi/hapi');
 
 const TestDB = require('./db/testdb');
 const db = new TestDB({
-  host: 'localhost',
+  host: 'postgres-postgresql.data.svc.cluster.local',
   port: 5432,
   database: 'postgres',
   user: 'postgres',

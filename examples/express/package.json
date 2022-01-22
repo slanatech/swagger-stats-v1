@@ -24,7 +24,9 @@
   "license": "MIT",
   "dependencies": {
     "@opentelemetry/api": "^1.0.4",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.27.0",
     "@opentelemetry/instrumentation-express": "^0.27.0",
+    "@opentelemetry/sdk-trace-base": "^1.0.1",
     "@swaggerstats/node": "1.0.0-alpha.1",
     "axios": "^0.21.1",
     "body-parser": "^1.18.2",

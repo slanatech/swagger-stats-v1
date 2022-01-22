@@ -1,0 +1,31 @@
+# To learn more about the skaffold.yaml schema visit
+# https://skaffold.dev/docs/references/yaml/
+apiVersion: skaffold/v2beta19
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: sws-example-express
+    context: .
+    custom:
+      buildCommand: yarn run build:examples:express
+      dependencies:
+        paths:
+          - examples/express
+  - image: sws-example-hapi
+    context: .
+    custom:
+      buildCommand: yarn run build:examples:hapi
+      dependencies:
+        paths:
+          - examples/hapi
+deploy:
+  kubectl:
+    manifests:
+    - examples/express/k8s-*
+    - examples/hapi/k8s-*
+profiles:
+- name: cloudbuild
+  build:
+    googleCloudBuild: {}
