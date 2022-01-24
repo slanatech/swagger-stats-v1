@@ -49,7 +49,7 @@ func main() {
 			"id":   id,
 		})
 	})
-	_ = r.Run(":8082")
+	_ = r.Run(":8084")
 }
 
 func initTracer() {
@@ -73,7 +73,6 @@ func initTracer() {
 	)
 	expOltpGrpc, err := otlp.NewExporter(ctx, driver)
 	handleErr(err, "failed to create exporter")
-
 
 	tp := sdktrace.NewTracerProvider(
 		sdktrace.WithSampler(sdktrace.AlwaysSample()),
