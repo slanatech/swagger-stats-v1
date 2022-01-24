@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-set -e
-set -x
-echo opa
-echo $(go env GOPATH)
-echo apo
-echo $GOPATH
-echo aaa
-env
-echo ddd
 
 if ! [ -x "$(go env GOPATH)/bin/ko" ]; then
     pushd $(mktemp -d)

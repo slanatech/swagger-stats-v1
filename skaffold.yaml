@@ -16,14 +16,14 @@ build:
       dependencies:
         paths:
         - examples/hapi
-  - image: sws-example-go
+  - image: sws-example-go2
     context: ./examples/go/otel-gin
     custom:
       buildCommand: ./build.sh
       dependencies:
         paths:
-        - '**/*.go'
         - go.mod
+        - '*.go'
         - .ko.yaml
   tagPolicy:
     sha256: {}
@@ -32,6 +32,7 @@ deploy:
     manifests:
     - examples/express/k8s-*
     - examples/hapi/k8s-*
+    - examples/go/otel-gin/k8s-*
 profiles:
 - name: cloudbuild
   build:

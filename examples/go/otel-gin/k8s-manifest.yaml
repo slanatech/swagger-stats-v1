@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sws-example-go
+spec:
+  type: LoadBalancer
+  selector:
+    app: sws-example-go
+  ports:
+    - name: http
+      port: 3070
+      targetPort: 3070
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sws-example-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sws-example-go
+  template:
+    metadata:
+      labels:
+        app: sws-example-go
+    spec:
+      containers:
+        - name: sws-example-go
+          image: sws-example-go
+          ports:
+          - containerPort: 3070
+          env:
+          - name: PORT
+            value: "3070"
+          readinessProbe:
+            tcpSocket:
+              port: 3070
+            initialDelaySeconds: 5
+
+
