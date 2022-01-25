@@ -16,15 +16,13 @@ build:
       dependencies:
         paths:
         - examples/hapi
-  - image: sws-example-go2
+  - image: sws-example-go
     context: ./examples/go/otel-gin
     custom:
       buildCommand: ./build.sh
       dependencies:
         paths:
-        - go.mod
-        - '*.go'
-        - .ko.yaml
+        - .
   tagPolicy:
     sha256: {}
 deploy:

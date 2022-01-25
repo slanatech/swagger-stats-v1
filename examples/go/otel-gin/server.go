@@ -56,6 +56,8 @@ func main() {
 }
 
 func initTracer() {
+    log.Print("Initializing OpenTelemetry")
+
 	stdoutExporter, err := stdout.New(stdout.WithPrettyPrint())
 	if err != nil {
 		log.Fatal(err)
