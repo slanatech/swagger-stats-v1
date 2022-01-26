@@ -23,6 +23,8 @@ build:
       dependencies:
         paths:
         - .
+  - image: sws-example-java-petclinic
+    context: ./examples/java/petclinic
   tagPolicy:
     sha256: {}
 deploy:
@@ -31,6 +33,7 @@ deploy:
     - examples/express/k8s-*
     - examples/hapi/k8s-*
     - examples/go/otel-gin/k8s-*
+    - examples/java/petclinic/k8s-*
 profiles:
 - name: cloudbuild
   build:
