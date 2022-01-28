@@ -1,8 +1,10 @@
 # Java OpenTelemetry Instrumentation example
 
-This is Spring Boot `spring-petclinic` example application:
+This is Spring Boot `spring-petclinic-rest` example application:
 
-https://github.com/spring-projects/spring-petclinic
+https://github.com/spring-petclinic/spring-petclinic-rest
+
+Application is configured to use Postgres database
 
 It is auto-instrumented with OpenTelemetry Instrumentation for Java - Java agent JAR:
 

@@ -128,12 +128,19 @@ parser.validate(specLocation, function (err, api) {
       apdexThreshold: 25,
     };
 
-    // Test API call that invokes other service
+    // Test API calls that invokes other service
+
+    app.get('/ptest', async function (req, res) {
+      let callResult = await new RestOp({ method: 'get', url: `http://sws-example-java-petclinic:9966/petclinic/api/vets` }).execute();
+      debug(`Got result from downstream: ${JSON.stringify(callResult)}`);
+      res.json(callResult);
+    });
+
     app.get('/dtest', async function (req, res) {
       let otctx = opentelemetry.context.active(); // This can get current trace id
       //let otSpan = opentelemetry.getCurrentSpan(); // This does not exist anymore
 
-      let callResult = await new RestOp({ method: 'get', url: `http://localhost:3050/dbtest` }).execute();
+      let callResult = await new RestOp({ method: 'get', url: `http://sws-example-hapi:3050/dbtest` }).execute();
       debug(`Got result from downstream 1: ${JSON.stringify(callResult)}`);
 
       let callResult2 = [];
@@ -141,7 +148,7 @@ parser.validate(specLocation, function (err, api) {
       for (let i = 0; i < 10; i++) {
         let cr = await new RestOp({
           method: 'get',
-          url: `http://localhost:3070/v2/test`,
+          url: `http://sws-example-go:3070/v2/test`,
           headers: {
             'x-sws-res': JSON.stringify({
               code: 200,

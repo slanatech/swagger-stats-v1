@@ -8,8 +8,8 @@ spec:
     app: sws-example-java-petclinic
   ports:
     - name: http
-      port: 8080
-      targetPort: 8080
+      port: 9966
+      targetPort: 9966
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -29,13 +29,13 @@ spec:
         - name: sws-example-java-petclinic
           image: sws-example-java-petclinic
           ports:
-          - containerPort: 8080
+          - containerPort: 9966
           env:
           - name: PORT
-            value: "8080"
+            value: "9966"
           readinessProbe:
             tcpSocket:
-              port: 8080
+              port: 9966
             initialDelaySeconds: 5
 
 
