@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sws-collector
+spec:
+  type: LoadBalancer
+  selector:
+    app: sws-collector
+  ports:
+    - name: http
+      port: 3060
+      targetPort: 3060
+    - name: grpc
+      port: 50051
+      targetPort: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sws-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sws-collector
+  template:
+    metadata:
+      labels:
+        app: sws-collector
+    spec:
+      containers:
+        - name: sws-collector
+          image: sws-collector
+          ports:
+          - containerPort: 3060
+            name: http
+          - containerPort: 50051
+            name: grpc
+          env:
+          - name: PORT
+            value: "3060"
+          readinessProbe:
+            tcpSocket:
+              port: 3060
+            initialDelaySeconds: 5
+
+

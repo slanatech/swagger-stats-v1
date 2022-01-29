@@ -4,6 +4,9 @@
   "version": "1.0.0-alpha.1",
   "private": true,
   "main": "collector_server.js",
+  "scripts": {
+    "start": "node collector_server.js"
+  },
   "keywords": [
     "opentelemetry",
     "nodejs",
@@ -16,9 +19,6 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "devDependencies": {
-    "pino-pretty": "^4.7.1"
-  },
   "dependencies": {
     "@grpc/grpc-js": "^1.4.5",
     "@grpc/proto-loader": "^0.6.7",
@@ -28,5 +28,12 @@
     "pino": "^7.6.0",
     "prom-client": "^14.0.1",
     "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "pino-pretty": "^4.7.1"
   }
 }

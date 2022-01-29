@@ -18,6 +18,7 @@
     "build:examples": "yarn run build:examples:express && yarn run build:examples:hapi",
     "build:examples:express": "yarn docker build @swaggerstats/examples-express -t sws-example-express",
     "build:examples:hapi": "yarn docker build @swaggerstats/examples-hapi -t sws-example-hapi",
+    "build:collector": "yarn docker build @swaggerstats/collector -t sws-collector",
     "test": "echo TODO"
   },
   "repository": {

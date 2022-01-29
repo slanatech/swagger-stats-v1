@@ -2,6 +2,13 @@ apiVersion: skaffold/v2beta25
 kind: Config
 build:
   artifacts:
+  - image: sws-collector
+    context: .
+    custom:
+      buildCommand: yarn run build:collector
+      dependencies:
+        paths:
+          - packages/collector
   - image: sws-example-express
     context: .
     custom:
@@ -34,6 +41,7 @@ deploy:
     - examples/hapi/k8s-*
     - examples/go/otel-gin/k8s-*
     - examples/java/petclinic/k8s-*
+    - packages/collector/k8s-*
 profiles:
 - name: cloudbuild
   build:

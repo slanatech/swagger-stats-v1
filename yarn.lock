@@ -2013,6 +2013,10 @@ __metadata:
     "@grpc/proto-loader": ^0.6.7
     "@swaggerstats/core": 1.0.0-alpha.1
     "@swaggerstats/prometheus": 1.0.0-alpha.1
+    "@typescript-eslint/eslint-plugin": ^5.8.0
+    "@typescript-eslint/parser": ^5.8.0
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-prettier: ^4.0.0
     express: ^4.17.2
     pino: ^7.6.0
     pino-pretty: ^4.7.1

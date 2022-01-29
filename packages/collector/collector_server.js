@@ -94,8 +94,7 @@ async function Export(call, callback) {
 }
 
 /**
- * Starts an RPC server that receives requests for the Greeter service at the
- * sample server port
+ * Starts an RPC server that receives OTLP traces
  */
 function main() {
   const server = new grpc.Server();
