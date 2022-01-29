@@ -9,7 +9,7 @@
   "module": "build/esm/index.js",
   "scripts": {
     "compile": "yarn run -T tsc --build tsconfig.all.json",
-    "postcompile": "cpy **/* !**/*.ts ../build/src --cwd=./src --no-overwrite --parents",
+    "postcompile": "cpy '**/*' '!**/*.ts' ../build/src --cwd=./src --no-overwrite --parents",
     "clean": "yarn run -T tsc --build --clean tsconfig.all.json",
     "list": "yarn run -T tsc --listFiles",
     "test": "jest --verbose",
@@ -62,6 +62,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.25.0",
+    "pino": "^7.6.5",
     "ramda": "^0.27.1",
     "uuid": "^8.3.2"
   },

@@ -14,6 +14,7 @@
     "build": "yarn run build:core && yarn run build:integrations && yarn run build:node",
     "build:core": "yarn workspace @swaggerstats/core compile",
     "build:integrations": "yarn workspace @swaggerstats/integrations compile",
+    "build:prometheus": "yarn workspace @swaggerstats/prometheus compile",
     "build:node": "yarn workspace @swaggerstats/node compile",
     "build:examples": "yarn run build:examples:express && yarn run build:examples:hapi",
     "build:examples:express": "yarn docker build @swaggerstats/examples-express -t sws-example-express",

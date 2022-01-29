@@ -1,7 +1,7 @@
-const { pathOr } = require('ramda');
-const { OpResult, OpError, RestOp, DataSource, getLogger } = require('@swaggerstats/core');
+import { pathOr } from 'ramda';
+import { OpResult, OpError, RestOp, DataSource, getLogger } from '@swaggerstats/core';
 const logger = getLogger('PROMETHEUS');
-const qs = require('qs');
+import * as qs from 'qs';
 
 const PLUGIN_NAME = 'prometheus';
 
@@ -117,6 +117,7 @@ export class Prometheus {
       return opResult;
     }
 
+    // @ts-ignore
     if (pathOr('fail', ['data', 'status'], reqResult) !== 'success') {
       return opResult.error('Response status is not success');
     }
@@ -189,6 +190,7 @@ export class Prometheus {
       return opResult;
     }
 
+    // @ts-ignore
     if (pathOr('fail', ['data', 'status'], reqResult) !== 'success') {
       return opResult.error('Response status is not success');
     }
@@ -248,6 +250,7 @@ export class Prometheus {
       return opResult;
     }
 
+    // @ts-ignore
     if (pathOr('fail', ['data', 'status'], reqResult) !== 'success') {
       return opResult.error('Response status is not success');
     }

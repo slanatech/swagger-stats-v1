@@ -9,5 +9,8 @@
     "test/**/*.ts"
   ],
   "references": [
+    {
+      "path": "../core"
+    }
   ]
 }
