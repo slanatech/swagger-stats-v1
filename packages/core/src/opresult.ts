@@ -2,8 +2,12 @@
  * Standard Operation Result
  * Used to return result and data for internal calls and API calls
  */
-class OpResult {
-  constructor(success, message, data) {
+export class OpResult {
+  public success: boolean;
+  public message: string;
+  public data: any | null;
+
+  constructor(success = false, message = '', data: any | null = null) {
     this.success = false;
     // message, if any
     this.message = '';
@@ -13,23 +17,23 @@ class OpResult {
     this.set(success, message, data);
   }
 
-  set(success, message, data) {
+  set(success = false, message = '', data: any | null = null) {
     this.success = success || false;
     this.message = message || '';
     this.data = data || null;
     return this;
   }
 
-  error(message, data) {
+  error(message = '', data: any | null = null) {
     return this.set(false, message, data);
   }
 
-  ok(data) {
+  ok(data: any | null = null) {
     return this.set(true, '', data);
   }
 
   // Checks if this result is success, and copies result to dst if supplied
-  isSuccess(dst) {
+  isSuccess(dst: OpResult) {
     if (dst instanceof OpResult) {
       dst.success = this.success;
       dst.message = this.message;
@@ -38,7 +42,7 @@ class OpResult {
     return this.success;
   }
 
-  copy(src) {
+  copy(src: any) {
     if (typeof src !== 'undefined' && src) {
       this.success = 'success' in src ? src.success : false;
       this.message = 'message' in src ? src.message : '';
@@ -51,35 +55,23 @@ class OpResult {
   }
 }
 
-class OpError extends OpResult {
-  constructor(message, data) {
+export class OpError extends OpResult {
+  constructor(message = '', data: any | null = null) {
     super(false, message, data);
   }
 }
 
 // TODO remove message ( check for compatibility first )
-class OpSuccess extends OpResult {
-  constructor(message,data) {
+export class OpSuccess extends OpResult {
+  constructor(message = '', data: any | null = null) {
     super(true, message, data);
   }
 }
 
 // Check if src is Success OpResult, and copy it to dst
-function isSuccess(src, dst) {
-  if (!(src instanceof OpResult)) {
-    return false;
-  }
-  if (dst instanceof OpResult) {
-    dst.success = src.success;
-    dst.message = src.message;
-    dst.data = src.data;
-  }
+export function isSuccess(src: OpResult, dst: OpResult) {
+  dst.success = src.success;
+  dst.message = src.message;
+  dst.data = src.data;
   return src.success;
 }
-
-module.exports = {
-  OpResult: OpResult,
-  OpSuccess: OpSuccess,
-  OpError: OpError,
-  isSuccess: isSuccess
-};

@@ -27,6 +27,9 @@ spec:
     metadata:
       labels:
         app: sws-collector
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '3060'
     spec:
       containers:
         - name: sws-collector
