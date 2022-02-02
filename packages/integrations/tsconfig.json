@@ -3,11 +3,13 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
+    "resolveJsonModule": true,
     "types": ["jest", "node"]
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    "test/**/*.json"
   ],
   "references": [
     {

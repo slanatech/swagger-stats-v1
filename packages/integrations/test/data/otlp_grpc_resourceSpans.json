@@ -1,0 +1,385 @@
+{
+  "resourceSpans":[
+    {
+      "instrumentation_library_spans": [
+        {
+          "spans": [
+            {
+              "attributes": [
+                {
+                  "key": "net.transport",
+                  "value": {
+                    "string_value": "ip_tcp",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "http.target",
+                  "value": {
+                    "string_value": "/",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "http.flavor",
+                  "value": {
+                    "string_value": "1.1",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "net.peer.port",
+                  "value": {
+                    "int_value": "47492",
+                    "value": "int_value"
+                  }
+                },
+                {
+                  "key": "net.peer.ip",
+                  "value": {
+                    "string_value": "127.0.0.1",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "thread.name",
+                  "value": {
+                    "string_value": "http-nio-9966-exec-5",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "http.host",
+                  "value": {
+                    "string_value": "127.0.0.1:9966",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "net.peer.name",
+                  "value": {
+                    "string_value": "localhost",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "http.server_name",
+                  "value": {
+                    "string_value": "127.0.0.1",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "thread.id",
+                  "value": {
+                    "int_value": "39",
+                    "value": "int_value"
+                  }
+                },
+                {
+                  "key": "http.user_agent",
+                  "value": {
+                    "string_value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "http.response_content_length",
+                  "value": {
+                    "int_value": "431",
+                    "value": "int_value"
+                  }
+                },
+                {
+                  "key": "http.method",
+                  "value": {
+                    "string_value": "GET",
+                    "value": "string_value"
+                  }
+                },
+                {
+                  "key": "http.status_code",
+                  "value": {
+                    "int_value": "404",
+                    "value": "int_value"
+                  }
+                },
+                {
+                  "key": "http.scheme",
+                  "value": {
+                    "string_value": "http",
+                    "value": "string_value"
+                  }
+                }
+              ],
+              "events": [],
+              "links": [],
+              "trace_id": {
+                "type": "Buffer",
+                "data": [
+                  10,
+                  124,
+                  52,
+                  213,
+                  222,
+                  39,
+                  116,
+                  166,
+                  61,
+                  228,
+                  170,
+                  178,
+                  203,
+                  232,
+                  119,
+                  54
+                ]
+              },
+              "span_id": {
+                "type": "Buffer",
+                "data": [
+                  243,
+                  56,
+                  33,
+                  34,
+                  66,
+                  193,
+                  139,
+                  44
+                ]
+              },
+              "trace_state": "",
+              "parent_span_id": {
+                "type": "Buffer",
+                "data": []
+              },
+              "name": "HTTP GET",
+              "kind": "SPAN_KIND_SERVER",
+              "start_time_unix_nano": "1643834883158000000",
+              "end_time_unix_nano": "1643834883236406000",
+              "dropped_attributes_count": 0,
+              "dropped_events_count": 0,
+              "dropped_links_count": 0,
+              "status": {
+                "message": "",
+                "code": "STATUS_CODE_UNSET"
+              }
+            }
+          ],
+          "instrumentation_library": {
+            "name": "io.opentelemetry.tomcat-7.0",
+            "version": "1.10.0"
+          },
+          "schema_url": ""
+        },
+        {
+          "spans": [
+            {
+              "attributes": [
+                {
+                  "key": "thread.id",
+                  "value": {
+                    "int_value": "39",
+                    "value": "int_value"
+                  }
+                },
+                {
+                  "key": "thread.name",
+                  "value": {
+                    "string_value": "http-nio-9966-exec-5",
+                    "value": "string_value"
+                  }
+                }
+              ],
+              "events": [],
+              "links": [],
+              "trace_id": {
+                "type": "Buffer",
+                "data": [
+                  10,
+                  124,
+                  52,
+                  213,
+                  222,
+                  39,
+                  116,
+                  166,
+                  61,
+                  228,
+                  170,
+                  178,
+                  203,
+                  232,
+                  119,
+                  54
+                ]
+              },
+              "span_id": {
+                "type": "Buffer",
+                "data": [
+                  202,
+                  58,
+                  220,
+                  40,
+                  137,
+                  226,
+                  31,
+                  153
+                ]
+              },
+              "trace_state": "",
+              "parent_span_id": {
+                "type": "Buffer",
+                "data": [
+                  243,
+                  56,
+                  33,
+                  34,
+                  66,
+                  193,
+                  139,
+                  44
+                ]
+              },
+              "name": "Response.sendError",
+              "kind": "SPAN_KIND_INTERNAL",
+              "start_time_unix_nano": "1643834883225698000",
+              "end_time_unix_nano": "1643834883225840400",
+              "dropped_attributes_count": 0,
+              "dropped_events_count": 0,
+              "dropped_links_count": 0,
+              "status": {
+                "message": "",
+                "code": "STATUS_CODE_UNSET"
+              }
+            }
+          ],
+          "instrumentation_library": {
+            "name": "io.opentelemetry.servlet-javax-common",
+            "version": "1.10.0"
+          },
+          "schema_url": ""
+        }
+      ],
+      "resource": {
+        "attributes": [
+          {
+            "key": "container.id",
+            "value": {
+              "string_value": "e4afefe4cf564fcf509e71d5cab25f6f80ab2cc0cf5cdf9f0475ec0669675faa",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "host.arch",
+            "value": {
+              "string_value": "amd64",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "host.name",
+            "value": {
+              "string_value": "sws-example-java-petclinic-79db65d8bb-895cf",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "os.description",
+            "value": {
+              "string_value": "Linux 5.4.0-96-generic",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "os.type",
+            "value": {
+              "string_value": "linux",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "process.command_line",
+            "value": {
+              "string_value": "/usr/lib/jvm/java-1.8-openjdk/jre:bin:java -Xmx4g -javaagent:opentelemetry-javaagent.jar -Dspring.profiles.active=postgresql,spring-data-jpa",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "process.executable.path",
+            "value": {
+              "string_value": "/usr/lib/jvm/java-1.8-openjdk/jre:bin:java",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "process.pid",
+            "value": {
+              "int_value": "1",
+              "value": "int_value"
+            }
+          },
+          {
+            "key": "process.runtime.description",
+            "value": {
+              "string_value": "Oracle Corporation OpenJDK 64-Bit Server VM 25.121-b13",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "process.runtime.name",
+            "value": {
+              "string_value": "OpenJDK Runtime Environment",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "process.runtime.version",
+            "value": {
+              "string_value": "1.8.0_121-b13",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "string_value": "petclinic",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "telemetry.auto.version",
+            "value": {
+              "string_value": "1.10.0",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "string_value": "java",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "string_value": "opentelemetry",
+              "value": "string_value"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "string_value": "1.10.0",
+              "value": "string_value"
+            }
+          }
+        ],
+        "dropped_attributes_count": 0
+      },
+      "schema_url": "https://opentelemetry.io/schemas/1.8.0"
+    }
+  ]
+}
+

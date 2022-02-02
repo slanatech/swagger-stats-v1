@@ -13,6 +13,9 @@ spec:
     - name: grpc
       port: 50051
       targetPort: 50051
+    - name: debug
+      port: 9232
+      targetPort: 9232
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,6 +42,8 @@ spec:
             name: http
           - containerPort: 50051
             name: grpc
+          - containerPort: 9232
+            name: debug
           env:
           - name: PORT
             value: "3060"

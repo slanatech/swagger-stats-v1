@@ -5,7 +5,7 @@
   "private": true,
   "main": "collector_server.js",
   "scripts": {
-    "start": "node collector_server.js"
+    "start": "node --inspect=0.0.0.0:9232 collector_server.js"
   },
   "keywords": [
     "opentelemetry",
