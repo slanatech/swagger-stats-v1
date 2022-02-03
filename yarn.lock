@@ -2418,6 +2418,7 @@ __metadata:
     "@grpc/grpc-js": ^1.4.5
     "@grpc/proto-loader": ^0.6.7
     "@swaggerstats/core": 1.0.0-alpha.1
+    "@swaggerstats/integrations": 1.0.0-alpha.1
     "@swaggerstats/prometheus": 1.0.0-alpha.1
     "@typescript-eslint/eslint-plugin": ^5.8.0
     "@typescript-eslint/parser": ^5.8.0

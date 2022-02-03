@@ -3,7 +3,8 @@ const http = require('http');
 const { pathOr } = require('ramda');
 const logger = require('./main/logger')('MAIN');
 const monitor = require('./main/monitor');
-const Span = require('./main/span');
+const { SwsSpan } = require('@swaggerstats/core');
+const { fromOtlp } = require('@swaggerstats/integrations');
 const processor = require('./main/processor');
 
 const PROTO_PATH = __dirname + '/protos/opentelemetry/proto/collector/trace/v1/trace_service.proto';
@@ -79,12 +80,7 @@ app.get('/stats', async function (req, res) {
 async function Export(call, callback) {
   logger.info(`Got spans!`);
   let resourceSpans = pathOr([], ['request', 'resource_spans'], call);
-  let spansBatch = [];
-  for (let rs of resourceSpans) {
-    let span = new Span().fromOtel(rs);
-    logger.info(`Span: traceId=${span.traceId}, spanId:${span.spanId}, parentSpanId:${span.parentSpanId}`);
-    spansBatch.push(span);
-  }
+  let spansBatch = fromOtlp(resourceSpans);
 
   // Process
   await processor.processSpans(spansBatch);

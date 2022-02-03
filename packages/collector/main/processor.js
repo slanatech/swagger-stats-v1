@@ -15,6 +15,10 @@
  *
  * */
 
+/*
+ * TODO REVISIT - Make client/server matching more robust, support same trace spans split across multiple batches
+ * */
+
 const { pathOr } = require('ramda');
 const logger = require('./logger')('PROC');
 const Trace = require('./trace');
@@ -50,6 +54,7 @@ class Processor {
   }
 
   // Return array of traceIds finished in this spans batch, i.e. ones that received root span
+  // TODO REVISIT - We can receive root span in previous batch, especially if it's trace across multiple services
   getFinishedTraceIds(spansBatch) {
     let finishedTraces = [];
     for (const span of spansBatch) {

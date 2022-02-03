@@ -1,162 +1,137 @@
 import { fromOtlp } from '../src';
 //import { readFileSync } from 'fs';
 // load samples from data
-import otlpAA from './data/otlp_grpc_resourceSpans.json';
-import t2 from './data/t2.json';
-//const otlpGrpcResourceSpans: any = otlpGrpcResourceSpansData;
+import { Buffer } from 'buffer';
+import * as otlpGrpcData from './data/otlp_grpc_resourceSpans.json';
 
-//const data1 = readFileSync('./data/otlp_grpc_resourceSpans.json');
+function fixBuffers(obj: any, props: string[]) {
+  Object.keys(obj).map((x) => {
+    if (Array.isArray(obj[x])) {
+      obj[x].map((o: any) => {
+        fixBuffers(o, props);
+      });
+    } else if (typeof obj[x] === 'object') {
+      if (props.includes(x)) {
+        obj[x] = Buffer.from(obj[x]);
+      } else {
+        fixBuffers(obj[x], props);
+      }
+    }
+  });
+}
 
 describe('OTLP Convertor Test', function () {
+  beforeAll(() => {
+    fixBuffers(otlpGrpcData, ['trace_id', 'span_id', 'parent_span_id']);
+  });
+
   it('Should check input data', async () => {
-    expect(otlpAA.resourceSpans[0].instrumentation_library_spans.length > 0).toBeTruthy();
+    expect(Array.isArray(otlpGrpcData.resourceSpans)).toBeTruthy();
+    // Convert buffers from json obj back to buffers
   });
 
   it('Should convert spans', async () => {
-    const resourceSpans = otlpAA.resourceSpans;
-    const sss = JSON.stringify(resourceSpans);
-    const otlpGrpcResourceSpansData = JSON.parse(sss);
-    //const otlpGrpcResourceSpansData2 = JSON.parse(data1.toString());
-    const spans2 = fromOtlp(resourceSpans);
-    expect(spans2.length > 0).toBeTruthy();
-    const spans3 = fromOtlp(t2.opa);
-    expect(spans3.length > 0).toBeTruthy();
-    const spans = fromOtlp(otlpGrpcResourceSpansData);
-    expect(spans.length > 0).toBeTruthy();
-  });
-
-  /*
-  it('Should register Prometheus data source', async () => {
-    const ds = new DataSource({
-      id: '1',
-      type: 'prometheus',
-      settings: {
-        url: prometheusURL,
+    const resourceSpans = otlpGrpcData.resourceSpans;
+    const spans = fromOtlp(resourceSpans);
+    expect(spans.length === 2).toBeTruthy();
+    expect(spans[0]).toMatchObject({
+      valid: true,
+      traceId: '0a7c34d5de2774a63de4aab2cbe87736',
+      spanId: 'f338212242c18b2c',
+      parentSpanId: null,
+      hasChild: false,
+      depth: null,
+      name: 'HTTP GET',
+      kind: 'server',
+      category: null,
+      service: 'petclinic',
+      status: {
+        message: '',
+        code: 'STATUS_CODE_UNSET',
       },
+      success: true,
+      startTime: 1643834883158,
+      endTime: 1643834883236,
+      duration: 78,
+      attributes: {
+        'net.transport': 'ip_tcp',
+        'http.target': '/',
+        'http.flavor': '1.1',
+        'net.peer.port': 47492,
+        'net.peer.ip': '127.0.0.1',
+        'thread.name': 'http-nio-9966-exec-5',
+        'http.host': '127.0.0.1:9966',
+        'net.peer.name': 'localhost',
+        'http.server_name': '127.0.0.1',
+        'thread.id': 39,
+        'http.user_agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36',
+        'http.response_content_length': 431,
+        'http.method': 'GET',
+        'http.status_code': 404,
+        'http.scheme': 'http',
+      },
+      resourceAttributes: {
+        'container.id': 'e4afefe4cf564fcf509e71d5cab25f6f80ab2cc0cf5cdf9f0475ec0669675faa',
+        'host.arch': 'amd64',
+        'host.name': 'sws-example-java-petclinic-79db65d8bb-895cf',
+        'os.description': 'Linux 5.4.0-96-generic',
+        'os.type': 'linux',
+        'process.command_line': '/usr/lib/jvm/java-1.8-openjdk/jre:bin:java -Xmx4g -javaagent:opentelemetry-javaagent.jar -Dspring.profiles.active=postgresql,spring-data-jpa',
+        'process.executable.path': '/usr/lib/jvm/java-1.8-openjdk/jre:bin:java',
+        'process.pid': 1,
+        'process.runtime.description': 'Oracle Corporation OpenJDK 64-Bit Server VM 25.121-b13',
+        'process.runtime.name': 'OpenJDK Runtime Environment',
+        'process.runtime.version': '1.8.0_121-b13',
+        'service.name': 'petclinic',
+        'telemetry.auto.version': '1.10.0',
+        'telemetry.sdk.language': 'java',
+        'telemetry.sdk.name': 'opentelemetry',
+        'telemetry.sdk.version': '1.10.0',
+      },
+      instrumentationLibrary: 'io.opentelemetry.tomcat-7.0',
     });
-
-    const testResult = await prometheus.testDataSource(ds);
-    expect(testResult.success).toBeTruthy();
-
-    const registerResult = await prometheus.registerDataSource(ds);
-    expect(registerResult.success).toBeTruthy();
-  });
-
-  it('Should get labels', async () => {
-    const labelsResult = await prometheus.request({
-      op: 'labels',
-      ds: '1',
+    expect(spans[1]).toMatchObject({
+      valid: true,
+      traceId: '0a7c34d5de2774a63de4aab2cbe87736',
+      spanId: 'ca3adc2889e21f99',
+      parentSpanId: 'f338212242c18b2c',
+      hasChild: false,
+      depth: null,
+      name: 'Response.sendError',
+      kind: 'internal',
+      category: null,
+      service: 'petclinic',
+      status: {
+        message: '',
+        code: 'STATUS_CODE_UNSET',
+      },
+      success: true,
+      startTime: 1643834883225,
+      endTime: 1643834883225,
+      duration: 0,
+      attributes: {
+        'thread.id': 39,
+        'thread.name': 'http-nio-9966-exec-5',
+      },
+      resourceAttributes: {
+        'container.id': 'e4afefe4cf564fcf509e71d5cab25f6f80ab2cc0cf5cdf9f0475ec0669675faa',
+        'host.arch': 'amd64',
+        'host.name': 'sws-example-java-petclinic-79db65d8bb-895cf',
+        'os.description': 'Linux 5.4.0-96-generic',
+        'os.type': 'linux',
+        'process.command_line': '/usr/lib/jvm/java-1.8-openjdk/jre:bin:java -Xmx4g -javaagent:opentelemetry-javaagent.jar -Dspring.profiles.active=postgresql,spring-data-jpa',
+        'process.executable.path': '/usr/lib/jvm/java-1.8-openjdk/jre:bin:java',
+        'process.pid': 1,
+        'process.runtime.description': 'Oracle Corporation OpenJDK 64-Bit Server VM 25.121-b13',
+        'process.runtime.name': 'OpenJDK Runtime Environment',
+        'process.runtime.version': '1.8.0_121-b13',
+        'service.name': 'petclinic',
+        'telemetry.auto.version': '1.10.0',
+        'telemetry.sdk.language': 'java',
+        'telemetry.sdk.name': 'opentelemetry',
+        'telemetry.sdk.version': '1.10.0',
+      },
+      instrumentationLibrary: 'io.opentelemetry.servlet-javax-common',
     });
-    expect(labelsResult.success).toBeTruthy();
-    expect(labelsResult.data).toEqual(expect.arrayContaining(['__name__']));
   });
-
-  it('Should get metrics', async () => {
-    const metricsResult = await prometheus.request({
-      op: 'metrics',
-      ds: '1',
-    });
-    expect(metricsResult.success).toBeTruthy();
-    expect(metricsResult.data).toEqual(expect.arrayContaining(['up']));
-  });
-
-  it('Should get labels values', async () => {
-    const labelValuesResult = await prometheus.request({
-      op: 'labelvalues',
-      ds: '1',
-      label: 'job',
-    });
-    expect(labelValuesResult.success).toBeTruthy();
-    expect(labelValuesResult.data).toEqual(expect.arrayContaining(['prometheus']));
-  });
-
-  it('Should get series', async () => {
-    const endTs = Math.floor(Date.now() / 1000);
-    const seriesResult = await prometheus.request({
-      op: 'series',
-      ds: '1',
-      match: ['up'],
-      start: endTs - 60 * 60,
-      end: endTs,
-    });
-    expect(seriesResult.success).toBeTruthy();
-    expect(seriesResult.data).toEqual(
-      expect.arrayContaining([
-        {
-          __name__: 'up',
-          instance: 'localhost:9090', // ???
-          job: 'prometheus',
-        },
-      ])
-    );
-  });
-
-  it('Should execute instant query', async () => {
-    const qResult = await prometheus.query({
-      ds: '1',
-      query: 'up',
-    });
-    expect(qResult.success).toBeTruthy();
-    expect(qResult.data.resultType).toEqual('vector');
-
-    expect(Array.isArray(qResult.data.result)).toBeTruthy();
-    let upEntry = null;
-    for (const entry of qResult.data.result) {
-      if (entry.metric.__name__ === 'up' && entry.metric.job === 'prometheus') {
-        upEntry = entry;
-      }
-    }
-    expect(upEntry !== null).toBeTruthy();
-    expect(Array.isArray(upEntry.value)).toBeTruthy();
-    expect(upEntry.value[1]).toEqual('1');
-  });
-
-  it('Should execute instant query with time', async () => {
-    const timeVal = Math.floor(Date.now() / 1000);
-    const qResult = await prometheus.query({
-      ds: '1',
-      query: 'up',
-      time: timeVal,
-    });
-    expect(qResult.success).toBeTruthy();
-    expect(qResult.data.resultType).toEqual('vector');
-
-    expect(Array.isArray(qResult.data.result)).toBeTruthy();
-    let upEntry = null;
-    for (const entry of qResult.data.result) {
-      if (entry.metric.__name__ === 'up' && entry.metric.job === 'prometheus') {
-        upEntry = entry;
-      }
-    }
-    expect(upEntry !== null).toBeTruthy();
-    expect(Array.isArray(upEntry.value)).toBeTruthy();
-    expect(upEntry.value[1]).toEqual('1');
-  });
-
-  // TODO wait 5 seconds ?
-  it('Should execute range query', async () => {
-    const timeEnd = Math.floor(Date.now() / 1000);
-    const qResult = await prometheus.query({
-      ds: '1',
-      query: 'up',
-      start: timeEnd - 5,
-      end: timeEnd,
-      step: 1,
-    });
-
-    expect(qResult.success).toBeTruthy();
-    expect(qResult.data.resultType).toEqual('matrix');
-
-    expect(Array.isArray(qResult.data.result)).toBeTruthy();
-    let upEntry = null;
-    for (const entry of qResult.data.result) {
-      if (entry.metric.__name__ === 'up' && entry.metric.job === 'prometheus') {
-        upEntry = entry;
-      }
-    }
-    expect(upEntry !== null).toBeTruthy();
-    expect(Array.isArray(upEntry.values)).toBeTruthy();
-    expect(upEntry.values[0][1]).toEqual('1');
-  });
- */
 });

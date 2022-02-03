@@ -1,17 +1,142 @@
 // Convert span from OTLP representaton to internal representation
-//import { pathOr } from 'ramda';
+import { pathOr } from 'ramda';
 //import { ReadableSpan } from '@opentelemetry/sdk-trace-base';
 //import { hrTimeToMilliseconds } from '@opentelemetry/core';
 import { SwsSpan } from '@swaggerstats/core';
+import { Buffer } from 'buffer';
+//import { hrTimeToMilliseconds } from '@opentelemetry/core';
 //import { resolveCategory } from '@swaggerstats/core';
 
+function attributesToObject(attrs: any): any {
+  if (!Array.isArray(attrs) || attrs.length <= 0) {
+    return {};
+  }
+  const attrsObj: any = {};
+  attrs.map((x) => {
+    const key = pathOr('', ['key'], x);
+    const vType: string = pathOr('', ['value', 'value'], x);
+    let value = null;
+    switch (vType) {
+      case 'string_value': {
+        value = pathOr(null, ['value', 'string_value'], x);
+        break;
+      }
+      case 'int_value': {
+        value = parseInt(pathOr('', ['value', 'int_value'], x));
+        break;
+      }
+    }
+    if (key && value) {
+      attrsObj[key] = value;
+    }
+  });
+  return attrsObj;
+}
+
+function getId(idBuffer: any) {
+  if (!Buffer.isBuffer(idBuffer) || idBuffer.length <= 0) {
+    return null;
+  }
+  return idBuffer.toString('hex'); //idObj.data.toString('hex');
+}
+
+function convertSpans(resourceAttributes: any, service: string | null, ilSpan: any): SwsSpan[] {
+  if (!Array.isArray(ilSpan.spans) || ilSpan.spans.length <= 0) {
+    return [];
+  }
+
+  const swsSpans: SwsSpan[] = [];
+
+  const instrumentationLibrary = pathOr(null, ['instrumentation_library', 'name'], ilSpan);
+  //const instrumentationLibraryVersion = pathOr(null, ['instrumentation_library', 'version'], ilSpan);
+
+  // ilSpan.spans is array, cover case when it could contain multiple entries
+
+  ilSpan.spans.map((span: any) => {
+    const swsSpan = new SwsSpan();
+    swsSpan.traceId = getId(pathOr(null, ['trace_id'], span));
+    swsSpan.spanId = getId(pathOr(null, ['span_id'], span));
+    swsSpan.parentSpanId = getId(pathOr(null, ['parent_span_id'], span));
+    swsSpan.valid = swsSpan.traceId !== null && swsSpan.spanId !== null;
+    swsSpan.name = pathOr(null, ['name'], span);
+
+    swsSpan.instrumentationLibrary = instrumentationLibrary;
+
+    // Kind
+    // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#spankind
+    const spanKind: string = pathOr('', ['kind'], span);
+    switch (spanKind) {
+      case 'SPAN_KIND_SERVER': {
+        swsSpan.kind = 'server';
+        break;
+      }
+      case 'SPAN_KIND_CLIENT': {
+        swsSpan.kind = 'client';
+        break;
+      }
+      case 'SPAN_KIND_PRODUCER': {
+        swsSpan.kind = 'producer';
+        break;
+      }
+      case 'SPAN_KIND_CONSUMER': {
+        swsSpan.kind = 'consumer';
+        break;
+      }
+      default: {
+        swsSpan.kind = 'internal';
+      }
+    }
+
+    // Status
+    swsSpan.status = pathOr({}, ['status'], span);
+    const statusCode = pathOr(null, ['code'], swsSpan.status); // === 'STATUS_CODE_OK';
+    swsSpan.success = statusCode === 'STATUS_CODE_OK' || statusCode === 'STATUS_CODE_UNSET';
+    //const deprecatedStatusCode = pathOr(null, ['deprecated_code'], swsSpan.status);
+    //else if (statusCode === 'STATUS_CODE_UNSET' && deprecatedStatusCode === 'DEPRECATED_STATUS_CODE_OK') {
+    //  swsSpan.success = true;
+    //}
+
+    // Timing
+    swsSpan.startTime = Math.floor(Number(pathOr(0, ['start_time_unix_nano'], span)) / 1000000);
+    swsSpan.endTime = Math.floor(Number(pathOr(0, ['end_time_unix_nano'], span)) / 1000000);
+    swsSpan.duration = swsSpan.endTime - swsSpan.startTime;
+
+    // Attributes
+    swsSpan.attributes = attributesToObject(pathOr([], ['attributes'], span));
+
+    // Resources
+    swsSpan.resourceAttributes = resourceAttributes;
+    swsSpan.service = service;
+
+    swsSpans.push(swsSpan);
+  });
+
+  return swsSpans;
+}
+
 // Convert from Otlp GRPC message
-export function fromOtlp(msg: any): SwsSpan[] {
+export function fromOtlp(otlpResourceSpans: any): SwsSpan[] {
+  if (!Array.isArray(otlpResourceSpans) || otlpResourceSpans.length <= 0) {
+    return [];
+  }
+
+  let results: SwsSpan[] = [];
+
+  otlpResourceSpans.map((resourceSpansEntry) => {
+    const resourceAttributes = attributesToObject(pathOr([], ['resource', 'attributes'], resourceSpansEntry));
+    const service = pathOr(null, ['service.name'], resourceAttributes);
+    const ilSpans = pathOr([], ['instrumentation_library_spans'], resourceSpansEntry);
+    ilSpans.map((ilSpan) => {
+      const resultSpans = convertSpans(resourceAttributes, service, ilSpan);
+      results = results.concat(resultSpans);
+    });
+  });
+
+  return results;
+
   // It can contain multiple spans
   //const span = pathOr([], ['instrumentation_library_spans', 0, 'spans'], msg);
 
-  // TEMP !!!
-  return [];
   /*
   if (!span) {
     return this;
