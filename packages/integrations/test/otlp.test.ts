@@ -19,7 +19,7 @@ describe('OTLP Convertor Test', function () {
     //const otlpGrpcResourceSpansData2 = JSON.parse(data1.toString());
     const spans2 = fromOtlp(resourceSpans);
     expect(spans2.length > 0).toBeTruthy();
-    const spans3 = fromOtlp(t2.opa);
+    const spans3 = fromOtlp(t2.opaa);
     expect(spans3.length > 0).toBeTruthy();
     const spans = fromOtlp(otlpGrpcResourceSpansData);
     expect(spans.length > 0).toBeTruthy();
