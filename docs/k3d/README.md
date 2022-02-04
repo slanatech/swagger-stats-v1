@@ -70,6 +70,7 @@ redislabs/redismod docker image is used. It contains redis with all the modules 
 
 ```shell
 kubectl create -f redis.yaml
+kubectl create -f redisinsight.yaml
 ```
 
 ## Install Observability Stack in k3d

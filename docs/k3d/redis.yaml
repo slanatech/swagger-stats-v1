@@ -29,8 +29,8 @@ spec:
     spec:
       containers:
         - name: redis
-          image: redislabs/redismod
-          args: ["--appendonly", "yes"]
+          image: redislabs/redismod:latest
+          #args: ["--appendonly", "yes"] # this disables all modules by some reason
           ports:
             - containerPort: 6379
               name: redis
