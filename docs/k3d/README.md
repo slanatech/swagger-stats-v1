@@ -29,6 +29,7 @@ How to add port mapping to existing cluster
 
 ```shell
 k3d cluster edit sws2 --port-add 443:443@loadbalancer
+k3d cluster edit sws2 --port-add 6379:6379@loadbalancer
 ```
 
 
