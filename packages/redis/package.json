@@ -10,7 +10,7 @@
   "scripts": {
     "compile": "yarn run -T tsc --build",
     "clean": "yarn run -T tsc --build --clean",
-    "test": "TEST_PROMETHEUS_URL=http://prometheus.localhost:8082 jest",
+    "test": "TEST_REDIS_URL=redis://localhost:6379 jest --forceExit",
     "tdd": "npm run test -- --watch-extensions ts --watch",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
