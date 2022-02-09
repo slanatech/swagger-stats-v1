@@ -74,6 +74,14 @@ app.get('/stats', async function (req, res) {
   res.json(r); //(qResult.data);
 });
 
+const validator = require('./main/validator');
+
+// Validation
+app.get('/validate', async function (req, res) {
+  const result = await validator.validate();
+  res.json(result);
+});
+
 /**
  * Implements the Export RPC method.
  */

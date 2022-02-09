@@ -5,7 +5,8 @@
   "private": true,
   "main": "collector_server.js",
   "scripts": {
-    "start": "node --inspect=0.0.0.0:9232 collector_server.js"
+    "start": "node --inspect=0.0.0.0:9232 collector_server.js",
+    "test": "jest --forceExit"
   },
   "keywords": [
     "opentelemetry",
@@ -33,10 +34,15 @@
     "ramda": "^0.27.1"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.2",
+    "@types/ramda": "^0.27.64",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "pino-pretty": "^4.7.1"
+    "jest": "^27.4.7",
+    "pino-pretty": "^4.7.1",
+    "ts-jest": "^27.1.3"
   }
 }

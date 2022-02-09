@@ -12,7 +12,7 @@ class Matcher {
     this.spans = {};
     this.spanCache = new LRU({
       max: 10000,
-      maxAge: 60 * 60 * 1000, // 1 hour
+      ttl: 60 * 60 * 1000, // 1 hour
     });
     this.stream = [];
   }
@@ -27,6 +27,12 @@ class Matcher {
 
   async getSpan(spanId) {
     return this.spanCache.get(spanId) || null;
+  }
+
+  // return all known spans from cache - used for testing
+  async getAll() {
+    const res = [...this.spanCache.values()];
+    return res;
   }
 
   // Internal / mock implementation of Redis stream analog

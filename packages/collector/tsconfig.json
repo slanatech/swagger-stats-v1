@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build",
+    "resolveJsonModule": true,
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "main/**/*.js",
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "test/**/*.json"
+  ],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}

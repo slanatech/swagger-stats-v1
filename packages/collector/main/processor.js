@@ -17,10 +17,10 @@
  *
  *   3) Consider: Deterministic processing based on span with parent
  *      Start clien/server span match process ONLY when we receive span that has parent spanId
- *      Typically that would be server span that has client span as parent, i.e. http or grpc call between services. 
- *      When we got span with parentId, check if we already have span with parent, if not - wait / queue info about this pair that needs to be resolved. 
- * 
- *   ? How to validate that we did not miss any pair that could have been resolved ? Metric ? 
+ *      Typically that would be server span that has client span as parent, i.e. http or grpc call between services.
+ *      When we got span with parentId, check if we already have span with parent, if not - wait / queue info about this pair that needs to be resolved.
+ *
+ *   ? How to validate that we did not miss any pair that could have been resolved ? Metric ?
  *
  * */
 
@@ -46,18 +46,31 @@ class Processor {
     this.tickInterval = setInterval(() => {
       this.tick().then(() => {});
     }, 1000);
+    this.spanBatches = [];
+    this.sbTs = null;
   }
 
   async tick() {
     const spansForProcessing = await matcher.getSpansForProcessing();
-    logger.info(`TICK: Got ${spansForProcessing.length} spans for processing`);
     if (spansForProcessing.length <= 0) {
       return;
     }
+    logger.info(`TICK: Got ${spansForProcessing.length} spans for processing`);
     // TODO
   }
 
   async processSpans(spansBatch) {
+    // Temp TODO Remove
+    const ts = Date.now();
+    if (!this.sbTs) {
+      this.sbTs = ts;
+    }
+    const delay = ts - this.sbTs;
+    this.spanBatches.push({
+      delay: delay,
+      batch: spansBatch,
+    });
+
     // do a first pass and pre-process all spans from the batch
     await this.preProcessBatch(spansBatch);
 
