@@ -19,6 +19,8 @@
  *      Start clien/server span match process ONLY when we receive span that has parent spanId
  *      Typically that would be server span that has client span as parent, i.e. http or grpc call between services. 
  *      When we got span with parentId, check if we already have span with parent, if not - wait / queue info about this pair that needs to be resolved. 
+ * 
+ *   ? How to validate that we did not miss any pair that could have been resolved ? Metric ? 
  *
  * */
 
