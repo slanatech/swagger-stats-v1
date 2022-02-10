@@ -2430,7 +2430,6 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     express: ^4.17.2
     jest: ^27.4.7
-    lru-cache: ^7.1.0
     pino: ^7.6.0
     pino-pretty: ^4.7.1
     prom-client: ^14.0.1
@@ -9603,13 +9602,6 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: f97f499f898f23e4585742138a22f22526254fdba6d75d41a1c2526b3b6cc5747ef59c5612ba7375f42aca4f8461950e925ba08c991ead0651b4918b7c978297
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "lru-cache@npm:7.1.0"
-  checksum: af294210c5d9995f893fa3b7e354bbe826cdd03f9f1c78a7feed9f888f059c418e375cf3553079a61eb80eddb584654836429111c6dc859b1af7f2b984f2f4ba
   languageName: node
   linkType: hard
 

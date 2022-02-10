@@ -3,22 +3,18 @@
  */
 
 //const { pathOr } = require('ramda');
-const LRU = require('lru-cache');
 const logger = require('./logger')('MATCHER');
 
 // TODO Redis
 class Matcher {
   constructor() {
     this.spans = {};
-    this.spanCache = new LRU({
-      max: 10000,
-      ttl: 60 * 60 * 1000, // 1 hour
-    });
+    this.spanCache = {}; // Very simple, do not use ttl
     this.stream = [];
   }
 
   async setSpan(span, ts) {
-    this.spanCache.set(span.spanId, span);
+    this.spanCache[span.spanId] = span;
     this.stream.push({
       spanId: span.spanId,
       ts: ts, // timestamp when span batch was received - we delay 10 sec from that time
@@ -26,12 +22,12 @@ class Matcher {
   }
 
   async getSpan(spanId) {
-    return this.spanCache.get(spanId) || null;
+    return this.spanCache[spanId] || null;
   }
 
   // return all known spans from cache - used for testing
   async getAll() {
-    const res = [...this.spanCache.values()];
+    const res = Object.keys(this.spanCache).map((x) => this.spanCache[x]);
     return res;
   }
 
@@ -41,13 +37,19 @@ class Matcher {
     if (this.stream.length <= 0) {
       return [];
     }
+
+    // TEMP!
+    //const r = this.stream.map((x) => x.spanId);
+    //this.stream = [];
+    //return r;
+
     // Find all items older than 10 sec at the beginning of the stream
     const len = this.stream.length;
     const currTs = Date.now();
     let stop = false;
     let idx = 0;
     while (idx < len && !stop) {
-      if (currTs - this.stream[idx].ts <= 10000) {
+      if (currTs - this.stream[idx].ts <= 2000) {
         stop = true;
       } else {
         idx++;

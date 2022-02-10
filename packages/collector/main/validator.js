@@ -16,14 +16,17 @@ class Validator {
   }
 
   async validate() {
+    logger.info(`Validating: getting all spans ...`);
     const allSpans = await matcher.getAll();
     logger.info(`Validating ${allSpans.length} received spans`);
-    monitor.inc('spans_processed_total');
+    //monitor.inc('spans_processed_total');
     const allMetrics = await promClient.register.getMetricsAsJSON();
+    logger.info(`Got metrics: ${JSON.stringify(allMetrics)}`);
 
     // TODO Validate
 
     return {
+      success: false,
       spansCount: allSpans.length,
       metricsCount: allMetrics.length,
       metrics: allMetrics,

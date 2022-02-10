@@ -43,9 +43,9 @@ class Processor {
     this.clientSpans = {};
     this.serverSpans = {}; // ???
     this.expectedParentSpans = {};
-    this.tickInterval = setInterval(() => {
-      this.tick().then(() => {});
-    }, 1000);
+    this.tickInterval = setInterval(async () => {
+      await this.tick();
+    }, 200);
     this.spanBatches = [];
     this.sbTs = null;
   }
@@ -56,24 +56,38 @@ class Processor {
       return;
     }
     logger.info(`TICK: Got ${spansForProcessing.length} spans for processing`);
-    // TODO
+
+    // Process them
+    const spansPromises = spansForProcessing.map((spanId) => matcher.getSpan(spanId));
+    const spans = await Promise.all(spansPromises);
+    for (const span of spans) {
+      //logger.info(`Processing Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
+      await this.processSingleSpan(span);
+    }
   }
 
   async processSpans(spansBatch) {
     // Temp TODO Remove
+    /*
     const ts = Date.now();
     if (!this.sbTs) {
       this.sbTs = ts;
     }
     const delay = ts - this.sbTs;
+    this.sbTs = ts;
     this.spanBatches.push({
       delay: delay,
       batch: spansBatch,
     });
-
+    */
     // do a first pass and pre-process all spans from the batch
     await this.preProcessBatch(spansBatch);
-
+    /*
+    for (const span of spansBatch) {
+      //logger.info(`Processing Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
+      await this.processSingleSpan(span);
+    }
+    */
     // then process one by one. so processing would not depend on sequence in batch.
     /*
     for (const span of spansBatch) {
@@ -81,7 +95,6 @@ class Processor {
       await this.processSingleSpan(span);
     }
     */
-
     // Then process traces which were completed in this batch
     /*
     let finishedTraces = this.getFinishedTraceIds(spansBatch);
@@ -125,7 +138,7 @@ class Processor {
   }
 
   async processServerSpan(span) {
-    logger.info(`Server Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
+    //logger.info(`Server Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
     if (!span.parentSpanId) {
       // This is ingress span, we do not expect that there will be  corresponding client span
       monitor.inc('service_calls_total', { src: 'external', dst: span.service });
@@ -140,9 +153,8 @@ class Processor {
     }
 
     // Put it to wait list - TEMP TODO REVISIT
-    this.expectedParentSpans[span.parentSpanId] = span;
-    // +++
-    logger.info(`Failed to find matching client parent span ${span.spanId} - MUST WAIT for ${span.parentSpanId}`);
+    //this.expectedParentSpans[span.parentSpanId] = span;
+    logger.info(`!!!! Failed to find matching parent span for ${span.spanId} - MUST WAIT for ${span.parentSpanId} !!!!!`);
 
     // We expect that there could be corresponding client span (parent)
     // Client and server spans may arrive in any order - they could be pushed via different nodes of otel collector, for instance
@@ -170,10 +182,15 @@ class Processor {
   }
 
   async processClientSpan(span) {
-    logger.info(`Client Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
+    //logger.info(`Client Span: name: ${span.name} traceId: ${span.traceId}, spanId: ${span.spanId}, parentSpanId: ${span.parentSpanId}, status: ${JSON.stringify(span.status)}`);
 
     let key = span.spanId;
 
+    // ????
+
+    //logger.error(`!!!!! Failed to find matching server span: ${key} !!!!`);
+
+    /*
     // attempt to find server span which expects this client span as a parent
     if (key in this.expectedParentSpans) {
       let serverSpan = this.expectedParentSpans[key];
@@ -181,10 +198,9 @@ class Processor {
       delete this.expectedParentSpans[key];
       return;
     }
+    */
 
     // TODO ???
-
-    logger.info(`Failed to find matching server span: ${key}`);
 
     // +++
   }

@@ -35,7 +35,7 @@
     ]
   },
   {
-    "delay": 447,
+    "delay": 1000,
     "batch": [
       {
         "valid": true,
@@ -4291,7 +4291,7 @@
     ]
   },
   {
-    "delay": 5436,
+    "delay": 1000,
     "batch": [
       {
         "valid": true,
@@ -4447,7 +4447,7 @@
     ]
   },
   {
-    "delay": 28285,
+    "delay": 1100,
     "batch": [
       {
         "valid": true,
@@ -4858,7 +4858,7 @@
     ]
   },
   {
-    "delay": 28488,
+    "delay": 203,
     "batch": [
       {
         "valid": true,
@@ -5066,7 +5066,7 @@
     ]
   },
   {
-    "delay": 33093,
+    "delay": 2000,
     "batch": [
       {
         "valid": true,
@@ -5231,303 +5231,7 @@
     ]
   },
   {
-    "delay": 33694,
-    "batch": [
-      {
-        "valid": true,
-        "traceId": "af551852a2d8dae87a3720efbcbb62c8",
-        "spanId": "3aa3db983d110f2c",
-        "parentSpanId": "ffc3d86879ad4671",
-        "hasChild": false,
-        "depth": null,
-        "name": "HTTP GET",
-        "kind": "client",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_OK"
-        },
-        "success": true,
-        "startTime": 1644434264962,
-        "endTime": 1644434265477,
-        "duration": 515,
-        "attributes": {
-          "http.url": "http://sws-example-java-petclinic:9966/petclinic/api/vets",
-          "http.method": "GET",
-          "http.target": "/petclinic/api/vets",
-          "net.peer.name": "sws-example-java-petclinic",
-          "net.peer.ip": "10.43.88.3",
-          "net.peer.port": 9966,
-          "http.host": "sws-example-java-petclinic:9966",
-          "http.status_code": 200,
-          "http.flavor": "1.1",
-          "net.transport": "ip_tcp"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-http"
-      },
-      {
-        "valid": true,
-        "traceId": "af551852a2d8dae87a3720efbcbb62c8",
-        "spanId": "ffc3d86879ad4671",
-        "parentSpanId": null,
-        "hasChild": false,
-        "depth": null,
-        "name": "GET /ptest",
-        "kind": "server",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_OK"
-        },
-        "success": true,
-        "startTime": 1644434264944,
-        "endTime": 1644434265483,
-        "duration": 539,
-        "attributes": {
-          "http.url": "http://127.0.0.1:3040/ptest",
-          "http.host": "127.0.0.1:3040",
-          "net.host.name": "127.0.0.1",
-          "http.method": "GET",
-          "http.target": "/ptest",
-          "http.user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
-          "http.flavor": "1.1",
-          "net.transport": "ip_tcp",
-          "net.host.ip": "::ffff:127.0.0.1",
-          "net.host.port": 3040,
-          "net.peer.ip": "::ffff:127.0.0.1",
-          "net.peer.port": 33390,
-          "http.status_code": 200,
-          "http.status_text": "OK",
-          "http.route": "/ptest"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-http"
-      }
-    ]
-  },
-  {
-    "delay": 34499,
-    "batch": [
-      {
-        "valid": true,
-        "traceId": "8bc07a230d6814a676ee37e039307685",
-        "spanId": "4f985a90d5b9934e",
-        "parentSpanId": null,
-        "hasChild": false,
-        "depth": null,
-        "name": "HTTP GET",
-        "kind": "server",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_ERROR"
-        },
-        "success": false,
-        "startTime": 1644434266274,
-        "endTime": 1644434266281,
-        "duration": 7,
-        "attributes": {
-          "http.url": "http://127.0.0.1:3040/favicon.ico",
-          "http.host": "127.0.0.1:3040",
-          "net.host.name": "127.0.0.1",
-          "http.method": "GET",
-          "http.target": "/favicon.ico",
-          "http.user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
-          "http.flavor": "1.1",
-          "net.transport": "ip_tcp",
-          "net.host.ip": "::ffff:127.0.0.1",
-          "net.host.port": 3040,
-          "net.peer.ip": "::ffff:127.0.0.1",
-          "net.peer.port": 33390,
-          "http.status_code": 500,
-          "http.status_text": "INTERNAL SERVER ERROR"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-http"
-      },
-      {
-        "valid": true,
-        "traceId": "8bc07a230d6814a676ee37e039307685",
-        "spanId": "b13ce1894aa8d360",
-        "parentSpanId": "4f985a90d5b9934e",
-        "hasChild": false,
-        "depth": null,
-        "name": "middleware - mockApiImplementation",
-        "kind": "internal",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_UNSET"
-        },
-        "success": true,
-        "startTime": 1644434266280,
-        "endTime": 1644434266280,
-        "duration": 0,
-        "attributes": {
-          "http.route": "/",
-          "express.name": "mockApiImplementation",
-          "express.type": "middleware"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
-      },
-      {
-        "valid": true,
-        "traceId": "8bc07a230d6814a676ee37e039307685",
-        "spanId": "1c0307340e576690",
-        "parentSpanId": "4f985a90d5b9934e",
-        "hasChild": false,
-        "depth": null,
-        "name": "middleware - jsonParser",
-        "kind": "internal",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_UNSET"
-        },
-        "success": true,
-        "startTime": 1644434266277,
-        "endTime": 1644434266277,
-        "duration": 0,
-        "attributes": {
-          "http.route": "/",
-          "express.name": "jsonParser",
-          "express.type": "middleware"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
-      },
-      {
-        "valid": true,
-        "traceId": "8bc07a230d6814a676ee37e039307685",
-        "spanId": "e19bbb5cdfd18e0e",
-        "parentSpanId": "4f985a90d5b9934e",
-        "hasChild": false,
-        "depth": null,
-        "name": "middleware - query",
-        "kind": "internal",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_UNSET"
-        },
-        "success": true,
-        "startTime": 1644434266275,
-        "endTime": 1644434266275,
-        "duration": 0,
-        "attributes": {
-          "http.route": "/",
-          "express.name": "query",
-          "express.type": "middleware"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
-      },
-      {
-        "valid": true,
-        "traceId": "8bc07a230d6814a676ee37e039307685",
-        "spanId": "dc6679c45a2a4cb3",
-        "parentSpanId": "4f985a90d5b9934e",
-        "hasChild": false,
-        "depth": null,
-        "name": "middleware - expressInit",
-        "kind": "internal",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_UNSET"
-        },
-        "success": true,
-        "startTime": 1644434266276,
-        "endTime": 1644434266276,
-        "duration": 0,
-        "attributes": {
-          "http.route": "/",
-          "express.name": "expressInit",
-          "express.type": "middleware"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
-      },
-      {
-        "valid": true,
-        "traceId": "8bc07a230d6814a676ee37e039307685",
-        "spanId": "3e06d8584bec38f7",
-        "parentSpanId": "4f985a90d5b9934e",
-        "hasChild": false,
-        "depth": null,
-        "name": "middleware - urlencodedParser",
-        "kind": "internal",
-        "category": null,
-        "service": "spectest-service",
-        "status": {
-          "message": "",
-          "code": "STATUS_CODE_UNSET"
-        },
-        "success": true,
-        "startTime": 1644434266279,
-        "endTime": 1644434266279,
-        "duration": 0,
-        "attributes": {
-          "http.route": "/",
-          "express.name": "urlencodedParser",
-          "express.type": "middleware"
-        },
-        "resourceAttributes": {
-          "service.name": "spectest-service",
-          "telemetry.sdk.language": "nodejs",
-          "telemetry.sdk.name": "opentelemetry",
-          "telemetry.sdk.version": "1.0.1"
-        },
-        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
-      }
-    ]
-  },
-  {
-    "delay": 35305,
+    "delay": 806,
     "batch": [
       {
         "valid": true,
@@ -6119,6 +5823,302 @@
           "telemetry.sdk.version": "1.10.0"
         },
         "instrumentationLibrary": "io.opentelemetry.tomcat-7.0"
+      }
+    ]
+  },
+  {
+    "delay": 1200,
+    "batch": [
+      {
+        "valid": true,
+        "traceId": "af551852a2d8dae87a3720efbcbb62c8",
+        "spanId": "3aa3db983d110f2c",
+        "parentSpanId": "ffc3d86879ad4671",
+        "hasChild": false,
+        "depth": null,
+        "name": "HTTP GET",
+        "kind": "client",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_OK"
+        },
+        "success": true,
+        "startTime": 1644434264962,
+        "endTime": 1644434265477,
+        "duration": 515,
+        "attributes": {
+          "http.url": "http://sws-example-java-petclinic:9966/petclinic/api/vets",
+          "http.method": "GET",
+          "http.target": "/petclinic/api/vets",
+          "net.peer.name": "sws-example-java-petclinic",
+          "net.peer.ip": "10.43.88.3",
+          "net.peer.port": 9966,
+          "http.host": "sws-example-java-petclinic:9966",
+          "http.status_code": 200,
+          "http.flavor": "1.1",
+          "net.transport": "ip_tcp"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-http"
+      },
+      {
+        "valid": true,
+        "traceId": "af551852a2d8dae87a3720efbcbb62c8",
+        "spanId": "ffc3d86879ad4671",
+        "parentSpanId": null,
+        "hasChild": false,
+        "depth": null,
+        "name": "GET /ptest",
+        "kind": "server",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_OK"
+        },
+        "success": true,
+        "startTime": 1644434264944,
+        "endTime": 1644434265483,
+        "duration": 539,
+        "attributes": {
+          "http.url": "http://127.0.0.1:3040/ptest",
+          "http.host": "127.0.0.1:3040",
+          "net.host.name": "127.0.0.1",
+          "http.method": "GET",
+          "http.target": "/ptest",
+          "http.user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+          "http.flavor": "1.1",
+          "net.transport": "ip_tcp",
+          "net.host.ip": "::ffff:127.0.0.1",
+          "net.host.port": 3040,
+          "net.peer.ip": "::ffff:127.0.0.1",
+          "net.peer.port": 33390,
+          "http.status_code": 200,
+          "http.status_text": "OK",
+          "http.route": "/ptest"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-http"
+      }
+    ]
+  },
+  {
+    "delay": 805,
+    "batch": [
+      {
+        "valid": true,
+        "traceId": "8bc07a230d6814a676ee37e039307685",
+        "spanId": "4f985a90d5b9934e",
+        "parentSpanId": null,
+        "hasChild": false,
+        "depth": null,
+        "name": "HTTP GET",
+        "kind": "server",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_ERROR"
+        },
+        "success": false,
+        "startTime": 1644434266274,
+        "endTime": 1644434266281,
+        "duration": 7,
+        "attributes": {
+          "http.url": "http://127.0.0.1:3040/favicon.ico",
+          "http.host": "127.0.0.1:3040",
+          "net.host.name": "127.0.0.1",
+          "http.method": "GET",
+          "http.target": "/favicon.ico",
+          "http.user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+          "http.flavor": "1.1",
+          "net.transport": "ip_tcp",
+          "net.host.ip": "::ffff:127.0.0.1",
+          "net.host.port": 3040,
+          "net.peer.ip": "::ffff:127.0.0.1",
+          "net.peer.port": 33390,
+          "http.status_code": 500,
+          "http.status_text": "INTERNAL SERVER ERROR"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-http"
+      },
+      {
+        "valid": true,
+        "traceId": "8bc07a230d6814a676ee37e039307685",
+        "spanId": "b13ce1894aa8d360",
+        "parentSpanId": "4f985a90d5b9934e",
+        "hasChild": false,
+        "depth": null,
+        "name": "middleware - mockApiImplementation",
+        "kind": "internal",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_UNSET"
+        },
+        "success": true,
+        "startTime": 1644434266280,
+        "endTime": 1644434266280,
+        "duration": 0,
+        "attributes": {
+          "http.route": "/",
+          "express.name": "mockApiImplementation",
+          "express.type": "middleware"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
+      },
+      {
+        "valid": true,
+        "traceId": "8bc07a230d6814a676ee37e039307685",
+        "spanId": "1c0307340e576690",
+        "parentSpanId": "4f985a90d5b9934e",
+        "hasChild": false,
+        "depth": null,
+        "name": "middleware - jsonParser",
+        "kind": "internal",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_UNSET"
+        },
+        "success": true,
+        "startTime": 1644434266277,
+        "endTime": 1644434266277,
+        "duration": 0,
+        "attributes": {
+          "http.route": "/",
+          "express.name": "jsonParser",
+          "express.type": "middleware"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
+      },
+      {
+        "valid": true,
+        "traceId": "8bc07a230d6814a676ee37e039307685",
+        "spanId": "e19bbb5cdfd18e0e",
+        "parentSpanId": "4f985a90d5b9934e",
+        "hasChild": false,
+        "depth": null,
+        "name": "middleware - query",
+        "kind": "internal",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_UNSET"
+        },
+        "success": true,
+        "startTime": 1644434266275,
+        "endTime": 1644434266275,
+        "duration": 0,
+        "attributes": {
+          "http.route": "/",
+          "express.name": "query",
+          "express.type": "middleware"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
+      },
+      {
+        "valid": true,
+        "traceId": "8bc07a230d6814a676ee37e039307685",
+        "spanId": "dc6679c45a2a4cb3",
+        "parentSpanId": "4f985a90d5b9934e",
+        "hasChild": false,
+        "depth": null,
+        "name": "middleware - expressInit",
+        "kind": "internal",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_UNSET"
+        },
+        "success": true,
+        "startTime": 1644434266276,
+        "endTime": 1644434266276,
+        "duration": 0,
+        "attributes": {
+          "http.route": "/",
+          "express.name": "expressInit",
+          "express.type": "middleware"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
+      },
+      {
+        "valid": true,
+        "traceId": "8bc07a230d6814a676ee37e039307685",
+        "spanId": "3e06d8584bec38f7",
+        "parentSpanId": "4f985a90d5b9934e",
+        "hasChild": false,
+        "depth": null,
+        "name": "middleware - urlencodedParser",
+        "kind": "internal",
+        "category": null,
+        "service": "spectest-service",
+        "status": {
+          "message": "",
+          "code": "STATUS_CODE_UNSET"
+        },
+        "success": true,
+        "startTime": 1644434266279,
+        "endTime": 1644434266279,
+        "duration": 0,
+        "attributes": {
+          "http.route": "/",
+          "express.name": "urlencodedParser",
+          "express.type": "middleware"
+        },
+        "resourceAttributes": {
+          "service.name": "spectest-service",
+          "telemetry.sdk.language": "nodejs",
+          "telemetry.sdk.name": "opentelemetry",
+          "telemetry.sdk.version": "1.0.1"
+        },
+        "instrumentationLibrary": "@opentelemetry/instrumentation-express"
       }
     ]
   }
