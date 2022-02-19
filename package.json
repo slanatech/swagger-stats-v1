@@ -11,7 +11,10 @@
     ]
   },
   "scripts": {
-    "build": "yarn run build:core && yarn run build:integrations && yarn run build:node",
+    "build": "yarn run build:core && yarn run build:integrations && yarn run build:prometheus && yarn run build:node",
+    "test": "yarn run test:integrations && yarn run test:prometheus",
+    "test:prometheus": "yarn workspace @swaggerstats/prometheus test",
+    "test:integrations": "yarn workspace @swaggerstats/integrations test",
     "build:core": "yarn workspace @swaggerstats/core compile",
     "build:integrations": "yarn workspace @swaggerstats/integrations compile",
     "build:prometheus": "yarn workspace @swaggerstats/prometheus compile",
@@ -19,8 +22,7 @@
     "build:examples": "yarn run build:examples:express && yarn run build:examples:hapi",
     "build:examples:express": "yarn docker build @swaggerstats/examples-express -t sws-example-express",
     "build:examples:hapi": "yarn docker build @swaggerstats/examples-hapi -t sws-example-hapi",
-    "build:collector": "yarn docker build @swaggerstats/collector -t sws-collector",
-    "test": "echo TODO"
+    "build:collector": "yarn docker build @swaggerstats/collector -t sws-collector"
   },
   "repository": {
     "type": "git",

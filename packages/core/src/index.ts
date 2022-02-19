@@ -17,18 +17,21 @@ export * from './entity/swsspan';
 export * from './entity/datasource';
 export * from './schema/resolvecategory';
 export * from './schema/spanschema';
+export * from './opresult';
+export * from './restop';
+export * from './logging/logger';
 
 // @ts-ignore
-import getLogger from './logging/logger';
-export { getLogger };
+//import getLogger from './logging/logger';
+//export { getLogger };
 
 // @ts-ignore
-import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';
-export { OpResult, OpSuccess, OpError, isSuccess };
+//import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';
+//export { OpResult, OpSuccess, OpError, isSuccess };
 
 // @ts-ignore
-import RestOp from './restop.js';
-export { RestOp };
+//import RestOp from './restop.js';
+//export { RestOp };
 
 /*
 import { OpResult, OpSuccess, OpError, isSuccess } from './opresult.js';

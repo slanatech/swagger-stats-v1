@@ -8,7 +8,6 @@
   "types": "build/src/index.d.ts",
   "scripts": {
     "compile": "yarn run -T tsc --build",
-    "postcompile": "cpy **/* !**/*.ts ../build/src --cwd=./src --no-overwrite --parents",
     "clean": "yarn run -T tsc --build --clean",
     "list": "yarn run -T tsc --listFiles",
     "test": "jest --verbose",

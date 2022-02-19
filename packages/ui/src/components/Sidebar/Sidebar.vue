@@ -26,8 +26,11 @@
   import { useRoute } from 'vue-router';
   import { ref, watch, computed } from 'vue';
   import { useStore } from 'vuex'
+  import { getLogger } from '@swaggerstats/core';
   import useBreakpoint from "../../hooks/useBreakpoint";
   import SidebarItemsRenderer from '@/components/Sidebar/SidebarItemsRenderer.vue';
+
+  const logger = getLogger('SIDEBAR');
 
   export default {
     components: {
@@ -64,18 +67,18 @@
     watch:{
       currentRoute: {
         handler: function (newRoute) {
-          console.log(`WATCH 2: new route ${newRoute}`);
+          logger.info(`WATCH 2: new route ${newRoute}`);
         }
       },
       is: {
         handler: function () {
-          console.log(`WATCH 3: new breakpoint ${this.is}`);
+          logger.info(`WATCH 3: new breakpoint ${this.is}`);
         }
       }
     },
     mounted() {
       this.$store.dispatch('sidebar/setRoutePath', {routePath:this.route.path});
-      console.log(`Sidebar mounted, ${this.sidebarItems.length} menu items, routePath: ${this.route.path}, breakpoints: ${JSON.stringify(this.breakpoints)}`);
+      logger.error({bp:this.breakpoints},`Sidebar mounted, ${this.sidebarItems.length} menu items, routePath: ${this.route.path}, breakpoints: ${JSON.stringify(this.breakpoints)}`);
       //console.log(`sidebarItems: ${JSON.stringify(this.sidebarItems)}`);
     },
   };
